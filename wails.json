@@ -9,5 +9,12 @@
   "author": {
     "name": "Gkirito",
     "email": "lownkid@outlook.com"
+  },
+  "info": {
+    "companyName": "bevm.io",
+    "productName": "lnd-desk",
+    "productVersion": "0.0.1",
+    "copyright": "",
+    "comments": "lnd desktop application"
   }
 }
