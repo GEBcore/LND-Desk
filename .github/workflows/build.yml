@@ -32,7 +32,7 @@ jobs:
           submodules: recursive
 
       - name: Build wails
-        uses: btclayer2/wails-build-action@v0.0.2
+        uses: btclayer2/wails-build-action@v0.0.4
         id: build
         with:
           build-name: ${{ matrix.build.name }}
@@ -43,3 +43,4 @@ jobs:
           deno-build: 'npm i -g pnpm'
           deno-version: '2.1.4'
           deno-working-directory: './'
+          tags: 'autopilotrpc signrpc walletrpc chainrpc invoicesrpc neutrinorpc routerrpc watchtowerrpc monitoring peersrpc kvdb_postrgres kvdb_sqlite kvdb_etcd'
