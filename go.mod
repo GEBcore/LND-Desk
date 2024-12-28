@@ -211,7 +211,6 @@ require (
 	sigs.k8s.io/yaml v1.2.0 // indirect
 )
 
-
 replace google.golang.org/protobuf => github.com/lightninglabs/protobuf-go-hex-display v1.30.0-hex-display
 
 replace github.com/gogo/protobuf => github.com/gogo/protobuf v1.3.2
