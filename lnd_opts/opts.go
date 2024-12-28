@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/lnrpc"
+	"github.com/lightningnetwork/lnd/lnrpc/walletrpc"
 )
 
 func Unlock(c *lnd.Config, password string) error {
@@ -407,3 +408,17 @@ func GetInfo(c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
 //
 //	return nil
 //}
+
+func ListAddresses(c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
+	walletClient, cleanUp, err := getWalletClient(c)
+	if err != nil {
+		return nil, err
+	}
+	defer cleanUp()
+
+	req := &walletrpc.ListAddressesRequest{
+		AccountName:        "",
+		ShowCustomAccounts: false,
+	}
+	return walletClient.ListAddresses(context.Background(), req)
+}
