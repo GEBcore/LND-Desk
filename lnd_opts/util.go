@@ -11,6 +11,7 @@ import (
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/lncfg"
 	"github.com/lightningnetwork/lnd/lnrpc"
+	"github.com/lightningnetwork/lnd/lnrpc/walletrpc"
 	"github.com/lightningnetwork/lnd/macaroons"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -246,4 +247,15 @@ func contextWithMetadata(ctx context.Context,
 	}
 
 	return metadata.AppendToOutgoingContext(ctx, kvPairs...)
+}
+
+func getWalletClient(c *lnd.Config) (walletrpc.WalletKitClient, func(), error) {
+	conn, err := getClientConn(c, false)
+	if err != nil {
+		return nil, nil, err
+	}
+	cleanUp := func() {
+		conn.Close()
+	}
+	return walletrpc.NewWalletKitClient(conn), cleanUp, nil
 }
