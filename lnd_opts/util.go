@@ -16,7 +16,6 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/metadata"
 	"net"
-	"os"
 	"strconv"
 )
 
@@ -29,11 +28,6 @@ var (
 	// set this to 200MiB atm.
 	maxMsgRecvSize = grpc.MaxCallRecvMsgSize(lnrpc.MaxGrpcMsgSize)
 )
-
-func fatal(err error) {
-	fmt.Fprintf(os.Stderr, "[lncli] %v\n", err)
-	os.Exit(1)
-}
 
 func getWalletUnlockerClient(c *lnd.Config) (lnrpc.WalletUnlockerClient, func(), error) {
 	conn, err := getClientConn(c, true)
