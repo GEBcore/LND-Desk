@@ -32,6 +32,7 @@ function LndState() {
   const [isWalletUnlocked, setIsWalletUnlocked] = useState(true);
   const [isWalletRpcReady, setIsWalletRpcReady] = useState(false);
   const [progress, setProgress] = useState(0)
+  const [progressRef, setProgressRef] = useState<NodeJS.Timeout | null>(null)
 
   async function StopNode() {
     await StopLnd()
@@ -143,7 +144,19 @@ function LndState() {
 
   useEffect(() => {
     GetLndInfo()
+    if (!progressRef) {
+      const timer = setInterval(async () => {
+        await GetChainInfo()
+      }, 5000)
+      setProgressRef(timer)
+    }
     InitState()
+
+    return () => {
+      if (progressRef) {
+        clearInterval(progressRef);
+      }
+    };
   }, [isWalletRpcReady, isWalletUnlocked, progress])
 
   return (
