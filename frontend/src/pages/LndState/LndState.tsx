@@ -114,6 +114,7 @@ function LndState() {
       switch (resp.state ?? WalletState.WalletState_NON_EXISTING) {
         case WalletState.WalletState_NON_EXISTING:
           //TODO need create wallet
+          InitState()
           console.log('need init')
           break
         case WalletState.WalletState_LOCKED:
