@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/btclayer2/LND-Desk/http_util"
+	"github.com/btclayer2/LND-Desk/lnd_opts"
 	"github.com/lightningnetwork/lnd/lnrpc"
 	"github.com/lightningnetwork/lnd/rpcperms"
-	"lnd-desk/http_util"
-	"lnd-desk/lnd_opts"
 	"strings"
 )
 
