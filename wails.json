@@ -1,18 +1,18 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "lnd-desk",
-  "outputfilename": "lnd-desk",
+  "name": "LND Desk",
+  "outputfilename": "LND-Desk",
   "frontend:install": "pnpm install",
   "frontend:build": "pnpm run build",
   "frontend:dev:watcher": "pnpm run dev",
   "frontend:dev:serverUrl": "auto",
   "author": {
-    "name": "Gkirito",
-    "email": "lownkid@outlook.com"
+    "name": "Bevm",
+    "email": "gguoss.coming@gmail.com"
   },
   "info": {
     "companyName": "bevm.io",
-    "productName": "lnd-desk",
+    "productName": "LND Desk",
     "productVersion": "0.0.1",
     "copyright": "",
     "comments": "lnd desktop application"
