@@ -2,9 +2,9 @@ package main
 
 import (
 	"bytes"
+	"github.com/btclayer2/LND-Desk/lnd_node"
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/signal"
-	"lnd-desk/lnd_node"
 	"time"
 )
 

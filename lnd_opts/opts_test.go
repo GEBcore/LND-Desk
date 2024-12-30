@@ -2,10 +2,10 @@ package lnd_ops
 
 import (
 	"bytes"
+	"github.com/btclayer2/LND-Desk/lnd_node"
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/lnrpc"
 	"github.com/lightningnetwork/lnd/signal"
-	"lnd-desk/lnd_node"
 	"testing"
 )
 
