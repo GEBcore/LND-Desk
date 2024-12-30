@@ -127,103 +127,14 @@ func GetInfo(c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
 	return client.GetInfo(context.Background(), req)
 }
 
-//func Create(c *lnd.Config) error {
+//func Create(c *lnd.Config, walletPassword string) error {
 //	client, cleanUp, err := getWalletUnlockerClient(c)
 //	if err != nil {
 //		return err
 //	}
 //	defer cleanUp()
 //
-//	var (
-//		chanBackups *lnrpc.ChanBackupSnapshot
-//
-//		// We use var restoreSCB to track if we will be including an SCB
-//		// recovery in the init wallet request.
-//		restoreSCB = false
-//	)
-//
-//	backups, err := parseChanBackups(ctx)
-//
-//	// We'll check to see if the user provided any static channel backups (SCB),
-//	// if so, we will warn the user that SCB recovery closes all open channels
-//	// and ask them to confirm their intention.
-//	// If the user agrees, we'll add the SCB recovery onto the final init wallet
-//	// request.
-//	switch {
-//	// parseChanBackups returns an errMissingBackup error (which we ignore) if
-//	// the user did not request a SCB recovery.
-//	case err == errMissingChanBackup:
-//
-//	// Passed an invalid channel backup file.
-//	case err != nil:
-//		return fmt.Errorf("unable to parse chan backups: %w", err)
-//
-//	// We have an SCB recovery option with a valid backup file.
-//	default:
-//
-//	warningLoop:
-//		for {
-//			fmt.Println()
-//			fmt.Printf("WARNING: You are attempting to restore from a " +
-//				"static channel backup (SCB) file.\nThis action will CLOSE " +
-//				"all currently open channels, and you will pay on-chain fees." +
-//				"\n\nAre you sure you want to recover funds from a" +
-//				" static channel backup? (Enter y/n): ")
-//
-//			reader := bufio.NewReader(os.Stdin)
-//			answer, err := reader.ReadString('\n')
-//			if err != nil {
-//				return err
-//			}
-//
-//			answer = strings.TrimSpace(answer)
-//			answer = strings.ToLower(answer)
-//
-//			switch answer {
-//			case "y":
-//				restoreSCB = true
-//				break warningLoop
-//			case "n":
-//				fmt.Println("Aborting SCB recovery")
-//				return nil
-//			}
-//		}
-//	}
-//
-//	// Proceed with SCB recovery.
-//	if restoreSCB {
-//		fmt.Println("Static Channel Backup (SCB) recovery selected!")
-//		if backups != nil {
-//			switch {
-//			case backups.GetChanBackups() != nil:
-//				singleBackup := backups.GetChanBackups()
-//				chanBackups = &lnrpc.ChanBackupSnapshot{
-//					SingleChanBackups: singleBackup,
-//				}
-//
-//			case backups.GetMultiChanBackup() != nil:
-//				multiBackup := backups.GetMultiChanBackup()
-//				chanBackups = &lnrpc.ChanBackupSnapshot{
-//					MultiChanBackup: &lnrpc.MultiChanBackup{
-//						MultiChanBackup: multiBackup,
-//					},
-//				}
-//			}
-//		}
-//	}
-//
-//	// Should the daemon be initialized stateless? Then we expect an answer
-//	// with the admin macaroon later. Because the --save_to is related to
-//	// stateless init, it doesn't make sense to be set on its own.
-//	statelessInit := ctx.Bool(statelessInitFlag.Name)
-//	if !statelessInit && ctx.IsSet(saveToFlag.Name) {
-//		return fmt.Errorf("cannot set save_to parameter without " +
-//			"stateless_init")
-//	}
-//
-//	walletPassword, err := capturePassword(
-//		"Input wallet password: ", false, walletunlocker.ValidatePassword,
-//	)
+//	err = walletunlocker.ValidatePassword([]byte(walletPassword))
 //	if err != nil {
 //		return err
 //	}
