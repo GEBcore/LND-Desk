@@ -18,7 +18,7 @@ func (a *App) GetLndChainInfo(mempoolHost string) (*ChainInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	info, err := lnd_ops.GetInfo(a.lndConfig)
+	info, err := lnd_ops.GetInfo(a.ctx, a.lndConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func (a *App) GetLndChainInfo(mempoolHost string) (*ChainInfo, error) {
 }
 
 func (a *App) Unlock(password string) error {
-	err := lnd_ops.Unlock(a.lndConfig, password)
+	err := lnd_ops.Unlock(a.ctx, a.lndConfig, password)
 	if err != nil && strings.Contains(err.Error(), rpcperms.ErrWalletUnlocked.Error()) {
 		return nil
 	}
@@ -37,5 +37,5 @@ func (a *App) Unlock(password string) error {
 }
 
 func (a *App) GetState() (*lnrpc.GetStateResponse, error) {
-	return lnd_ops.GetState(a.lndConfig)
+	return lnd_ops.GetState(a.ctx, a.lndConfig)
 }
