@@ -140,6 +140,7 @@ function LndState() {
         title: "Lnd RPC ERROR",
         description: String(error),
       })
+      InitState()
     }
   }
 
