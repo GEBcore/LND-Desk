@@ -2,6 +2,7 @@ package lnd_ops
 
 import (
 	"bytes"
+	"context"
 	"github.com/btclayer2/LND-Desk/lnd_node"
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/lnrpc"
@@ -19,7 +20,8 @@ func TestGetInfo(t *testing.T) {
 		t.Fatal(err)
 	}
 	type args struct {
-		c *lnd.Config
+		c   *lnd.Config
+		ctx context.Context
 	}
 	tests := []struct {
 		name    string
@@ -28,12 +30,12 @@ func TestGetInfo(t *testing.T) {
 	}{
 		{
 			name: "test",
-			args: args{c: lndConfig},
+			args: args{c: lndConfig, ctx: context.TODO()},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetInfo(tt.args.c)
+			got, err := GetInfo(tt.args.ctx, tt.args.c)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetInfo() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -53,7 +55,8 @@ func TestGetInfo1(t *testing.T) {
 		t.Fatal(err)
 	}
 	type args struct {
-		c *lnd.Config
+		c   *lnd.Config
+		ctx context.Context
 	}
 	tests := []struct {
 		name    string
@@ -63,13 +66,13 @@ func TestGetInfo1(t *testing.T) {
 	}{
 		{
 			name:    "test",
-			args:    args{lndConfig},
+			args:    args{lndConfig, context.TODO()},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetInfo(tt.args.c)
+			got, err := GetInfo(tt.args.ctx, tt.args.c)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetInfo() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -90,7 +93,8 @@ func TestGetState(t *testing.T) {
 		t.Fatal(err)
 	}
 	type args struct {
-		c *lnd.Config
+		c   *lnd.Config
+		ctx context.Context
 	}
 	tests := []struct {
 		name    string
@@ -99,13 +103,13 @@ func TestGetState(t *testing.T) {
 	}{
 		{
 			name:    "test",
-			args:    args{lndConfig},
+			args:    args{lndConfig, context.TODO()},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetState(tt.args.c)
+			got, err := GetState(tt.args.ctx, tt.args.c)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetState() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -125,7 +129,8 @@ func TestListAddresses(t *testing.T) {
 		t.Fatal(err)
 	}
 	type args struct {
-		c *lnd.Config
+		c   *lnd.Config
+		ctx context.Context
 	}
 	tests := []struct {
 		name    string
@@ -135,14 +140,15 @@ func TestListAddresses(t *testing.T) {
 		{
 			name: "test",
 			args: args{
-				c: lndConfig,
+				c:   lndConfig,
+				ctx: context.TODO(),
 			},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ListAddresses(tt.args.c)
+			got, err := ListAddresses(tt.args.ctx, tt.args.c)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ListAddresses() error = %v, wantErr %v", err, tt.wantErr)
 				return
