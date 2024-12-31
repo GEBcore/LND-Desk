@@ -15,7 +15,7 @@ func TestGetInfo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	lndConfig, err := lnd_node.CheckAndParse(interceptor, "", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
+	lndConfig, err := lnd_node.CheckAndParse(interceptor, "~/Library/Application Support/Lnd", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -50,7 +50,7 @@ func TestGetInfo1(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	lndConfig, err := lnd_node.CheckAndParse(interceptor, "", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
+	lndConfig, err := lnd_node.CheckAndParse(interceptor, "~/Library/Application Support/Lnd", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -88,7 +88,7 @@ func TestGetState(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	lndConfig, err := lnd_node.CheckAndParse(interceptor, "", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
+	lndConfig, err := lnd_node.CheckAndParse(interceptor, "~/Library/Application Support/Lnd", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -124,7 +124,7 @@ func TestListAddresses(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	lndConfig, err := lnd_node.CheckAndParse(interceptor, "", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
+	lndConfig, err := lnd_node.CheckAndParse(interceptor, "~/Library/Application Support/Lnd", bytes.NewBufferString("[Application Options]\ndebuglevel=trace\nmaxpendingchannels=10\nalias=Bevm_client_test\nno-macaroons=false\ncoin-selection-strategy=largest\nrpclisten=localhost:10009\nrestlisten=localhost:8080\nno-rest-tls=true\nrestcors=https://bevmhub.bevm.io\n\n[Bitcoin]\nbitcoin.mainnet=false\nbitcoin.testnet=false\nbitcoin.simnet=false\nbitcoin.regtest=false\nbitcoin.signet=true\nbitcoin.node=neutrino\n\n[neutrino]\nneutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl\nneutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333\n\n[protocol]\nprotocol.simple-taproot-chans=true"))
 	if err != nil {
 		t.Fatal(err)
 	}
