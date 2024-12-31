@@ -6,6 +6,8 @@ import (
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/lnrpc"
 	"github.com/lightningnetwork/lnd/lnrpc/walletrpc"
+	"github.com/lightningnetwork/lnd/walletunlocker"
+)
 
 const (
 	defaultRecoveryWindow = 2500
@@ -130,6 +132,28 @@ func GetInfo(c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
 	return client.GetInfo(context.Background(), req)
 }
 
+func GenSeed(ctx context.Context, c *lnd.Config, aezeedPass string) ([]string, error) {
+	client, cleanUp, err := getWalletUnlockerClient(c)
+	if err != nil {
+		return nil, err
+	}
+	defer cleanUp()
+	// Neither a seed nor a master root key was specified, the user wants
+	// to create a new seed.
+	// Otherwise, if the user doesn't have a mnemonic that they
+	// want to use, we'll generate a fresh one with the GenSeed
+	// command.
+
+	genSeedReq := &lnrpc.GenSeedRequest{
+		AezeedPassphrase: []byte(aezeedPass),
+	}
+	seedResp, err := client.GenSeed(ctx, genSeedReq)
+	if err != nil {
+		return nil, fmt.Errorf("unable to generate seed: %w", err)
+	}
+
+	return seedResp.CipherSeedMnemonic, nil
+}
 
 func ListAddresses(c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
 	walletClient, cleanUp, err := getWalletClient(c)
