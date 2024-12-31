@@ -4,6 +4,8 @@ import {main} from '../models';
 import {lnrpc} from '../models';
 import {frontend} from '../models';
 
+export function GenSeed(arg1:string):Promise<Array<string>>;
+
 export function GetDefaultLndDir():Promise<string>;
 
 export function GetLndAdminMacaroonPath():Promise<string>;
@@ -15,6 +17,8 @@ export function GetLndPath():Promise<string>;
 export function GetLndRest():Promise<string>;
 
 export function GetState():Promise<lnrpc.GetStateResponse>;
+
+export function InitWallet(arg1:string,arg2:string,arg3:string,arg4:string):Promise<void>;
 
 export function OpenFileSelector(arg1:frontend.OpenDialogOptions):Promise<string>;
 
