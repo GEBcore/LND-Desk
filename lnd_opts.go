@@ -39,3 +39,11 @@ func (a *App) Unlock(password string) error {
 func (a *App) GetState() (*lnrpc.GetStateResponse, error) {
 	return lnd_ops.GetState(a.ctx, a.lndConfig)
 }
+
+func (a *App) InitWallet(walletPassword, existMnemonic, aezeedPass, existXprv string) error {
+	return lnd_ops.InitWallet(a.ctx, a.lndConfig, walletPassword, existMnemonic, aezeedPass, existXprv)
+}
+
+func (a *App) GenSeed(aezeedPass string) ([]string, error) {
+	return lnd_ops.GenSeed(a.ctx, a.lndConfig, aezeedPass)
+}
