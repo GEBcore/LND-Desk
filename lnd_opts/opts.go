@@ -14,7 +14,7 @@ const (
 	defaultRecoveryWindow = 2500
 )
 
-func Unlock(c *lnd.Config, password string) error {
+func Unlock(ctx context.Context, c *lnd.Config, password string) error {
 	client, cleanUp, err := getWalletUnlockerClient(c)
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func Unlock(c *lnd.Config, password string) error {
 		RecoveryWindow: recoveryWindow,
 		StatelessInit:  true,
 	}
-	_, err = client.UnlockWallet(context.Background(), req)
+	_, err = client.UnlockWallet(ctx, req)
 	if err != nil {
 		return err
 	}
@@ -38,7 +38,7 @@ func Unlock(c *lnd.Config, password string) error {
 	return nil
 }
 
-func GetState(c *lnd.Config) (*lnrpc.GetStateResponse, error) {
+func GetState(ctx context.Context, c *lnd.Config) (*lnrpc.GetStateResponse, error) {
 	client, cleanUp, err := getStateServiceClient(c)
 	if err != nil {
 		return nil, err
@@ -46,10 +46,10 @@ func GetState(c *lnd.Config) (*lnrpc.GetStateResponse, error) {
 	defer cleanUp()
 
 	req := &lnrpc.GetStateRequest{}
-	return client.GetState(context.Background(), req)
+	return client.GetState(ctx, req)
 }
 
-func GetInfo(c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
+func GetInfo(ctx context.Context, c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
 	client, cleanUp, err := getClient(c)
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func GetInfo(c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
 	defer cleanUp()
 
 	req := &lnrpc.GetInfoRequest{}
-	return client.GetInfo(context.Background(), req)
+	return client.GetInfo(ctx, req)
 }
 
 func GenSeed(ctx context.Context, c *lnd.Config, aezeedPass string) ([]string, error) {
@@ -148,7 +148,7 @@ func InitWallet(ctx context.Context, c *lnd.Config, walletPassword, existMnemoni
 	return err
 }
 
-func ListAddresses(c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
+func ListAddresses(ctx context.Context, c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
 	walletClient, cleanUp, err := getWalletClient(c)
 	if err != nil {
 		return nil, err
@@ -159,5 +159,5 @@ func ListAddresses(c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
 		AccountName:        "",
 		ShowCustomAccounts: false,
 	}
-	return walletClient.ListAddresses(context.Background(), req)
+	return walletClient.ListAddresses(ctx, req)
 }
