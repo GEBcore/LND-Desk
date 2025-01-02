@@ -1,26 +1,22 @@
-import { Tabs, Root, TabsList, TabsTrigger, Content } from '@radix-ui/react-tabs';
 import React from 'react';
 import Import from '@/pages/Create/Import';
 import New from '@/pages/Create/New';
-
+import { Tabs } from "@chakra-ui/react"
 function Tab() {
   return (
-    <Tabs>
-      <Root defaultValue="account">
-        <TabsList className="gap-3 flex flex-row">
-          <TabsTrigger value="import" className={"flex"}>Our Own Mnemonic</TabsTrigger>
-          <TabsTrigger value="new" className={"flex"}>New Wallet</TabsTrigger>
-        </TabsList>
-        <div className="pt-3">
-          <Content value="import">
-            <Import/>
-          </Content>
-          <Content value="new">
-            <New/>
-          </Content>
-        </div>
-      </Root>
-    </Tabs>
+    <Tabs.Root defaultValue="import" variant="plain">
+      <Tabs.List bg="bg.muted" rounded="l3" p="1">
+        <Tabs.Trigger value="import">
+          Our Own Mnemonic
+        </Tabs.Trigger>
+        <Tabs.Trigger value="new">
+          New Wallet
+        </Tabs.Trigger>
+        <Tabs.Indicator rounded="l2" />
+      </Tabs.List>
+      <Tabs.Content value="import"><Import/></Tabs.Content>
+      <Tabs.Content value="new"><New/></Tabs.Content>
+    </Tabs.Root>
   )
 }
 
