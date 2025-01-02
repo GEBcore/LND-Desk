@@ -56,10 +56,16 @@ protocol.simple-taproot-chans=true`);
       await RunLnd()
       navigate('/lndState');
     } catch (error) {
+      navigate('/create');
       toast({
         variant: "destructive",
         title: "Lnd Error",
         description: String(error),
+      })
+      toast({
+        variant: "destructive",
+        title: "Lnd Error",
+        description: 'Sorry, we couldn\'t find your local wallet in the specific directory. Please follow the steps to create a local wallet.',
       })
     }
   }
