@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useCreateStore } from '@/store/create';
+import { Stack } from '@chakra-ui/react';
+import { Field } from '@/components/ui/field';
 
 function Pwd() {
 
@@ -23,18 +25,27 @@ function Pwd() {
   return (
     <>
       <Toaster />
-      <div className='flex w-full max-w-3xl items-center space-x-3'>
-        <Label className="w-[15%] max-w-xs">Create a password for your wallet</Label>
-      </div>
-      <div className='flex w-full max-w-3xl items-center space-x-3'>
-        <Label className="w-[15%] max-w-xs">Input wallet Password:</Label>
-        <Input className="w-full" id="pwd" type="pwd" value={pwd} onChange={(e) => setPwd(e.target.value)} />
-      </div>
-      <div className='flex w-full max-w-3xl items-center space-x-3'>
-        <Label className="w-[15%] max-w-xs">Confirm wallet Password:</Label>
-        <Input className="w-full" id="conformPwd" type="pwd" value={confirmPwd} onChange={(e) => setConfirmPwd(e.target.value)} />
-      </div>
-      <Button onClick={()=>comparePwd(pwd, confirmPwd)} className="dark">Confirm</Button>
+      <form onSubmit={()=>comparePwd(pwd, confirmPwd)}>
+        Create a password for your wallet
+        <Stack gap="4" align="flex-start" width="500px">
+
+          <Field label="Input wallet Password:">
+            <Input
+              placeholder="is required."
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
+            />
+          </Field>
+          <Field label="Confirm wallet Password:">
+            <Input
+              placeholder="is required."
+              value={confirmPwd}
+              onChange={(e) => setConfirmPwd(e.target.value)}
+            />
+          </Field>
+          <Button type="submit" onClick={()=>comparePwd(pwd, confirmPwd)}>Submit</Button>
+        </Stack>
+      </form>
     </>
   )
 }

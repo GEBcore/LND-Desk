@@ -9,34 +9,22 @@ function New() {
 
   const [confirmPassphrase, setConfirmPassphrase] = useState("");
   const [newStatus, setNewStatus] = useState<'phrase' | 'word'>('phrase')
-  const { initWallet, pwd, createPassphrase, setCreatePassphrase } = useCreateStore()
-  const [error, setError] = useState(""); // 错误提示信息
+  const { initWallet, pwd, createPassphrase, setCreatePassphrase, genSeed, createMnemonic } = useCreateStore()
 
-  const onSubmit = (event: React.FormEvent) => {
+  const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // 阻止默认表单提交行为
-    if(confirmPassphrase === createPassphrase){
+    if (confirmPassphrase === createPassphrase) {
       console.log('下一步')
+      await genSeed(pwd)
+      debugger
       setNewStatus('word')
+
     }
   };
 
-  const words: string[] = [
-    'absorb', 'loan', 'name', 'shop',
-    'rice', 'hundred', 'elbow', 'solid',
-    'marble', 'task', 'daughter', 'middle',
-    'flower', 'bulk', 'coil', 'female',
-    'soap', 'guide', 'armor', 'adapt',
-    'replace', 'month', 'muffin', 'wet'
-  ];
-
-  function formatWords(words: string[]): string {
-    let result = '';
-    for (let i = 0; i < words.length; i += 4) {
-      const line = words.slice(i, i + 4).map((word, index) => `${i + index + 1}. ${word}`).join('  ');
-      result += line + '\n';
-    }
-    return result;
-  }
+  const finishCreate = () => {
+    const result = initWallet(pwd, createMnemonic, createPassphrase, '')
+  };
 
   return (
     <div className="dark flex flex-col items-center justify-center h-screen mx-w-full">
@@ -63,14 +51,14 @@ function New() {
       </form>}
       {newStatus === 'word' && <div style={{width:'400px', padding:'12px', border:'1px solid white', display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
         <div style={{fontSize:'18px',fontWeight: '600', margin:'8px 0'}}>New mnemonic</div>
-        <div style={{maxWidth:'280px'}}>{formatWords(words)}</div>
+        <div style={{maxWidth:'280px'}}>{createMnemonic}</div>
         <div style={{maxWidth:'280px',marginTop:'24px', fontSize:'12px'}}>
           1 Please take a moment to write down this mnemonic phrase on a piece of paper.
         </div>
         <div style={{maxWidth:'280px', fontSize:'12px'}}>
           2 It's your backup and you can use it to recover the wallet.
         </div>
-        <Button type="submit" onClick={onSubmit}>Submit</Button>
+        <Button type="submit" onClick={finishCreate}>Submit</Button>
       </div>}
     </div>
   );
