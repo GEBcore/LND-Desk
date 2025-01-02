@@ -6,9 +6,15 @@ import (
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/lnrpc"
 	"github.com/lightningnetwork/lnd/lnrpc/walletrpc"
+	"github.com/lightningnetwork/lnd/walletunlocker"
+	"strings"
 )
 
-func Unlock(c *lnd.Config, password string) error {
+const (
+	defaultRecoveryWindow = 2500
+)
+
+func Unlock(ctx context.Context, c *lnd.Config, password string) error {
 	client, cleanUp, err := getWalletUnlockerClient(c)
 	if err != nil {
 		return err
@@ -22,7 +28,7 @@ func Unlock(c *lnd.Config, password string) error {
 		RecoveryWindow: recoveryWindow,
 		StatelessInit:  true,
 	}
-	_, err = client.UnlockWallet(context.Background(), req)
+	_, err = client.UnlockWallet(ctx, req)
 	if err != nil {
 		return err
 	}
@@ -32,80 +38,7 @@ func Unlock(c *lnd.Config, password string) error {
 	return nil
 }
 
-//func parseChanBackups(ctx *cli.Context) (*lnrpc.RestoreChanBackupRequest, error) {
-//	switch {
-//	case ctx.IsSet("single_backup"):
-//		packedBackup, err := hex.DecodeString(
-//			ctx.String("single_backup"),
-//		)
-//		if err != nil {
-//			return nil, fmt.Errorf("unable to decode single packed "+
-//				"backup: %v", err)
-//		}
-//
-//		return &lnrpc.RestoreChanBackupRequest{
-//			Backup: &lnrpc.RestoreChanBackupRequest_ChanBackups{
-//				ChanBackups: &lnrpc.ChannelBackups{
-//					ChanBackups: []*lnrpc.ChannelBackup{
-//						{
-//							ChanBackup: packedBackup,
-//						},
-//					},
-//				},
-//			},
-//		}, nil
-//
-//	case ctx.IsSet("multi_backup"):
-//		packedMulti, err := hex.DecodeString(
-//			ctx.String("multi_backup"),
-//		)
-//		if err != nil {
-//			return nil, fmt.Errorf("unable to decode multi packed "+
-//				"backup: %v", err)
-//		}
-//
-//		return &lnrpc.RestoreChanBackupRequest{
-//			Backup: &lnrpc.RestoreChanBackupRequest_MultiChanBackup{
-//				MultiChanBackup: packedMulti,
-//			},
-//		}, nil
-//
-//	case ctx.IsSet("single_file"):
-//		packedSingle, err := os.ReadFile(ctx.String("single_file"))
-//		if err != nil {
-//			return nil, fmt.Errorf("unable to decode single "+
-//				"packed backup: %v", err)
-//		}
-//
-//		return &lnrpc.RestoreChanBackupRequest{
-//			Backup: &lnrpc.RestoreChanBackupRequest_ChanBackups{
-//				ChanBackups: &lnrpc.ChannelBackups{
-//					ChanBackups: []*lnrpc.ChannelBackup{{
-//						ChanBackup: packedSingle,
-//					}},
-//				},
-//			},
-//		}, nil
-//
-//	case ctx.IsSet("multi_file"):
-//		packedMulti, err := os.ReadFile(ctx.String("multi_file"))
-//		if err != nil {
-//			return nil, fmt.Errorf("unable to decode multi packed "+
-//				"backup: %v", err)
-//		}
-//
-//		return &lnrpc.RestoreChanBackupRequest{
-//			Backup: &lnrpc.RestoreChanBackupRequest_MultiChanBackup{
-//				MultiChanBackup: packedMulti,
-//			},
-//		}, nil
-//
-//	default:
-//		return nil, errMissingChanBackup
-//	}
-//}
-
-func GetState(c *lnd.Config) (*lnrpc.GetStateResponse, error) {
+func GetState(ctx context.Context, c *lnd.Config) (*lnrpc.GetStateResponse, error) {
 	client, cleanUp, err := getStateServiceClient(c)
 	if err != nil {
 		return nil, err
@@ -113,10 +46,10 @@ func GetState(c *lnd.Config) (*lnrpc.GetStateResponse, error) {
 	defer cleanUp()
 
 	req := &lnrpc.GetStateRequest{}
-	return client.GetState(context.Background(), req)
+	return client.GetState(ctx, req)
 }
 
-func GetInfo(c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
+func GetInfo(ctx context.Context, c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
 	client, cleanUp, err := getClient(c)
 	if err != nil {
 		return nil, err
@@ -124,203 +57,98 @@ func GetInfo(c *lnd.Config) (*lnrpc.GetInfoResponse, error) {
 	defer cleanUp()
 
 	req := &lnrpc.GetInfoRequest{}
-	return client.GetInfo(context.Background(), req)
+	return client.GetInfo(ctx, req)
 }
 
-//func Create(c *lnd.Config, walletPassword string) error {
-//	client, cleanUp, err := getWalletUnlockerClient(c)
-//	if err != nil {
-//		return err
-//	}
-//	defer cleanUp()
-//
-//	err = walletunlocker.ValidatePassword([]byte(walletPassword))
-//	if err != nil {
-//		return err
-//	}
-//
-//	// Next, we'll see if the user has 24-word mnemonic they want to use to
-//	// derive a seed within the wallet or if they want to specify an
-//	// extended master root key (xprv) directly.
-//	var (
-//		hasMnemonic bool
-//		hasXprv     bool
-//	)
-//
-//mnemonicCheck:
-//	for {
-//		fmt.Println()
-//		fmt.Printf("Do you have an existing cipher seed " +
-//			"mnemonic or extended master root key you want to " +
-//			"use?\nEnter 'y' to use an existing cipher seed " +
-//			"mnemonic, 'x' to use an extended master root key " +
-//			"\nor 'n' to create a new seed (Enter y/x/n): ")
-//
-//		reader := bufio.NewReader(os.Stdin)
-//		answer, err := reader.ReadString('\n')
-//		if err != nil {
-//			return err
-//		}
-//
-//		fmt.Println()
-//
-//		answer = strings.TrimSpace(answer)
-//		answer = strings.ToLower(answer)
-//
-//		switch answer {
-//		case "y":
-//			hasMnemonic = true
-//			break mnemonicCheck
-//
-//		case "x":
-//			hasXprv = true
-//			break mnemonicCheck
-//
-//		case "n":
-//			break mnemonicCheck
-//		}
-//	}
-//
-//	// If the user *does* have an existing seed or root key they want to
-//	// use, then we'll read that in directly from the terminal.
-//	var (
-//		cipherSeedMnemonic      []string
-//		aezeedPass              []byte
-//		extendedRootKey         string
-//		extendedRootKeyBirthday uint64
-//		recoveryWindow          int32
-//	)
-//	switch {
-//	// Use an existing cipher seed mnemonic in the aezeed format.
-//	case hasMnemonic:
-//		// We'll now prompt the user to enter in their 24-word
-//		// mnemonic.
-//		fmt.Printf("Input your 24-word mnemonic separated by spaces: ")
-//		reader := bufio.NewReader(os.Stdin)
-//		mnemonic, err := reader.ReadString('\n')
-//		if err != nil {
-//			return err
-//		}
-//
-//		// We'll trim off extra spaces, and ensure the mnemonic is all
-//		// lower case, then populate our request.
-//		mnemonic = strings.TrimSpace(mnemonic)
-//		mnemonic = strings.ToLower(mnemonic)
-//
-//		cipherSeedMnemonic = strings.Split(mnemonic, " ")
-//
-//		fmt.Println()
-//
-//		if len(cipherSeedMnemonic) != 24 {
-//			return fmt.Errorf("wrong cipher seed mnemonic "+
-//				"length: got %v words, expecting %v words",
-//				len(cipherSeedMnemonic), 24)
-//		}
-//
-//		// Additionally, the user may have a passphrase, that will also
-//		// need to be provided so the daemon can properly decipher the
-//		// cipher seed.
-//		aezeedPass, err = readPassword("Input your cipher seed " +
-//			"passphrase (press enter if your seed doesn't have a " +
-//			"passphrase): ")
-//		if err != nil {
-//			return err
-//		}
-//
-//		recoveryWindow, err = askRecoveryWindow()
-//		if err != nil {
-//			return err
-//		}
-//
-//	// Use an existing extended master root key to create the wallet.
-//	case hasXprv:
-//		// We'll now prompt the user to enter in their extended master
-//		// root key.
-//		fmt.Printf("Input your extended master root key (usually " +
-//			"starting with xprv... on mainnet): ")
-//		reader := bufio.NewReader(os.Stdin)
-//		extendedRootKey, err = reader.ReadString('\n')
-//		if err != nil {
-//			return err
-//		}
-//		extendedRootKey = strings.TrimSpace(extendedRootKey)
-//
-//		extendedRootKeyBirthday, err = askBirthdayTimestamp()
-//		if err != nil {
-//			return err
-//		}
-//
-//		recoveryWindow, err = askRecoveryWindow()
-//		if err != nil {
-//			return err
-//		}
-//
-//	// Neither a seed nor a master root key was specified, the user wants
-//	// to create a new seed.
-//	default:
-//		// Otherwise, if the user doesn't have a mnemonic that they
-//		// want to use, we'll generate a fresh one with the GenSeed
-//		// command.
-//		fmt.Println("Your cipher seed can optionally be encrypted.")
-//
-//		instruction := "Input your passphrase if you wish to encrypt it " +
-//			"(or press enter to proceed without a cipher seed " +
-//			"passphrase): "
-//		aezeedPass, err = capturePassword(
-//			instruction, true, func(_ []byte) error { return nil },
-//		)
-//		if err != nil {
-//			return err
-//		}
-//
-//		fmt.Println()
-//		fmt.Println("Generating fresh cipher seed...")
-//		fmt.Println()
-//
-//		genSeedReq := &lnrpc.GenSeedRequest{
-//			AezeedPassphrase: aezeedPass,
-//		}
-//		seedResp, err := client.GenSeed(ctxc, genSeedReq)
-//		if err != nil {
-//			return fmt.Errorf("unable to generate seed: %w", err)
-//		}
-//
-//		cipherSeedMnemonic = seedResp.CipherSeedMnemonic
-//	}
-//
-//	// Before we initialize the wallet, we'll display the cipher seed to
-//	// the user so they can write it down.
-//	if len(cipherSeedMnemonic) > 0 {
-//		printCipherSeedWords(cipherSeedMnemonic)
-//	}
-//
-//	// With either the user's prior cipher seed, or a newly generated one,
-//	// we'll go ahead and initialize the wallet.
-//	req := &lnrpc.InitWalletRequest{
-//		WalletPassword:                     walletPassword,
-//		CipherSeedMnemonic:                 cipherSeedMnemonic,
-//		AezeedPassphrase:                   aezeedPass,
-//		ExtendedMasterKey:                  extendedRootKey,
-//		ExtendedMasterKeyBirthdayTimestamp: extendedRootKeyBirthday,
-//		RecoveryWindow:                     recoveryWindow,
-//		ChannelBackups:                     chanBackups,
-//		StatelessInit:                      statelessInit,
-//	}
-//	response, err := client.InitWallet(ctxc, req)
-//	if err != nil {
-//		return err
-//	}
-//
-//	fmt.Println("\nlnd successfully initialized!")
-//
-//	if statelessInit {
-//		return storeOrPrintAdminMac(ctx, response.AdminMacaroon)
-//	}
-//
-//	return nil
-//}
+func GenSeed(ctx context.Context, c *lnd.Config, aezeedPass string) ([]string, error) {
+	client, cleanUp, err := getWalletUnlockerClient(c)
+	if err != nil {
+		return nil, err
+	}
+	defer cleanUp()
+	// Neither a seed nor a master root key was specified, the user wants
+	// to create a new seed.
+	// Otherwise, if the user doesn't have a mnemonic that they
+	// want to use, we'll generate a fresh one with the GenSeed
+	// command.
 
-func ListAddresses(c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
+	genSeedReq := &lnrpc.GenSeedRequest{
+		AezeedPassphrase: []byte(aezeedPass),
+	}
+	seedResp, err := client.GenSeed(ctx, genSeedReq)
+	if err != nil {
+		return nil, fmt.Errorf("unable to generate seed: %w", err)
+	}
+
+	return seedResp.CipherSeedMnemonic, nil
+}
+
+func InitWallet(ctx context.Context, c *lnd.Config, walletPassword, existMnemonic, aezeedPass, existXprv string) error {
+	client, cleanUp, err := getWalletUnlockerClient(c)
+	if err != nil {
+		return err
+	}
+	defer cleanUp()
+
+	err = walletunlocker.ValidatePassword([]byte(walletPassword))
+	if err != nil {
+		return err
+	}
+
+	var (
+		cipherSeedMnemonic      []string
+		extendedRootKey         string
+		extendedRootKeyBirthday uint64
+		recoveryWindow          int32
+	)
+	switch {
+	// Use an existing cipher seed mnemonic in the aezeed format.
+	case existMnemonic != "":
+		// We'll now prompt the user to enter in their 24-word
+		// mnemonic.
+
+		// We'll trim off extra spaces, and ensure the mnemonic is all
+		// lower case, then populate our request.
+		existMnemonic = strings.TrimSpace(existMnemonic)
+		existMnemonic = strings.ToLower(existMnemonic)
+
+		cipherSeedMnemonic = strings.Split(existMnemonic, " ")
+
+		if len(cipherSeedMnemonic) != 24 {
+			return fmt.Errorf("wrong cipher seed mnemonic "+
+				"length: got %v words, expecting %v words",
+				len(cipherSeedMnemonic), 24)
+		}
+
+		recoveryWindow = defaultRecoveryWindow
+
+	// Use an existing extended master root key to create the wallet.
+	case existXprv != "":
+		extendedRootKey = strings.TrimSpace(existXprv)
+
+		extendedRootKeyBirthday = 0
+
+		recoveryWindow = defaultRecoveryWindow
+
+	}
+
+	// With either the user's prior cipher seed, or a newly generated one,
+	// we'll go ahead and initialize the wallet.
+	req := &lnrpc.InitWalletRequest{
+		WalletPassword:                     []byte(walletPassword),
+		CipherSeedMnemonic:                 cipherSeedMnemonic,
+		AezeedPassphrase:                   []byte(aezeedPass),
+		ExtendedMasterKey:                  extendedRootKey,
+		ExtendedMasterKeyBirthdayTimestamp: extendedRootKeyBirthday,
+		RecoveryWindow:                     recoveryWindow,
+		ChannelBackups:                     nil,
+		StatelessInit:                      false,
+	}
+	_, err = client.InitWallet(ctx, req)
+	return err
+}
+
+func ListAddresses(ctx context.Context, c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
 	walletClient, cleanUp, err := getWalletClient(c)
 	if err != nil {
 		return nil, err
@@ -331,5 +159,5 @@ func ListAddresses(c *lnd.Config) (*walletrpc.ListAddressesResponse, error) {
 		AccountName:        "",
 		ShowCustomAccounts: false,
 	}
-	return walletClient.ListAddresses(context.Background(), req)
+	return walletClient.ListAddresses(ctx, req)
 }
