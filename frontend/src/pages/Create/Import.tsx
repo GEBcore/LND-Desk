@@ -35,14 +35,15 @@ function Import() {
   };
 
   return (
-    <div className="dark flex flex-col items-center justify-center h-screen mx-w-full">
-      <form onSubmit={onSubmit}>
+    <div className="dark flex flex-col items-center justify-center mx-w-full">
+      <form onSubmit={onSubmit} className="flex flex-col justify-center items-center">
         <Stack gap="4" align="flex-start" width="500px">
           <Field label="Your Own Mnemonic" errorText={error}>
             <Textarea
               placeholder="Please enter the 24-word mnemonic, separated by spaces."
               value={mnemonic}
               onChange={(e) => setMnemonic(e.target.value)}
+              style={{height:'200px'}}
             />
           </Field>
           <Field label="Input your cipher seed passphrase">
@@ -52,8 +53,8 @@ function Import() {
               onChange={(e) => setPassphrase(e.target.value)}
             />
           </Field>
-          <Button type="submit" onClick={onSubmit}>Submit</Button>
         </Stack>
+        <Button type="submit" onClick={onSubmit}>Submit</Button>
       </form>
     </div>
   );

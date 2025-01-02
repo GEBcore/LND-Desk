@@ -43,7 +43,6 @@ export const useCreateStore = create<CreateState>((set, get) => ({
     try {
       console.log('walletPassword', walletPassword)
       const data = await GenSeed(walletPassword);
-      debugger
       set({createMnemonic: formatWords([''])})
       console.log(data)
       return ''

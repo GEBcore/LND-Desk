@@ -16,7 +16,6 @@ function New() {
     if (confirmPassphrase === createPassphrase) {
       console.log('下一步')
       await genSeed(pwd)
-      debugger
       setNewStatus('word')
 
     }
@@ -27,9 +26,9 @@ function New() {
   };
 
   return (
-    <div className="dark flex flex-col items-center justify-center h-screen mx-w-full">
-      {newStatus === 'phrase' && <form onSubmit={onSubmit}>
-        Set cipher seed passphrase(optional)
+    <div className="dark flex flex-col items-center justify-center mx-w-full">
+      {newStatus === 'phrase' && <form onSubmit={onSubmit} className="flex flex-col justify-center items-center">
+        <div style={{textAlign:'center', padding:'12px 0 24px 0'}}> Set cipher seed passphrase(optional)</div>
         <Stack gap="4" align="flex-start" width="500px">
 
           <Field label="Input your cipher seed passphrase">
@@ -46,8 +45,8 @@ function New() {
               onChange={(e) => setConfirmPassphrase(e.target.value)}
             />
           </Field>
-          <Button type="submit" onClick={onSubmit}>Submit</Button>
         </Stack>
+        <Button type="submit" onClick={onSubmit}>Submit</Button>
       </form>}
       {newStatus === 'word' && <div style={{width:'400px', padding:'12px', border:'1px solid white', display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
         <div style={{fontSize:'18px',fontWeight: '600', margin:'8px 0'}}>New mnemonic</div>

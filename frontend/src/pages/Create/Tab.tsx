@@ -6,10 +6,10 @@ function Tab() {
   return (
     <Tabs.Root defaultValue="import" variant="plain">
       <Tabs.List bg="bg.muted" rounded="l3" p="1">
-        <Tabs.Trigger value="import">
+        <Tabs.Trigger value="import" className="px-6">
           Our Own Mnemonic
         </Tabs.Trigger>
-        <Tabs.Trigger value="new">
+        <Tabs.Trigger value="new" className="px-6">
           New Wallet
         </Tabs.Trigger>
         <Tabs.Indicator rounded="l2" />
