@@ -1,6 +1,6 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "LND Desk",
+  "name": "LND-Desk",
   "outputfilename": "LND-Desk",
   "frontend:install": "pnpm install",
   "frontend:build": "pnpm run build",
