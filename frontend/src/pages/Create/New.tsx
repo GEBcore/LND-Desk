@@ -9,20 +9,22 @@ function New() {
 
   const [confirmPassphrase, setConfirmPassphrase] = useState("");
   const [newStatus, setNewStatus] = useState<'phrase' | 'word'>('phrase')
-  const { initWallet, pwd, createPassphrase, setCreatePassphrase, genSeed, createMnemonic } = useCreateStore()
+  const { initWallet, pwd, createPassphrase, setCreatePassphrase, genSeed, createMnemonic, showCreateMnemonic } = useCreateStore()
+  const navigate = useNavigate();
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // 阻止默认表单提交行为
     if (confirmPassphrase === createPassphrase) {
       console.log('下一步')
-      await genSeed(pwd)
+      await genSeed(createPassphrase)
       setNewStatus('word')
 
     }
   };
 
-  const finishCreate = () => {
-    const result = initWallet(pwd, createMnemonic, createPassphrase, '')
+  const finishCreate = async() => {
+    await initWallet(pwd, createMnemonic, createPassphrase ? createPassphrase : 'aezeed', '')
+    navigate('/lndState')
   };
 
   return (
@@ -48,16 +50,16 @@ function New() {
         </Stack>
         <Button type="submit" onClick={onSubmit}>Submit</Button>
       </form>}
-      {newStatus === 'word' && <div style={{width:'400px', padding:'12px', border:'1px solid white', display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
+      {newStatus === 'word' && <div style={{width:'400px', padding:'12px', display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
         <div style={{fontSize:'18px',fontWeight: '600', margin:'8px 0'}}>New mnemonic</div>
-        <div style={{maxWidth:'280px'}}>{createMnemonic}</div>
+        <div style={{maxWidth:'280px'}}>{showCreateMnemonic}</div>
         <div style={{maxWidth:'280px',marginTop:'24px', fontSize:'12px'}}>
           1 Please take a moment to write down this mnemonic phrase on a piece of paper.
         </div>
         <div style={{maxWidth:'280px', fontSize:'12px'}}>
           2 It's your backup and you can use it to recover the wallet.
         </div>
-        <Button type="submit" onClick={finishCreate}>Submit</Button>
+        <Button type="submit" onClick={finishCreate}>Confirm</Button>
       </div>}
     </div>
   );

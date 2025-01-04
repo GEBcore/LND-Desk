@@ -50,6 +50,7 @@ protocol.simple-taproot-chans=true`);
         title: "Lnd Error",
         description: "Node is not ready to run",
       })
+      navigate('/create');
       return;
     }
     try {
@@ -80,6 +81,7 @@ protocol.simple-taproot-chans=true`);
         title: "Lnd Config Error",
         description: String(error),
       })
+      navigate('/create');
       setIsReady(false)
     }
   }

@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import axios from 'axios'
 import { useState } from 'react';
 import { GenSeed, InitWallet } from '../../wailsjs/go/main/App';
-import { formatWords } from '@/utils/formatWords';
+import { formatWords, formatWordsIndex } from '@/utils/formatWords';
 // import { InitWallet } from '../../wailsjs/go/main/App';
 
 
@@ -16,8 +16,9 @@ interface CreateState {
   createPassphrase: string
   setCreatePassphrase:(val: string) =>void
   initWallet:(walletPassword:string, existMnemonic:string, aezeedPass:string, existXprv: string) => void
+  showCreateMnemonic: string,
   createMnemonic: string,
-  genSeed:(walletPassword: string) => void
+  genSeed:(aezeedPass: string) => void
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -30,24 +31,24 @@ export const useCreateStore = create<CreateState>((set, get) => ({
   createPassphrase: '',
   setCreatePassphrase:(val: string) =>set({createPassphrase: val}),
   createMnemonic: '',
+  showCreateMnemonic: '',
   initWallet: async (walletPassword:string, existMnemonic:string, aezeedPass:string, existXprv: string) => {
     try {
+      console.log('walletPassword, existMnemonic, aezeedPass, existXprv', walletPassword, existMnemonic, aezeedPass, existXprv)
       const data = await InitWallet(walletPassword, existMnemonic, aezeedPass, existXprv);
       console.log(data)
-      return ''
     } catch (error) {
-      console.error('Error getting LND path:', error);
+      console.error('Error:', error);
     }
   },
-  genSeed:async (walletPassword:string) => {
+  genSeed:async (aezeedPass:string) => {
     try {
-      console.log('walletPassword', walletPassword)
-      const data = await GenSeed(walletPassword);
-      set({createMnemonic: formatWords([''])})
+      console.log('aezeedPass', aezeedPass)
+      const data = await GenSeed(aezeedPass);
+      set({createMnemonic: formatWords(data), showCreateMnemonic: formatWordsIndex(data)})
       console.log(data)
-      return ''
     } catch (error) {
-      console.error('Error getting LND path:', error);
+      console.error('Error:', error);
     }
   },
 
