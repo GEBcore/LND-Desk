@@ -14,13 +14,13 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - name: 'LND-Desk'
+          - name: 'LND Desk'
             platform:  'linux/amd64'
             os: 'ubuntu-latest'
-          - name: 'LND-Desk'
+          - name: 'LND Desk'
             platform:  'windows/amd64'
             os: 'windows-latest'
-          - name: 'LND-Desk'
+          - name: 'LND Desk'
             platform:  'darwin/universal'
             os: 'macos-latest'
 
@@ -32,7 +32,7 @@ jobs:
           submodules: recursive
 
       - name: Build wails
-        uses: btclayer2/wails-build-action@v0.0.4
+        uses: btclayer2/wails-build-action@v0.0.5
         id: build
         with:
           build-name: ${{ matrix.build.name }}
