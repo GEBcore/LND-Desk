@@ -115,7 +115,7 @@ function LndState() {
         case WalletState.WalletState_NON_EXISTING:
           //TODO need create wallet
           InitState()
-          console.log('need init')
+          navigate('/create')
           break
         case WalletState.WalletState_LOCKED:
           setIsWalletUnlocked(false)
