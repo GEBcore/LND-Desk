@@ -14,10 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - name: 'LND Desk'
+          - name: 'LND-Desk'
             platform:  'linux/amd64'
             os: 'ubuntu-latest'
-          - name: 'LND Desk'
+          - name: 'LND-Desk'
             platform:  'windows/amd64'
             os: 'windows-latest'
           - name: 'LND Desk'
