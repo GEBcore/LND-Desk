@@ -207,17 +207,17 @@ function LndState() {
         <Label className='w-full max-w-md'>Lnd Dir</Label>
         <div className="relative flex w-full max-w-md">
           <Input className="pr-10" type="text" value={LndInfo.path} disabled />
-          <Button onClick={() => copyToClipboard(LndInfo.path)} className="dark absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
+          <Button onClick={() => copyToClipboard(LndInfo.path)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
         </div>
         <Label className='w-full max-w-md'>Lnd REST</Label>
         <div className="relative flex w-full max-w-md">
           <Input className="pr-10" type="text" value={LndInfo.rest} disabled />
-          <Button onClick={() => copyToClipboard(LndInfo.rest)} className="dark absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
+          <Button onClick={() => copyToClipboard(LndInfo.rest)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
         </div>
         <Label className='w-full max-w-md'>Lnd Admin Macaroon</Label>
         <div className="relative flex w-full max-w-md">
           <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
-          <Button onClick={() => copyToClipboard(LndInfo.admMacaroon)} className="dark absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
+          <Button onClick={() => copyToClipboard(LndInfo.admMacaroon)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
         </div>
         <Button variant="destructive" onClick={StopNode}>Stop</Button>
       </div>

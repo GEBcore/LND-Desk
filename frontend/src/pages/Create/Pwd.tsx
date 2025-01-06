@@ -22,10 +22,20 @@ function Pwd() {
     console.log(pwd, confirmPwd)
     if(pwd.length < 8) {
       setError('The password must be at least eight digits！')
+      toast({
+        variant: "destructive",
+        title: "Password Error",
+        description: String('The password must be at least eight digits！'),
+      })
     } else if(pwd === confirmPwd) {
       setStatus('create')
     }else{
-      setError('Check whether the entered password is consistent')
+      setError('Check whether the entered password is consistent!')
+      toast({
+        variant: "destructive",
+        title: "Password Error",
+        description: String('Check whether the entered password is consistent!'),
+      })
     }
   }
   return (

@@ -16,10 +16,10 @@
     position: relative;
     width: 100px;
     height: 100px;
-    background: radial-gradient(circle, #4d4d4d, #1a1a1a);
+    /*background: radial-gradient(circle, #4d4d4d, #1a1a1a);*/
     border: 3px solid #333;
     border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 -2px 4px rgba(255, 255, 255, 0.1);
+    /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 -2px 4px rgba(255, 255, 255, 0.1);*/
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }

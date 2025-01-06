@@ -7,7 +7,7 @@ function Tab() {
     <Tabs.Root defaultValue="import" variant="plain">
       <Tabs.List bg="bg.muted" rounded="l3" p="1">
         <Tabs.Trigger value="import" className="px-6">
-          Our Own Mnemonic
+          Your Own Mnemonic
         </Tabs.Trigger>
         <Tabs.Trigger value="new" className="px-6">
           New Wallet

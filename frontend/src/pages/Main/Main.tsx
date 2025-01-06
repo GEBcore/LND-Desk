@@ -50,7 +50,6 @@ protocol.simple-taproot-chans=true`);
         title: "Lnd Error",
         description: "Node is not ready to run",
       })
-      navigate('/create');
       return;
     }
     try {
@@ -62,7 +61,6 @@ protocol.simple-taproot-chans=true`);
         title: "Lnd Error",
         description: String(error),
       })
-      navigate('/create');
     }
   }
 
@@ -133,12 +131,12 @@ protocol.simple-taproot-chans=true`);
   }, []);
 
   return (
-    <div className='dark flex flex-col items-center justify-center h-screen mx-w-full'>
+    <div className='flex flex-col items-center justify-center h-screen mx-w-full'>
       <Toaster />
       <div className='flex w-full max-w-3xl items-center space-x-3'>
         <Label className="w-[15%] max-w-xs">Lnd Data Dir</Label>
         <Input className="w-full" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
-        <Button onClick={ChooseLndDir} className="dark" > <Folder/></Button>
+        <Button onClick={ChooseLndDir} > <Folder/></Button>
       </div>
       <div id="input-box" className='w-[80%] mx-auto'>
         <div id="editor-container" className='w-full'>

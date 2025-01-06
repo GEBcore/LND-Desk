@@ -1,9 +1,6 @@
 import { create } from 'zustand'
-import axios from 'axios'
-import { useState } from 'react';
 import { GenSeed, InitWallet } from '../../wailsjs/go/main/App';
 import { formatWords, formatWordsIndex } from '@/utils/formatWords';
-// import { InitWallet } from '../../wailsjs/go/main/App';
 
 
 interface CreateState {
@@ -15,10 +12,10 @@ interface CreateState {
   setTabStatus:(val: string) =>void
   createPassphrase: string
   setCreatePassphrase:(val: string) =>void
-  initWallet:(walletPassword:string, existMnemonic:string, aezeedPass:string, existXprv: string) => void
-  showCreateMnemonic: string,
+  initWallet:(walletPassword:string, existMnemonic:string, aezeedPass:string, existXprv: string) => Promise<{ status: string; data?: any; error?: any }>
+  showCreateMnemonic: string[],
   createMnemonic: string,
-  genSeed:(aezeedPass: string) => void
+  genSeed:(aezeedPass: string) => Promise<{ status: string; data?: any; error?: any }>
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -31,24 +28,24 @@ export const useCreateStore = create<CreateState>((set, get) => ({
   createPassphrase: '',
   setCreatePassphrase:(val: string) =>set({createPassphrase: val}),
   createMnemonic: '',
-  showCreateMnemonic: '',
-  initWallet: async (walletPassword:string, existMnemonic:string, aezeedPass:string, existXprv: string) => {
+  showCreateMnemonic: [],
+  initWallet: async (walletPassword:string, existMnemonic:string, aezeedPass:string, existXprv: string):Promise<{ status: string; data?: any; error?: any }> => {
     try {
-      console.log('walletPassword, existMnemonic, aezeedPass, existXprv', walletPassword, existMnemonic, aezeedPass, existXprv)
       const data = await InitWallet(walletPassword, existMnemonic, aezeedPass, existXprv);
-      console.log(data)
+      return { status: 'success', data };
     } catch (error) {
       console.error('Error:', error);
+      return { status: 'fail', error };
     }
   },
-  genSeed:async (aezeedPass:string) => {
+  genSeed:async (aezeedPass:string):Promise<{ status: string; data?: any; error?: any }> => {
     try {
-      console.log('aezeedPass', aezeedPass)
       const data = await GenSeed(aezeedPass);
-      set({createMnemonic: formatWords(data), showCreateMnemonic: formatWordsIndex(data)})
-      console.log(data)
+      set({createMnemonic: formatWords(data), showCreateMnemonic: data})
+      return { status: 'success', data };
     } catch (error) {
       console.error('Error:', error);
+      return { status: 'fail', error };
     }
   },
 

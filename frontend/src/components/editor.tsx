@@ -17,7 +17,7 @@ function INIEditor({ config, onChange }: INIEditorProps) {
     editorRef.current = monaco.editor.create(document.getElementById('editor')!, {
       value: config,
       language: 'ini',
-      theme: 'vs-dark',
+      theme: 'vs-white',
       minimap: { enabled: false },
       fontFamily: 'monospace',
       fontSize: 13,

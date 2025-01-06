@@ -3,13 +3,14 @@ import { Field } from "@/components/ui/field";
 import { useState } from "react";
 import { useCreateStore } from '@/store/create';
 import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 function Import() {
   // 定义状态存储两个文本框的值
   const [mnemonic, setMnemonic] = useState("");
   const [passphrase, setPassphrase] = useState("");
   const [error, setError] = useState(""); // 错误提示信息
-
+  const navigate = useNavigate();
   const { initWallet, pwd } = useCreateStore()
   // 验证方法：检查是否为24个单词
   const validateMnemonic = (mnemonic: string) => {
@@ -18,8 +19,7 @@ function Import() {
   };
 
   // 表单提交逻辑
-  const onSubmit = (event: React.FormEvent) => {
-    debugger
+  const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // 阻止默认表单提交行为
     // 检查第一个文本框内容
     if (!validateMnemonic(mnemonic)) {
@@ -37,11 +37,18 @@ function Import() {
     // 检查通过，输出成功
     console.log("Mnemonic:", mnemonic);
     console.log("Passphrase:", passphrase || "No passphrase provided.");
-    initWallet(pwd, mnemonic, passphrase, '')
+    const {status, error} = await initWallet(pwd, mnemonic, passphrase ? passphrase : 'aezeed', '')
+    status === 'success' && navigate('/lndState')
+    status !== 'success' && toast({
+      variant: "destructive",
+      title: "Create ERROR",
+      description: String(error),
+    })
+
   };
 
   return (
-    <div className="dark flex flex-col items-center justify-center mx-w-full">
+    <div className="flex flex-col items-center justify-center mx-w-full">
       <form onSubmit={onSubmit} className="flex flex-col justify-center items-center">
         <Stack gap="4" align="flex-start" width="500px">
           <Field label="Your Own Mnemonic" errorText={error}>
