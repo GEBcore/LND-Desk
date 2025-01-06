@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCreateStore } from '@/store/create';
 import { toast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from '@/components/ui/toaster';
 
 function Import() {
   // 定义状态存储两个文本框的值
@@ -38,8 +39,9 @@ function Import() {
     console.log("Mnemonic:", mnemonic);
     console.log("Passphrase:", passphrase || "No passphrase provided.");
     const {status, error} = await initWallet(pwd, mnemonic, passphrase ? passphrase : 'aezeed', '')
+    console.log('1111', status, error)
     status === 'success' && navigate('/lndState')
-    status !== 'success' && toast({
+    status === 'fail' && toast({
       variant: "destructive",
       title: "Create ERROR",
       description: String(error),
@@ -49,6 +51,7 @@ function Import() {
 
   return (
     <div className="flex flex-col items-center justify-center mx-w-full">
+      <Toaster />
       <form onSubmit={onSubmit} className="flex flex-col justify-center items-center">
         <Stack gap="4" align="flex-start" width="500px">
           <Field label="Your Own Mnemonic" errorText={error}>

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useCreateStore } from '@/store/create';
 import { Box, Button, Input, Stack, Textarea } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
+import { Toaster } from '@/components/ui/toaster';
 
 function New() {
 
@@ -13,7 +14,6 @@ function New() {
   const navigate = useNavigate();
 
   const onSubmit = async (event: React.FormEvent) => {
-    debugger
     event.preventDefault(); // 阻止默认表单提交行为
     if (confirmPassphrase === createPassphrase) {
       const {status, error} = await  genSeed(createPassphrase)
@@ -39,6 +39,7 @@ function New() {
 
   return (
     <div className="flex flex-col items-center justify-center mx-w-full">
+      <Toaster />
       {newStatus === 'phrase' && <form onSubmit={onSubmit} className="flex flex-col justify-center items-center">
         <div style={{textAlign:'center', padding:'12px 0 24px 0'}}> Set cipher seed passphrase(optional)</div>
         <Stack gap="4" align="flex-start" width="500px">

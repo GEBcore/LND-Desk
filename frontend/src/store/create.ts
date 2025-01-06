@@ -51,6 +51,6 @@ export const useCreateStore = create<CreateState>((set, get) => ({
       return { status: 'fail', error };
     }
   },
-  isReady: false,
+  isReady: true,
   setIsReady: (val: boolean) => set({isReady: val})
 }))
