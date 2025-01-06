@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { frontend } from '@/../wailsjs/go/models';
+import { useCreateStore } from '@/store/create';
 
 function Main() {
   const [config, setConfig] = useState(`[Application Options]
@@ -37,10 +38,10 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
 
 [protocol]
 protocol.simple-taproot-chans=true`);
-  const [isReady, setIsReady] = useState(true);
   const [lndDir, setLndDir] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast()
+  const { isReady, setIsReady } = useCreateStore()
 
   async function RunNode() {
     await CheckConfig()
@@ -74,7 +75,6 @@ protocol.simple-taproot-chans=true`);
         title: "Lnd Config Error",
         description: String(error),
       })
-      navigate('/create');
       setIsReady(false)
     }
   }

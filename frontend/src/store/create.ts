@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { GenSeed, InitWallet } from '../../wailsjs/go/main/App';
 import { formatWords, formatWordsIndex } from '@/utils/formatWords';
+import { useState } from 'react';
 
 
 interface CreateState {
@@ -16,6 +17,8 @@ interface CreateState {
   showCreateMnemonic: string[],
   createMnemonic: string,
   genSeed:(aezeedPass: string) => Promise<{ status: string; data?: any; error?: any }>
+  isReady: boolean
+  setIsReady: (val: boolean) => void
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -48,5 +51,6 @@ export const useCreateStore = create<CreateState>((set, get) => ({
       return { status: 'fail', error };
     }
   },
-
+  isReady: false,
+  setIsReady: (val: boolean) => set({isReady: val})
 }))
