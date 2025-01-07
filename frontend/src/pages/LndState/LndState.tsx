@@ -17,7 +17,7 @@ enum WalletState {
   WalletState_UNLOCKED,
   WalletState_RPC_ACTIVE,
   WalletState_SERVER_ACTIVE,
-  WalletState_WAITING_TO_START,
+  WalletState_WAITING_TO_START = 255,
 }
 
 
@@ -113,14 +113,15 @@ function LndState() {
       const resp = await GetState()
       switch (resp.state ?? WalletState.WalletState_NON_EXISTING) {
         case WalletState.WalletState_NON_EXISTING:
-          //TODO need create wallet
-          InitState()
+          setIsWalletRpcReady(true)
           navigate('/create')
           break
         case WalletState.WalletState_LOCKED:
+          setIsWalletRpcReady(true)
           setIsWalletUnlocked(false)
           break
         case WalletState.WalletState_UNLOCKED:
+          setIsWalletRpcReady(true)
           setIsWalletUnlocked(true)
           await InitState()
           break
