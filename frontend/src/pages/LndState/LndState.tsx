@@ -203,7 +203,7 @@ function LndState() {
         <Label className='w-full max-w-md'>Block Sync Process</Label>
         <div className="relative flex items-center justify-center w-full max-w-md gap-3">
           <Progress value={progress} className="w-[90%]" />
-          <Label className='w-[10%] text-center'>{progress / 100 * 100 + '%'}</Label>
+          <Label className='w-[10%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
         </div>
         <Label className='w-full max-w-md'>Lnd Dir</Label>
         <div className="relative flex w-full max-w-md">
