@@ -113,7 +113,6 @@ function LndState() {
       const resp = await GetState()
       switch (resp.state ?? WalletState.WalletState_NON_EXISTING) {
         case WalletState.WalletState_NON_EXISTING:
-          setIsWalletRpcReady(true)
           navigate('/create')
           break
         case WalletState.WalletState_LOCKED:
