@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
+import { useCreateStore } from '@/store/create';
 
 enum WalletState {
   WalletState_NON_EXISTING,
@@ -28,9 +29,8 @@ function LndState() {
     admMacaroon: ''
   });
   const { toast } = useToast()
+  const {isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady} = useCreateStore()
   const [password, setPassword] = useState('');
-  const [isWalletUnlocked, setIsWalletUnlocked] = useState(true);
-  const [isWalletRpcReady, setIsWalletRpcReady] = useState(false);
   const [progress, setProgress] = useState(0)
   const [progressRef, setProgressRef] = useState<NodeJS.Timeout | null>(null)
 

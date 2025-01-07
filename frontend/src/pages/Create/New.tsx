@@ -2,9 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { toast, useToast } from '@/hooks/use-toast';
 import React, { useState } from 'react';
 import { useCreateStore } from '@/store/create';
-import { Box, Button, Input, Stack, Textarea } from '@chakra-ui/react';
+import { Box, Button, Stack, Textarea } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
 import { Toaster } from '@/components/ui/toaster';
+import { Input } from '@/components/ui/input';
 
 function New() {
 
@@ -29,7 +30,11 @@ function New() {
 
   const finishCreate = async() => {
     const {status, error} = await initWallet(pwd, createMnemonic, createPassphrase ? createPassphrase : 'aezeed', '')
-    status === 'success' && navigate('/lndState')
+    if (status === "success") {
+      setTimeout(() => {
+        navigate("/lndState");
+      }, 1000);
+    }
     status !== 'success' && toast({
       variant: "destructive",
       title: "Create ERROR",
@@ -43,7 +48,6 @@ function New() {
       {newStatus === 'phrase' && <form onSubmit={onSubmit} className="flex flex-col justify-center items-center">
         <div style={{textAlign:'center', padding:'12px 0 24px 0'}}> Set cipher seed passphrase(optional)</div>
         <Stack gap="4" align="flex-start" width="500px">
-
           <Field label="Input your cipher seed passphrase">
             <Input
               placeholder="If not, no input is required."
@@ -59,7 +63,7 @@ function New() {
             />
           </Field>
         </Stack>
-        <Button type="submit" onClick={onSubmit}>Submit</Button>
+        <Button background={'black'} color={'white'} padding={'8px'} type="submit" margin={'12px 0px'} onClick={onSubmit}>Submit</Button>
       </form>}
       {newStatus === 'word' && <div style={{width:'400px', padding:'12px', display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
         <div  style={{fontSize:'18px',fontWeight: '600', margin:'8px 0'}}>New mnemonic</div>
@@ -78,7 +82,7 @@ function New() {
         <div style={{width:'380px', fontSize:'12px', textAlign:'left', marginBottom:'12px'}}>
           2 It's your backup and you can use it to recover the wallet.
         </div>
-        <Button type="submit" onClick={finishCreate}>Confirm</Button>
+        <Button background={'black'} color={'white'} padding={'8px'} margin={'12px 0px'} type="submit" onClick={finishCreate}>Confirm</Button>
       </div>}
     </div>
   );

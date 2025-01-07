@@ -1,9 +1,10 @@
-import { Button, Input, Stack, Textarea } from "@chakra-ui/react";
+import { Button, Stack, Textarea } from "@chakra-ui/react";
 import { Field } from "@/components/ui/field";
 import { useState } from "react";
 import { useCreateStore } from '@/store/create';
 import { toast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
 
 function Import() {
@@ -39,8 +40,11 @@ function Import() {
     console.log("Mnemonic:", mnemonic);
     console.log("Passphrase:", passphrase || "No passphrase provided.");
     const {status, error} = await initWallet(pwd, mnemonic, passphrase ? passphrase : 'aezeed', '')
-    console.log('1111', status, error)
-    status === 'success' && navigate('/lndState')
+    if (status === "success") {
+      setTimeout(() => {
+        navigate("/lndState");
+      }, 1000);
+    }
     status === 'fail' && toast({
       variant: "destructive",
       title: "Create ERROR",
@@ -59,7 +63,7 @@ function Import() {
               placeholder="Please enter the 24-word mnemonic, separated by spaces."
               value={mnemonic}
               onChange={(e) => setMnemonic(e.target.value)}
-              style={{height:'200px'}}
+              style={{height:'200px', padding:'12px', border:'1px solid #e4e4e7'}}
             />
           </Field>
           <Field label="Input your cipher seed passphrase">
@@ -70,7 +74,7 @@ function Import() {
             />
           </Field>
         </Stack>
-        <Button type="submit" onClick={onSubmit}>Submit</Button>
+        <Button background={'black'} color={'white'} padding={'8px'} margin={'12px 0px'} type="submit" onClick={onSubmit}>Submit</Button>
       </form>
     </div>
   );

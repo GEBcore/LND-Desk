@@ -14,8 +14,8 @@ function Tab() {
         </Tabs.Trigger>
         <Tabs.Indicator rounded="l2" />
       </Tabs.List>
-      <Tabs.Content value="import"><Import/></Tabs.Content>
-      <Tabs.Content value="new"><New/></Tabs.Content>
+      <Tabs.Content value="import" style={{height: '380px'}}><Import/></Tabs.Content>
+      <Tabs.Content value="new" style={{height: '380px'}}><New/></Tabs.Content>
     </Tabs.Root>
   )
 }

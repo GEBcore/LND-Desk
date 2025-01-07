@@ -19,6 +19,10 @@ interface CreateState {
   genSeed:(aezeedPass: string) => Promise<{ status: string; data?: any; error?: any }>
   isReady: boolean
   setIsReady: (val: boolean) => void
+  isWalletUnlocked: boolean
+  setIsWalletUnlocked: (val: boolean) => void
+  isWalletRpcReady: boolean
+  setIsWalletRpcReady: (val: boolean) => void
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -52,5 +56,9 @@ export const useCreateStore = create<CreateState>((set, get) => ({
     }
   },
   isReady: true,
-  setIsReady: (val: boolean) => set({isReady: val})
+  setIsReady: (val: boolean) => set({isReady: val}),
+  isWalletUnlocked: true,
+  setIsWalletUnlocked: (val: boolean) => set({isWalletUnlocked: val}),
+  isWalletRpcReady: false,
+  setIsWalletRpcReady: (val: boolean) => set({isWalletRpcReady: val}),
 }))
