@@ -32,20 +32,16 @@ function Import() {
       })
       return;
     }
-    setShowMnemonicDialog(true)
-  };
-  const onFinish = async () => {
-    setConfirmLoading(true)
     const {status, error} = await initWallet(pwd, mnemonic, passphrase ? passphrase : 'aezeed', '')
     if (status === "success") {
       setTimeout(() => {
-        setShowMnemonicDialog(false)
+        // setShowMnemonicDialog(false)
         setConfirmLoading(false)
         navigate("/lndState");
       }, 1000);
     }
     if(status === 'fail'){
-      setConfirmLoading(false)
+      // setConfirmLoading(false)
       toast({
         variant: "destructive",
         title: "Create ERROR",
@@ -77,7 +73,6 @@ function Import() {
         </Stack>
         <Button background={'black'} color={'white'} padding={'8px'} margin={'12px 0px'} type="submit" onClick={onSubmit}>Submit</Button>
       </form>
-      <ChakraMnemonicAlert onSubmit={onFinish}/>
     </div>
   );
 }
