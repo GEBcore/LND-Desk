@@ -165,7 +165,7 @@ function LndState() {
     }
 
     return () => {
-      if (isWalletUnlocked && initState.current) {
+      if (initState.current) {
         clearInterval(initState.current)
         initState.current = null
       }
