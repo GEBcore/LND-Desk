@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import {
   Button,
-  VStack,
   Text,
-  Box,
-  Circle,
-  List,
-  ListItem,
-  useDisclosure
 } from '@chakra-ui/react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogFooter } from '@/components/ui/dialog';
+import Warning from '@/assets/fonts/warning.svg'
+import { useCreateStore } from '@/store/create';
+import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import Loading from '@/components/Loading';
 
 
-const ChakraMnemonicAlert = () => {
-  const [isOpen, onClose] = useState(false)
-  // 比特币主题色
+export const ChakraMnemonicAlert = ({onSubmit}:{onSubmit:any}) => {
+  const { showMnemonicDialog, setShowMnemonicDialog, confirmLoading } = useCreateStore()
+
   const btcTheme = {
     orange: {
       50: '#FFF7ED',
@@ -26,61 +25,60 @@ const ChakraMnemonicAlert = () => {
   };
 
   return (
-  <Dialog open={!isOpen}>
-    <DialogContent className="p-6 rounded-lg shadow-lg">
+    <Dialog open={showMnemonicDialog}>
+      <DialogContent className="p-6 rounded-lg shadow-lg flex flex-col items-center justify-center">
         <DialogHeader>
-
-          <Text fontSize="xl" fontWeight="semibold">
-            Important Security Notice
-          </Text>
-          <DialogTitle className="text-lg font-semibold">Input Your Wallet Password</DialogTitle>
-        </DialogHeader>
-        <div>
+          <div className="flex flex-col justify-center items-center gap-2">
+            <img src={Warning} alt=""/>
+            <Text fontSize="xl" fontWeight="semibold">
+              Important Security Notice
+            </Text>
+          </div>
           <Text color="gray.600">
             Please ensure you have safely backed up your mnemonic phrase.
           </Text>
-
-          <Box
-            w="full"
-            bg={btcTheme.orange[50]}
-            p={4}
-            borderRadius="lg"
-            border="1px"
-            borderColor={btcTheme.orange[100]}
-          >
-            {/*<List*/}
-            {/*  spacing={2}*/}
-            {/*  styleType="none"*/}
-            {/*  listStylePosition="inside"*/}
-            {/*  color={btcTheme.orange[800]}*/}
-            {/*  textAlign="left"*/}
-            {/*  m={0}*/}
-            {/*>*/}
-            {/*  */}
-            {/*</List>*/}
-            <div>
-              <ListItem display="flex" alignItems="start">
-                <Text as="span" fontWeight="bold" mr={2}>•</Text>
-                <Text as="span">This is your ONLY chance to backup these words</Text>
-              </ListItem>
-              <ListItem display="flex" alignItems="start">
-                <Text as="span" fontWeight="bold" mr={2}>•</Text>
-                <Text as="span">Without this backup, you will not be able to recover your wallet if lost</Text>
-              </ListItem>
-              <ListItem display="flex" alignItems="start">
-                <Text as="span" fontWeight="bold" mr={2}>•</Text>
-                <Text as="span">Store this backup in a secure location, never share it with anyone</Text>
-              </ListItem>
-            </div>
-          </Box>
-
-          <Text color={btcTheme.orange[500]} fontSize="sm" fontWeight="medium">
-            Once confirmed, you will not see these words again
-          </Text>
+        </DialogHeader>
+        <div className="flex flex-col p-6" style={{background: `${[btcTheme.orange[50]]}`, borderRadius:'10px', color:`${[btcTheme.orange[800]]}`, gap:'10px'}}>
+          <div className="flex flex-row items-start">
+            <Text as="span" fontWeight="bold" mr={2}>•</Text>
+            <Text as="span">This is your ONLY chance to backup these words</Text>
+          </div>
+          <div className="flex flex-row items-start">
+            <Text as="span" fontWeight="bold" mr={2}>•</Text>
+            <Text as="span">Without this backup, you will not be able to recover your wallet if lost</Text>
+          </div>
+          <div className="flex flex-row items-start">
+            <Text as="span" fontWeight="bold" mr={2}>•</Text>
+            <Text as="span">Store this backup in a secure location, never share it with anyone</Text>
+          </div>
         </div>
-    </DialogContent>
-  </Dialog>
+        <Text color={btcTheme.orange[500]} fontSize="sm" fontWeight="medium">
+          Once confirmed, you will not see these words again
+        </Text>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            size="md"
+            w={{ base: 'full', sm: 'auto' }}
+            onClick={()=>setShowMnemonicDialog(false)}
+            style={{border:'1px solid rgb(200, 200, 200)', padding: '4px 8px'}}
+          >
+            Go Back
+          </Button>
+          <Button
+            bg={btcTheme.orange[500]}
+            _hover={{ bg: btcTheme.orange[600] }}
+            color="white"
+            size="md"
+            w={{ base: 'full', sm: 'auto' }}
+            onClick={onSubmit}
+            style={{padding: '4px 8px'}}
+          >
+            I've Backed Up My Mnemonic
+          </Button>
+        </DialogFooter>
+        {confirmLoading && <Loading/>}
+      </DialogContent>
+    </Dialog>
   );
 };
-
-export default ChakraMnemonicAlert;

@@ -23,6 +23,10 @@ interface CreateState {
   setIsWalletUnlocked: (val: boolean) => void
   isWalletRpcReady: boolean
   setIsWalletRpcReady: (val: boolean) => void
+  showMnemonicDialog: boolean
+  setShowMnemonicDialog: (val: boolean) => void
+  confirmLoading: boolean
+  setConfirmLoading: (val: boolean) => void
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -61,4 +65,8 @@ export const useCreateStore = create<CreateState>((set, get) => ({
   setIsWalletUnlocked: (val: boolean) => set({isWalletUnlocked: val}),
   isWalletRpcReady: false,
   setIsWalletRpcReady: (val: boolean) => set({isWalletRpcReady: val}),
+  showMnemonicDialog: false,
+  setShowMnemonicDialog:(val: boolean) => set({showMnemonicDialog: val}),
+  confirmLoading: false,
+  setConfirmLoading: (val: boolean) => set({confirmLoading: val}),
 }))

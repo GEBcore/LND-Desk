@@ -6,13 +6,13 @@ import { Box, Button, Stack, Textarea } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
 import { Toaster } from '@/components/ui/toaster';
 import { Input } from '@/components/ui/input';
-import ChakraMnemonicAlert from '@/views/create/ChakraMnemonicAlert';
+import { ChakraMnemonicAlert } from '@/views/create/ChakraMnemonicAlert';
 
 function New() {
 
   const [confirmPassphrase, setConfirmPassphrase] = useState("");
   const [newStatus, setNewStatus] = useState<'phrase' | 'word'>('phrase')
-  const { initWallet, pwd, createPassphrase, setCreatePassphrase, genSeed, createMnemonic, showCreateMnemonic } = useCreateStore()
+  const { createPassphrase, setCreatePassphrase, genSeed,  initWallet, pwd, createMnemonic, showCreateMnemonic, setShowMnemonicDialog, setConfirmLoading } = useCreateStore()
   const navigate = useNavigate();
 
   const onSubmit = async (event: React.FormEvent) => {
@@ -30,17 +30,24 @@ function New() {
   };
 
   const finishCreate = async() => {
+    setConfirmLoading(true)
+    console.log('111', pwd, createMnemonic, createPassphrase ? createPassphrase : 'aezeed', '')
     const {status, error} = await initWallet(pwd, createMnemonic, createPassphrase ? createPassphrase : 'aezeed', '')
     if (status === "success") {
       setTimeout(() => {
+        setShowMnemonicDialog(false)
+        setConfirmLoading(false)
         navigate("/lndState");
       }, 1000);
     }
-    status !== 'success' && toast({
-      variant: "destructive",
-      title: "Create ERROR",
-      description: String(error),
-    })
+    if(status !== 'success'){
+      setConfirmLoading(false)
+      toast({
+        variant: "destructive",
+        title: "Create ERROR",
+        description: String(error),
+      })
+    }
   };
 
   return (
@@ -83,8 +90,9 @@ function New() {
         <div style={{width:'380px', fontSize:'12px', textAlign:'left', marginBottom:'12px'}}>
           2 It's your backup and you can use it to recover the wallet.
         </div>
-        <Button background={'black'} color={'white'} padding={'8px'} margin={'12px 0px'} type="submit" onClick={finishCreate}>Confirm</Button>
+        <Button background={'black'} color={'white'} padding={'8px'} margin={'12px 0px'} type="submit" onClick={()=>setShowMnemonicDialog(true)}>Confirm</Button>
       </div>}
+      <ChakraMnemonicAlert onSubmit={finishCreate}/>
     </div>
   );
 }

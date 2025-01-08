@@ -178,7 +178,7 @@ function LndState() {
   }, [])
 
   return (
-    <div id="state" className="flex flex-col justify-center items-center space-y-4 h-screen relative" style={{border:'1px solid #333'}}>
+    <div id="state" className="flex flex-col justify-center items-center space-y-4 h-screen relative">
       <Dialog open={!isWalletUnlocked}>
         <DialogContent className="p-6 rounded-lg shadow-lg">
           <DialogHeader>

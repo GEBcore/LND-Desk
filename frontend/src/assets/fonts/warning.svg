@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="67px" height="67px" viewBox="0 0 67 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <defs>
+        <rect id="path-1" x="31.9714599" y="24.5524457" width="3.05708027" height="11.0007498" rx="1.52854013"></rect>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组">
+            <circle id="椭圆形" fill="#FFF7ED" cx="33.5" cy="33.5" r="33.5"></circle>
+            <circle id="椭圆形" fill="#F7931A" cx="33.5" cy="33.5" r="16.75"></circle>
+            <circle id="椭圆形" fill="#FFF7ED" cx="33.5" cy="38.8046513" r="1.52854013"></circle>
+            <use id="矩形" fill="#FFF7ED" stroke-linejoin="round" stroke-dasharray="18,18" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

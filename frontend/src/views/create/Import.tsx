@@ -1,11 +1,12 @@
 import { Button, Stack, Textarea } from "@chakra-ui/react";
 import { Field } from "@/components/ui/field";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useCreateStore } from '@/store/create';
 import { toast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
+import { ChakraMnemonicAlert } from '@/views/create/ChakraMnemonicAlert';
 
 function Import() {
   // 定义状态存储两个文本框的值
@@ -13,14 +14,13 @@ function Import() {
   const [passphrase, setPassphrase] = useState("");
   const [error, setError] = useState(""); // 错误提示信息
   const navigate = useNavigate();
-  const { initWallet, pwd } = useCreateStore()
+  const { initWallet, pwd, setShowMnemonicDialog, setConfirmLoading } = useCreateStore()
   // 验证方法：检查是否为24个单词
   const validateMnemonic = (mnemonic: string) => {
     const words = mnemonic.trim().split(/\s+/); // 通过空格分割单词
     return words.length === 24;
   };
 
-  // 表单提交逻辑
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // 阻止默认表单提交行为
     // 检查第一个文本框内容
@@ -32,25 +32,26 @@ function Import() {
       })
       return;
     }
-
-    // 清除错误信息
-    setError("");
-
-    // 检查通过，输出成功
-    console.log("Mnemonic:", mnemonic);
-    console.log("Passphrase:", passphrase || "No passphrase provided.");
+    setShowMnemonicDialog(true)
+  };
+  const onFinish = async () => {
+    setConfirmLoading(true)
     const {status, error} = await initWallet(pwd, mnemonic, passphrase ? passphrase : 'aezeed', '')
     if (status === "success") {
       setTimeout(() => {
+        setShowMnemonicDialog(false)
+        setConfirmLoading(false)
         navigate("/lndState");
       }, 1000);
     }
-    status === 'fail' && toast({
-      variant: "destructive",
-      title: "Create ERROR",
-      description: String(error),
-    })
-
+    if(status === 'fail'){
+      setConfirmLoading(false)
+      toast({
+        variant: "destructive",
+        title: "Create ERROR",
+        description: String(error),
+      })
+    }
   };
 
   return (
@@ -76,6 +77,7 @@ function Import() {
         </Stack>
         <Button background={'black'} color={'white'} padding={'8px'} margin={'12px 0px'} type="submit" onClick={onSubmit}>Submit</Button>
       </form>
+      <ChakraMnemonicAlert onSubmit={onFinish}/>
     </div>
   );
 }
