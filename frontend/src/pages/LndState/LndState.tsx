@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Unlock, GetState, StopLnd, GetLndPath, GetLndRest, GetLndAdminMacaroonPath, GetLndChainInfo } from "../../../wailsjs/go/main/App";
+import { Unlock, GetState, StopLnd, GetLndPath, GetLndRest, GetLndAdminMacaroonPath, GetLndChainInfo, InitWallet } from "../../../wailsjs/go/main/App";
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
 import { ClipboardCopy, Lock, Unlock as UnlockIcn } from 'lucide-react';
@@ -32,11 +32,16 @@ function LndState() {
   const { isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady } = useCreateStore()
   const [password, setPassword] = useState('');
   const [progress, setProgress] = useState(0)
-  const [progressRef, setProgressRef] = useState<NodeJS.Timeout | null>(null)
+  const progressRef = useRef<NodeJS.Timeout | null>(null);
+  const initState = useRef<NodeJS.Timeout | null>(null);
 
   async function StopNode() {
     await StopLnd()
-    setTimeout(() => { navigate('/'); }, 1000)
+    setTimeout(() => {
+      setIsWalletRpcReady(false)
+      setIsWalletUnlocked(false)
+      navigate('/');
+    }, 1000)
   }
 
   async function GetLndInfo() {
@@ -77,7 +82,6 @@ function LndState() {
         variant: "default",
         title: "Wallet Unlocked Successfully!",
       })
-      await InitState()
     } catch (error) {
       toast({
         variant: "destructive",
@@ -88,10 +92,6 @@ function LndState() {
   }
 
   async function GetChainInfo() {
-    if (!isWalletRpcReady) {
-      return;
-    }
-
     try {
       const { MempoolBlock, LndInfo } = await GetLndChainInfo("https://mempool.space/signet");
       let lndBlock = 0
@@ -108,7 +108,7 @@ function LndState() {
     }
   }
 
-  async function InitState() {
+  async function InitState(t: NodeJS.Timeout) {
     try {
       const resp = await GetState()
       switch (resp.state ?? WalletState.WalletState_NON_EXISTING) {
@@ -120,16 +120,15 @@ function LndState() {
           break
         case WalletState.WalletState_UNLOCKED:
           setIsWalletUnlocked(true)
-          await InitState()
           break
         case WalletState.WalletState_RPC_ACTIVE:
         case WalletState.WalletState_SERVER_ACTIVE:
           setIsWalletRpcReady(true)
           GetChainInfo()
+          clearInterval(t)
           break
         case WalletState.WalletState_WAITING_TO_START:
           setIsWalletRpcReady(false)
-          await InitState()
           break
       }
     } catch (error) {
@@ -138,26 +137,45 @@ function LndState() {
         title: "Lnd RPC ERROR",
         description: String(error),
       })
-      InitState()
+      clearInterval(t)
     }
   }
 
   useEffect(() => {
-    GetLndInfo()
-    if (!progressRef) {
-      const timer = setInterval(async () => {
-        await GetChainInfo()
+    if (isWalletRpcReady && !progressRef.current) {
+      progressRef.current = setInterval(() => {
+        GetChainInfo()
       }, 5000)
-      setProgressRef(timer)
     }
-    InitState()
 
     return () => {
-      if (progressRef) {
-        clearInterval(progressRef);
+      if (!isWalletRpcReady && progressRef.current) {
+        clearInterval(progressRef.current)
+        progressRef.current = null
       }
-    };
-  }, [isWalletRpcReady, isWalletUnlocked, progress])
+    }
+  }, [isWalletRpcReady]) 
+
+  useEffect(() => {
+    if (!initState.current) {
+      const timer = setInterval(() => {
+        InitState(timer)
+      }, 100)
+      initState.current = timer
+    }
+
+    return () => {
+      if (isWalletUnlocked && initState.current) {
+        clearInterval(initState.current)
+        initState.current = null
+      }
+    }
+  }, [])
+
+
+  useEffect(() => {
+    GetLndInfo()
+  }, [])
 
   return (
     <div id="state" className="flex flex-col justify-center items-center space-y-4 h-screen relative">
