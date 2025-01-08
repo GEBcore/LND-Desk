@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { frontend } from '@/../wailsjs/go/models';
 import { useCreateStore } from '@/store/create';
+import { resolve } from 'path';
 
 function Main() {
   const [config, setConfig] = useState(`[Application Options]
@@ -41,17 +42,11 @@ protocol.simple-taproot-chans=true`);
   const [lndDir, setLndDir] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast()
-  const { isReady, setIsReady } = useCreateStore()
 
   async function RunNode() {
-    await CheckConfig()
-    if (!isReady) {
-      toast({
-        variant: "destructive",
-        title: "Lnd Error",
-        description: "Node is not ready to run",
-      })
-      return;
+    const isVerify = await CheckConfig()
+    if (!isVerify) {
+      return
     }
     try {
       await RunLnd()
@@ -65,24 +60,25 @@ protocol.simple-taproot-chans=true`);
     }
   }
 
-  async function CheckConfig() {
+  async function CheckConfig(): Promise<boolean> {
     try {
+      console.log(lndDir)
+      console.log(config)
       await VerifyConfig(lndDir, config);
-      setIsReady(true)
+      return true
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Lnd Config Error",
         description: String(error),
       })
-      setIsReady(false)
+      return false
     }
   }
 
   function SaveConfig(value: string) {
     setConfig(value);
     localStorage.setItem('config', value);
-    CheckConfig()
   }
 
   function SaveLndDir(value: string) {
@@ -92,7 +88,7 @@ protocol.simple-taproot-chans=true`);
 
   async function SetDefaultLndDir() {
     const defaultLndDir = await GetDefaultLndDir()
-    setLndDir(defaultLndDir)
+    SaveLndDir(defaultLndDir)
   }
 
   async function ChooseLndDir() {
@@ -136,7 +132,7 @@ protocol.simple-taproot-chans=true`);
       <div className='flex w-full max-w-3xl items-center space-x-3'>
         <Label className="w-[15%] max-w-xs">Lnd Data Dir</Label>
         <Input className="w-full" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
-        <Button onClick={ChooseLndDir} > <Folder/></Button>
+        <Button onClick={ChooseLndDir} > <Folder /></Button>
       </div>
       <div id="input-box" className='w-[80%] mx-auto'>
         <div id="editor-container" className='w-full'>
@@ -144,8 +140,7 @@ protocol.simple-taproot-chans=true`);
         </div>
 
         <div className="power-button-container">
-          <div className={`power-button off ${!isReady ? "disabled" : ""
-            }`} onClick={RunNode}>
+          <div className={`power-button off }`} onClick={RunNode}>
             <div className="power-indicator flex flex-col justify-center items-center">
               <Power />
             </div>
