@@ -178,7 +178,7 @@ function LndState() {
   }, [])
 
   return (
-    <div id="state" className="flex flex-col justify-center items-center space-y-4 h-screen relative">
+    <div id="state" className="flex flex-col justify-center items-center space-y-4 h-screen relative" style={{border:'1px solid #333'}}>
       <Dialog open={!isWalletUnlocked}>
         <DialogContent className="p-6 rounded-lg shadow-lg">
           <DialogHeader>
@@ -218,7 +218,7 @@ function LndState() {
         <Label className='w-full max-w-md'>Block Sync Process</Label>
         <div className="relative flex items-center justify-center w-full max-w-md gap-3">
           <Progress value={progress} className="w-[90%]" />
-          <Label className='w-[10%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
+          <Label className='w-[15%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
         </div>
         <Label className='w-full max-w-md'>Lnd Dir</Label>
         <div className="relative flex w-full max-w-md">

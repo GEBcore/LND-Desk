@@ -1,6 +1,6 @@
 import React from 'react';
-import Import from '@/pages/Create/Import';
-import New from '@/pages/Create/New';
+import Import from '@/views/create/Import';
+import New from '@/views/create/New';
 import { Tabs } from "@chakra-ui/react"
 function Tab() {
   return (
@@ -14,8 +14,8 @@ function Tab() {
         </Tabs.Trigger>
         <Tabs.Indicator rounded="l2" />
       </Tabs.List>
-      <Tabs.Content value="import" style={{height: '380px'}}><Import/></Tabs.Content>
-      <Tabs.Content value="new" style={{height: '380px'}}><New/></Tabs.Content>
+      <Tabs.Content value="import" style={{width:'600px',height: '400px'}}><Import/></Tabs.Content>
+      <Tabs.Content value="new" style={{width:'600px',height: '500px'}}><New/></Tabs.Content>
     </Tabs.Root>
   )
 }

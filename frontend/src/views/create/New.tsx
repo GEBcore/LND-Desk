@@ -6,6 +6,7 @@ import { Box, Button, Stack, Textarea } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
 import { Toaster } from '@/components/ui/toaster';
 import { Input } from '@/components/ui/input';
+import ChakraMnemonicAlert from '@/views/create/ChakraMnemonicAlert';
 
 function New() {
 

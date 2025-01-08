@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from '@/hooks/use-toast';
-import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
