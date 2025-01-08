@@ -29,7 +29,7 @@ function LndState() {
     admMacaroon: ''
   });
   const { toast } = useToast()
-  const {isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady} = useCreateStore()
+  const { isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady } = useCreateStore()
   const [password, setPassword] = useState('');
   const [progress, setProgress] = useState(0)
   const [progressRef, setProgressRef] = useState<NodeJS.Timeout | null>(null)
@@ -116,11 +116,9 @@ function LndState() {
           navigate('/create')
           break
         case WalletState.WalletState_LOCKED:
-          setIsWalletRpcReady(true)
           setIsWalletUnlocked(false)
           break
         case WalletState.WalletState_UNLOCKED:
-          setIsWalletRpcReady(true)
           setIsWalletUnlocked(true)
           await InitState()
           break
