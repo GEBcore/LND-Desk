@@ -8,8 +8,7 @@ import {
   GetLndRest,
   GetLndAdminMacaroonPath,
   GetLndChainInfo,
-  InitWallet,
-  GetDefaultLndDir, OpenFileSelector
+  OpenFileSelector
 } from '../../../wailsjs/go/main/App';
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
@@ -165,7 +164,7 @@ function LndState() {
         progressRef.current = null
       }
     }
-  }, [isWalletRpcReady]) 
+  }, [isWalletRpcReady])
 
   useEffect(() => {
     if (!initState.current) {
@@ -189,23 +188,26 @@ function LndState() {
   }, [])
 
   async function ChooseLndDir() {
-    try {
-      const chooseedLndDir = await OpenFileSelector(frontend.OpenDialogOptions.createFrom({
-        'DefaultDirectory': LndInfo.path,
-        'DefaultFilename': 'admin',
-        'Title': 'Select Lnd Data Directory',
-        'ShowHiddenFiles': true,
-        'CanCreateDirectories': true,
-        'ResolvesAliases': true,
-        'TreatPackagesAsDirectories': false,
-      }))
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Lnd Data File Error",
-        description: String(error),
-      })
-    }
+    const lastSlashIndex = LndInfo.admMacaroon.lastIndexOf('/');
+    const folderPath = LndInfo.admMacaroon.substring(0, lastSlashIndex);
+    const fileName = LndInfo.admMacaroon.substring(lastSlashIndex + 1);
+    await OpenFileSelector(frontend.OpenDialogOptions.createFrom({
+      'DefaultDirectory': folderPath,
+      'DefaultFilename': fileName,
+      'Title': 'Select Lnd Data Directory',
+      'ShowHiddenFiles': true,
+      'CanCreateDirectories': false,
+      'ResolvesAliases': true,
+      'TreatPackagesAsDirectories': false,
+      'Filters': [
+        frontend.FileFilter.createFrom(
+          {
+            'DisplayName': fileName,
+            'Pattern': '*.macaroon'
+          }
+        )
+      ]
+    }))
   }
 
   return (
@@ -264,7 +266,7 @@ function LndState() {
         <Label className='w-full max-w-md'>Lnd Admin Macaroon</Label>
         <div className="relative flex w-full max-w-md">
           <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
-          <Button onClick={ChooseLndDir} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <Folder/></Button>
+          <Button onClick={ChooseLndDir} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <Folder /></Button>
         </div>
         <Button variant="destructive" onClick={StopNode}>Stop</Button>
       </div>
