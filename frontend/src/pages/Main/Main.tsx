@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './Main.css';
 import INIEditor from '../../components/editor';
 import { useNavigate } from 'react-router-dom';
-import { RunLnd, VerifyConfig, GetDefaultLndDir, OpenFileSelector } from "@/../wailsjs/go/main/App";
+import { RunLnd, VerifyConfig, GetDefaultLndDir, OpenDirectorySelector } from "@/../wailsjs/go/main/App";
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from '@/hooks/use-toast';
 import { Folder, Power, PowerOff } from 'lucide-react';
@@ -94,7 +94,7 @@ protocol.simple-taproot-chans=true`);
   async function ChooseLndDir() {
     try {
       const defaultLndDir = await GetDefaultLndDir()
-      const chooseedLndDir = await OpenFileSelector(frontend.OpenDialogOptions.createFrom({
+      const chooseedLndDir = await OpenDirectorySelector(frontend.OpenDialogOptions.createFrom({
         'DefaultDirectory': defaultLndDir,
         'DefaultFilename': 'lnd',
         'Title': 'Select Lnd Data Directory',
