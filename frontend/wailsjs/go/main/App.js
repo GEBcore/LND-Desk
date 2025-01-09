@@ -34,6 +34,10 @@ export function InitWallet(arg1, arg2, arg3, arg4) {
   return window['go']['main']['App']['InitWallet'](arg1, arg2, arg3, arg4);
 }
 
+export function OpenDirectorySelector(arg1) {
+  return window['go']['main']['App']['OpenDirectorySelector'](arg1);
+}
+
 export function OpenFileSelector(arg1) {
   return window['go']['main']['App']['OpenFileSelector'](arg1);
 }

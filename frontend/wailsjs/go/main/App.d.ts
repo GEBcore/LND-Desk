@@ -20,6 +20,8 @@ export function GetState():Promise<lnrpc.GetStateResponse>;
 
 export function InitWallet(arg1:string,arg2:string,arg3:string,arg4:string):Promise<void>;
 
+export function OpenDirectorySelector(arg1:frontend.OpenDialogOptions):Promise<string>;
+
 export function OpenFileSelector(arg1:frontend.OpenDialogOptions):Promise<string>;
 
 export function RunLnd():Promise<void>;
