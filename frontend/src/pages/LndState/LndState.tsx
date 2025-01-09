@@ -189,23 +189,15 @@ function LndState() {
   }, [])
 
   async function ChooseLndDir() {
-    try {
-      const chooseedLndDir = await OpenFileSelector(frontend.OpenDialogOptions.createFrom({
-        'DefaultDirectory': LndInfo.path,
-        'DefaultFilename': 'admin',
-        'Title': 'Select Lnd Data Directory',
-        'ShowHiddenFiles': true,
-        'CanCreateDirectories': true,
-        'ResolvesAliases': true,
-        'TreatPackagesAsDirectories': false,
-      }))
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Lnd Data File Error",
-        description: String(error),
-      })
-    }
+    await OpenFileSelector(frontend.OpenDialogOptions.createFrom({
+      'DefaultDirectory': LndInfo.path,
+      'DefaultFilename': 'admin.macaroon',
+      'Title': 'Select Lnd Data Directory',
+      'ShowHiddenFiles': true,
+      'CanCreateDirectories': true,
+      'ResolvesAliases': true,
+      'TreatPackagesAsDirectories': false,
+    }))
   }
 
   return (
