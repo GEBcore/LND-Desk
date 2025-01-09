@@ -1,15 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Unlock, GetState, StopLnd, GetLndPath, GetLndRest, GetLndAdminMacaroonPath, GetLndChainInfo, InitWallet } from "../../../wailsjs/go/main/App";
+import {
+  Unlock,
+  GetState,
+  StopLnd,
+  GetLndPath,
+  GetLndRest,
+  GetLndAdminMacaroonPath,
+  GetLndChainInfo,
+  InitWallet,
+  GetDefaultLndDir, OpenFileSelector
+} from '../../../wailsjs/go/main/App';
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
-import { ClipboardCopy, Lock, Unlock as UnlockIcn } from 'lucide-react';
+import { ClipboardCopy, Folder, Lock, Unlock as UnlockIcn } from 'lucide-react';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { useCreateStore } from '@/store/create';
+import { frontend } from '../../../wailsjs/go/models';
 
 enum WalletState {
   WalletState_NON_EXISTING,
@@ -177,6 +188,26 @@ function LndState() {
     GetLndInfo()
   }, [])
 
+  async function ChooseLndDir() {
+    try {
+      const chooseedLndDir = await OpenFileSelector(frontend.OpenDialogOptions.createFrom({
+        'DefaultDirectory': LndInfo.path,
+        'DefaultFilename': 'admin',
+        'Title': 'Select Lnd Data Directory',
+        'ShowHiddenFiles': true,
+        'CanCreateDirectories': true,
+        'ResolvesAliases': true,
+        'TreatPackagesAsDirectories': false,
+      }))
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Lnd Data File Error",
+        description: String(error),
+      })
+    }
+  }
+
   return (
     <div id="state" className="flex flex-col justify-center items-center space-y-4 h-screen relative">
       <Dialog open={!isWalletUnlocked}>
@@ -233,7 +264,7 @@ function LndState() {
         <Label className='w-full max-w-md'>Lnd Admin Macaroon</Label>
         <div className="relative flex w-full max-w-md">
           <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
-          <Button onClick={() => copyToClipboard(LndInfo.admMacaroon)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
+          <Button onClick={ChooseLndDir} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <Folder/></Button>
         </div>
         <Button variant="destructive" onClick={StopNode}>Stop</Button>
       </div>
