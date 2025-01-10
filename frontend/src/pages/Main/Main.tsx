@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { frontend } from '@/../wailsjs/go/models';
 import { useCreateStore } from '@/store/create';
 import { resolve } from 'path';
+import { ConfirmButton } from '@/components/ConfirmButton';
 
 function Main() {
   const [config, setConfig] = useState(`[Application Options]
@@ -127,7 +128,10 @@ protocol.simple-taproot-chans=true`);
   }, []);
 
   return (
-    <div className='flex flex-col items-center justify-center h-screen mx-w-full'>
+    <div className='flex flex-col items-center justify-center mt-[48px] mx-w-full'>
+      <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[35px]">
+        Your LND Node Operation Information
+      </div>
       <Toaster />
       <div className='flex w-full max-w-3xl items-center space-x-3'>
         <Label className="w-[15%] max-w-xs">Lnd Data Dir</Label>
@@ -139,13 +143,14 @@ protocol.simple-taproot-chans=true`);
           <INIEditor config={config} onChange={SaveConfig} />
         </div>
 
-        <div className="power-button-container">
-          <div className={`power-button off }`} onClick={RunNode}>
-            <div className="power-indicator flex flex-col justify-center items-center">
-              <Power />
-            </div>
-          </div>
-        </div>
+        {/*<div className="power-button-container">*/}
+        {/*  <div className={`power-button off }`} onClick={RunNode}>*/}
+        {/*    <div className="power-indicator flex flex-col justify-center items-center">*/}
+        {/*      <Power />*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
       </div>
     </div>
   )

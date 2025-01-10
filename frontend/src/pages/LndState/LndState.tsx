@@ -20,6 +20,8 @@ import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { useCreateStore } from '@/store/create';
 import { frontend } from '../../../wailsjs/go/models';
+import { ConfirmButton } from '@/components/ConfirmButton';
+import copyIcon from '@/assets/lndstate/copy.svg'
 
 enum WalletState {
   WalletState_NON_EXISTING,
@@ -211,7 +213,7 @@ function LndState() {
   }
 
   return (
-    <div id="state" className="flex flex-col justify-center items-center space-y-4 h-screen relative">
+    <div id="state" className="flex flex-col justify-center items-center relative mt-[48px]">
       <Dialog open={!isWalletUnlocked}>
         <DialogContent className="p-6 rounded-lg shadow-lg">
           <DialogHeader>
@@ -245,30 +247,41 @@ function LndState() {
           </div>
         </DialogContent>
       </Dialog>
-
       <Toaster />
-      <div className="flex flex-col justify-center items-center flex-wrap gap-5 w-full">
-        <Label className='w-full max-w-md'>Block Sync Process</Label>
-        <div className="relative flex items-center justify-center w-full max-w-md gap-3">
-          <Progress value={progress} className="w-[90%]" />
-          <Label className='w-[15%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
+      <div className="flex flex-col justify-center items-center flex-wrap gap-[16px] w-full">
+        <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[35px]">
+          Your LND Node Operation Information
         </div>
-        <Label className='w-full max-w-md'>Lnd Dir</Label>
-        <div className="relative flex w-full max-w-md">
-          <Input className="pr-10" type="text" value={LndInfo.path} disabled />
-          <Button onClick={() => copyToClipboard(LndInfo.path)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
+        <div className="flex flex-col gap-[8px] justify-center items-center w-full">
+          <Label className='w-full max-w-md'>Block Sync Process</Label>
+          <div className="relative flex items-center justify-center w-full max-w-md gap-3">
+            <Progress value={progress} className="w-[90%]" />
+            <Label className='w-[15%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
+          </div>
         </div>
-        <Label className='w-full max-w-md'>Lnd REST</Label>
-        <div className="relative flex w-full max-w-md">
-          <Input className="pr-10" type="text" value={LndInfo.rest} disabled />
-          <Button onClick={() => copyToClipboard(LndInfo.rest)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <ClipboardCopy /></Button>
+        <div className="flex flex-col gap-[8px] justify-center items-center w-full">
+          <Label className='w-full max-w-md'>Lnd Dir</Label>
+          <div className="relative flex w-full max-w-md">
+            <Input className="pr-10" type="text" value={LndInfo.path} disabled />
+            <Button onClick={() => copyToClipboard(LndInfo.path)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <img src={copyIcon} alt=""/></Button>
+          </div>
         </div>
-        <Label className='w-full max-w-md'>Lnd Admin Macaroon</Label>
-        <div className="relative flex w-full max-w-md">
-          <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
-          <Button onClick={ChooseLndDir} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <Folder /></Button>
+        <div className="flex flex-col gap-[8px] justify-center items-center w-full">
+          <Label className='w-full max-w-md'>Lnd REST</Label>
+          <div className="relative flex w-full max-w-md">
+            <Input className="pr-10" type="text" value={LndInfo.rest} disabled />
+            <Button onClick={() => copyToClipboard(LndInfo.rest)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon">
+              <img src={copyIcon} alt=""/></Button>
+          </div>
         </div>
-        <Button variant="destructive" onClick={StopNode}>Stop</Button>
+        <div className="flex flex-col gap-[8px] justify-center items-center w-full">
+          <Label className='w-full max-w-md'>Lnd Admin Macaroon</Label>
+          <div className="relative flex w-full max-w-md">
+            <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
+            <Button onClick={ChooseLndDir} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <Folder /></Button>
+          </div>
+        </div>
+        <ConfirmButton onClick={StopNode} content={'Stop'}/>
       </div>
     </div>
   )

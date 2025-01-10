@@ -6,41 +6,28 @@ import { toast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
-import { ChakraMnemonicAlert } from '@/views/create/ChakraMnemonicAlert';
 import { ConfirmButton } from '@/components/ConfirmButton';
 
-function Import() {
+function Private() {
   // 定义状态存储两个文本框的值
-  const [mnemonic, setMnemonic] = useState("");
-  const [passphrase, setPassphrase] = useState("");
+  const [privateKey, setPrivateKey] = useState("");
   const [error, setError] = useState(""); // 错误提示信息
   const navigate = useNavigate();
   const { initWallet, pwd, setShowMnemonicDialog, setConfirmLoading } = useCreateStore()
-  // 验证方法：检查是否为24个单词
   const validateMnemonic = (mnemonic: string) => {
     const words = mnemonic.trim().split(/\s+/); // 通过空格分割单词
     return words.length === 24;
   };
 
   const onSubmit = async () => {
-    if (!validateMnemonic(mnemonic)) {
-      setError("The mnemonic must consist of exactly 24 words.");
-      toast({
-        variant: "default",
-        title: "The mnemonic must consist of exactly 24 words.",
-      })
-      return;
-    }
-    const {status, error} = await initWallet(pwd, mnemonic, passphrase ? passphrase : 'aezeed', '')
+    const {status, error} = await initWallet(pwd, "", 'aezeed', privateKey)
     if (status === "success") {
       setTimeout(() => {
-        // setShowMnemonicDialog(false)
         setConfirmLoading(false)
         navigate("/lndState");
       }, 1000);
     }
     if(status === 'fail'){
-      // setConfirmLoading(false)
       toast({
         variant: "destructive",
         title: "Create ERROR",
@@ -56,17 +43,10 @@ function Import() {
         <Stack gap="4" align="flex-start" width="480px">
           <Field label="" errorText={error}>
             <Textarea
-              placeholder="Please enter the 24-word mnemonic, separated by spaces."
-              value={mnemonic}
-              onChange={(e) => setMnemonic(e.target.value)}
-              style={{height:'200px', padding:'12px', border:'1px solid #e4e4e7'}}
-            />
-          </Field>
-          <Field label="Input your cipher seed passphrase">
-            <Input
-              placeholder="If not, no input is required."
-              value={passphrase}
-              onChange={(e) => setPassphrase(e.target.value)}
+              placeholder="Please enter your own private key."
+              value={privateKey}
+              onChange={(e) => setPrivateKey(e.target.value)}
+              style={{height:'120px', padding:'12px', border:'1px solid #e4e4e7'}}
             />
           </Field>
         </Stack>
@@ -76,4 +56,4 @@ function Import() {
   );
 }
 
-export default Import;
+export default Private;

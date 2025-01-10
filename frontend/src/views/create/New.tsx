@@ -7,6 +7,7 @@ import { Field } from '@/components/ui/field';
 import { Toaster } from '@/components/ui/toaster';
 import { Input } from '@/components/ui/input';
 import { ChakraMnemonicAlert } from '@/views/create/ChakraMnemonicAlert';
+import { ConfirmButton } from '@/components/ConfirmButton';
 
 function New() {
 
@@ -15,8 +16,7 @@ function New() {
   const { createPassphrase, setCreatePassphrase, genSeed,  initWallet, pwd, createMnemonic, showCreateMnemonic, setShowMnemonicDialog, setConfirmLoading } = useCreateStore()
   const navigate = useNavigate();
 
-  const onSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); // 阻止默认表单提交行为
+  const onSubmit = async () => {
     if (confirmPassphrase === createPassphrase) {
       const {status, error} = await  genSeed(createPassphrase)
       status === 'success' && setNewStatus('word')
@@ -31,7 +31,6 @@ function New() {
 
   const finishCreate = async() => {
     setConfirmLoading(true)
-    console.log('111', pwd, createMnemonic, createPassphrase ? createPassphrase : 'aezeed', '')
     const {status, error} = await initWallet(pwd, createMnemonic, createPassphrase ? createPassphrase : 'aezeed', '')
     if (status === "success") {
       setTimeout(() => {
@@ -53,9 +52,11 @@ function New() {
   return (
     <div className="flex flex-col items-center justify-center mx-w-full">
       <Toaster />
-      {newStatus === 'phrase' && <form onSubmit={onSubmit} className="flex flex-col justify-center items-center">
-        <div style={{textAlign:'center', padding:'12px 0 24px 0'}}> Set cipher seed passphrase(optional)</div>
-        <Stack gap="4" align="flex-start" width="500px">
+      {newStatus === 'phrase' && <div className="flex flex-col justify-center items-center">
+        <div className="font-normal text-[20px] text-[#1A202C] leading-[26px] text-right not-italic my-[24px]">
+          Set cipher seed passphrase(optional)
+        </div>
+        <Stack gap={'24px'} align="flex-start" width="480px">
           <Field label="Input your cipher seed passphrase">
             <Input
               placeholder="If not, no input is required."
@@ -71,8 +72,8 @@ function New() {
             />
           </Field>
         </Stack>
-        <Button background={'black'} color={'white'} padding={'8px'} type="submit" margin={'12px 0px'} onClick={onSubmit}>Submit</Button>
-      </form>}
+        <ConfirmButton type="submit" onClick={onSubmit} content="Submit" style={{marginTop:'40px'}}/>
+      </div>}
       {newStatus === 'word' && <div style={{width:'400px', padding:'12px', display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
         <div  style={{fontSize:'18px',fontWeight: '600', margin:'8px 0'}}>New mnemonic</div>
         {/*<div style={{maxWidth:'280px'}}>{showCreateMnemonic}</div>*/}
