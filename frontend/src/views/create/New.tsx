@@ -72,7 +72,7 @@ function New() {
             />
           </Field>
         </Stack>
-        <ConfirmButton type="submit" onClick={onSubmit} content="Submit" style={{marginTop:'40px'}}/>
+        <ConfirmButton type="submit" onClick={onSubmit} content="Generate new wallet" style={{marginTop:'40px'}}/>
       </div>}
       {newStatus === 'word' && <div style={{width:'400px', padding:'12px', display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
         <div  style={{fontSize:'18px',fontWeight: '600', margin:'8px 0'}}>New mnemonic</div>

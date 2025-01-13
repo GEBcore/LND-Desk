@@ -13,6 +13,7 @@ import { frontend } from '@/../wailsjs/go/models';
 import { useCreateStore } from '@/store/create';
 import { resolve } from 'path';
 import { ConfirmButton } from '@/components/ConfirmButton';
+import ConfigForm from '@/views/Main/ConfigForm';
 
 function Main() {
   const [config, setConfig] = useState(`[Application Options]
@@ -133,16 +134,20 @@ protocol.simple-taproot-chans=true`);
         Your LND Node Operation Information
       </div>
       <Toaster />
-      <div className='flex w-full max-w-3xl items-center space-x-3'>
-        <Label className="w-[15%] max-w-xs">Lnd Data Dir</Label>
-        <Input className="w-full" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
-        <Button onClick={ChooseLndDir} > <Folder /></Button>
-      </div>
-      <div id="input-box" className='w-[80%] mx-auto'>
-        <div id="editor-container" className='w-full'>
-          <INIEditor config={config} onChange={SaveConfig} />
+      <div className="w-[480px] flex flex-col items-start gap-[24px] mb-[40px]">
+        <div className="flex flex-col items-start w-full gap-[8px]">
+          <div className="font-normal text-base text-black leading-5 text-left font-normal uppercase:none">Data Storage Directory</div>
+          <div className='flex w-full max-w-3xl items-center space-x-3'>
+            <Input className="w-full" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
+            <Button onClick={ChooseLndDir} > <Folder /></Button>
+          </div>
         </div>
-
+        <ConfigForm/>
+      </div>
+      {/*<div id="input-box" className='w-[80%] mx-auto'>*/}
+        {/*<div id="editor-container" className='w-full'>*/}
+        {/*  /!*<INIEditor config={config} onChange={SaveConfig} />*!/*/}
+        {/*</div>*/}
         {/*<div className="power-button-container">*/}
         {/*  <div className={`power-button off }`} onClick={RunNode}>*/}
         {/*    <div className="power-indicator flex flex-col justify-center items-center">*/}
@@ -151,7 +156,7 @@ protocol.simple-taproot-chans=true`);
         {/*  </div>*/}
         {/*</div>*/}
         <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
-      </div>
+      {/*</div>*/}
     </div>
   )
 }

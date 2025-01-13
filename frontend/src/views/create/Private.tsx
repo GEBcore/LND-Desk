@@ -46,7 +46,8 @@ function Private() {
               placeholder="Please enter your own private key."
               value={privateKey}
               onChange={(e) => setPrivateKey(e.target.value)}
-              style={{height:'120px', padding:'12px', border:'1px solid #e4e4e7'}}
+              _hover={{border:'1px solid #E67137', outline:'none'}}
+              style={{height:'120px', padding:'12px',  border:'1px solid #e4e4e7', outline:'none'}}
             />
           </Field>
         </Stack>
