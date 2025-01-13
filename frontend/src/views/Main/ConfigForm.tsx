@@ -98,7 +98,7 @@ const ConfigForm = () => {
   return (
     <>
       <div className="flex flex-col items-start w-full gap-[8px]">
-        <div className="font-normal text-base text-black leading-5 text-left font-normal uppercase:none">Your LND Alias</div>
+        <div className="font-normal text-base text-black leading-5 text-left uppercase:none">Your LND Alias</div>
         <Input className="w-full" id="lndDir" type="text"  value={configObj['Application Options']['alias']}  onChange={(e) =>
           handleChange('Application Options', 'alias', e.target.value)
         } />
@@ -109,11 +109,11 @@ const ConfigForm = () => {
           <div className="flex flex-row w-full">
             <div className="font-normal text-sm text-black leading-4 text-left w-[170px]">BTC Network:</div>
             <select id="bitcoin-network"
-                    className="w-full rounded-md border border-input px-3 bg-transparent py-1 text-base shadow-sm transition-colors outline-none"
+                    className="w-full flex h-9 rounded-md border border-input px-3 bg-transparent py-1 text-base outline-none"
                     value={Object.keys(configObj['Bitcoin']).find((key) =>
                       configObj['Bitcoin'][key] === 'true'
                     )?.replace('bitcoin.', '')}
-                    onChange={handleBitcoinNetworkChange}>
+                    onChange={handleBitcoinNetworkChange} >
               {['mainnet', 'testnet', 'simnet', 'regtest', 'signet'].map((network) => (
                 <option key={network} value={network}>
                   {network}
