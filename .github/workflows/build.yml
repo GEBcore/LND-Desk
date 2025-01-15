@@ -17,7 +17,7 @@ jobs:
         build:
           - name: 'LND-Desk'
             platform:  'linux/amd64'
-            os: 'ubuntu-latest'
+            os: 'ubuntu-22.04'
           - name: 'LND-Desk'
             platform:  'windows/amd64'
             os: 'windows-latest'
