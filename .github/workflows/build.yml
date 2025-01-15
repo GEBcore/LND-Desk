@@ -36,7 +36,7 @@ jobs:
         id: PRERELEASE
         env:
           PRERELEASE: false
-        if: match(github.ref_name, '^v[0-9]+\\.[0-9]+\\.[0-9]+$')
+        if: startsWith(github.ref_name, 'v') && !contains(github.ref_name, '-')
         run: echo "This is a stable release."
 
       - name: Build wails
