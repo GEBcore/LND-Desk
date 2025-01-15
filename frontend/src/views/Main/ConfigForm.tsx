@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { defaultConfig, useCreateStore } from '@/store/create';
-
+import { createListCollection } from "@chakra-ui/react"
+import {
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from "@/components/ui/select"
 interface Config {
   [section: string]: {
     [key: string]: string;
@@ -79,7 +87,15 @@ const ConfigForm = () => {
   const handleBlur = () => {
     setIsTouched(true);
   };
-
+  const frameworks = createListCollection({
+    items: [
+      { label: "mainnet", value: "mainnet" },
+      { label: "testnet", value: "testnet" },
+      { label: "simnet", value: "simnet" },
+      { label: "regtest", value: "regtest" },
+      { label: "signet", value: "signet" },
+    ],
+  })
   // @ts-ignore
   return (
     <>
@@ -100,36 +116,50 @@ const ConfigForm = () => {
       <div className="flex flex-col items-start w-full gap-[8px]">
         <div className="font-normal text-base text-black leading-5 text-left uppercase:none mb-[12px]">Special node configuration</div>
         <div className="flex flex-col items-start w-full gap-[8px]">
-          <div className="flex flex-row w-full">
+          <div className="flex flex-row w-full items-center justify-between">
             <div className="font-normal text-sm text-black leading-4 text-left w-[170px]">BTC Network:</div>
-            <select id="bitcoin-network"
-                    className="w-full flex h-9 rounded-md border border-input px-3 bg-transparent py-1 text-base outline-none"
-                    value={Object.keys(configObj['Bitcoin']).find((key) =>
-                      configObj['Bitcoin'][key] === 'true'
-                    )?.replace('bitcoin.', '')}
-                    onChange={handleBitcoinNetworkChange} >
-              {['mainnet', 'testnet', 'simnet', 'regtest', 'signet'].map((network) => (
-                <option key={network} value={network}>
-                  {network}
-                </option>
-              ))}
-            </select>
+            {/*<select id="bitcoin-network"*/}
+            {/*        className="w-full flex h-9 rounded-md border border-input px-3 bg-transparent py-1 text-base outline-none"*/}
+            {/*        value={Object.keys(configObj['Bitcoin']).find((key) =>*/}
+            {/*          configObj['Bitcoin'][key] === 'true'*/}
+            {/*        )?.replace('bitcoin.', '')}*/}
+            {/*        onChange={handleBitcoinNetworkChange} >*/}
+            {/*  {['mainnet', 'testnet', 'simnet', 'regtest', 'signet'].map((network) => (*/}
+            {/*    <option key={network} value={network}>*/}
+            {/*      {network}*/}
+            {/*    </option>*/}
+            {/*  ))}*/}
+            {/*</select>*/}
+            <div className="rounded-md border border-[1px] border-[#E2E8F0] w-[297px] h-[32px] pl-[12px] leading-[18px] text-[14px] flex flex-row items-center justify-center">
+              <SelectRoot collection={frameworks}>
+                <SelectTrigger className="flex flex-row items-center justify-center">
+                  <SelectValueText placeholder="Select Network" className="leading-[18px] text-[14px]" />
+                </SelectTrigger>
+                <SelectContent>
+                  {frameworks.items.map((item: { value: React.Key | null | undefined; label: any; }) => (
+                    <SelectItem item={item} key={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </SelectRoot>
+            </div>
           </div>
-          <div className="flex flex-row w-full">
-            <div className="font-normal text-sm text-black leading-4 text-left font-normal w-[170px]">REST cors:</div>
-            <Input className="w-full" id="lndDir" type="text"  value={configObj['Application Options']['restcors']} onChange={(e) =>
+          <div className="flex flex-row w-full items-center justify-between">
+            <div className="font-normal text-sm text-black leading-4 text-left w-[170px]">REST cors:</div>
+            <Input className="w-[295px] h-[32px]" id="restcors" type="text"  value={configObj['Application Options']['restcors']} onChange={(e) =>
               handleChange('Application Options', 'restcors', e.target.value)
             } />
           </div>
-          <div className="flex flex-row w-full">
-            <div className="font-normal text-sm text-black leading-4 text-left font-normal w-[170px]">RPC Listen Endpoint:</div>
-            <Input className="w-full" id="lndDir" type="text"  value={configObj['Application Options']['rpclisten']} onChange={(e) =>
+          <div className="flex flex-row w-full items-center justify-between">
+            <div className="font-normal text-sm text-black leading-4 text-left w-[170px]">RPC Listen Endpoint:</div>
+            <Input className="w-[295px] h-[32px]" id="rpclisten" type="text"  value={configObj['Application Options']['rpclisten']} onChange={(e) =>
               handleChange('Application Options', 'rpclisten', e.target.value)
             } />
           </div>
-          <div className="flex flex-row w-full">
-            <div className="font-normal text-sm text-black leading-4 text-left font-normal w-[170px]">REST Listen Endpoint:</div>
-            <Input className="w-full" id="lndDir" type="text" value={configObj['Application Options']['restlisten']}
+          <div className="flex flex-row w-full items-center justify-between flex-nowrap">
+            <div className="font-normal text-sm text-black leading-4 text-left w-[170px]">REST Listen Endpoint:</div>
+            <Input className="w-[295px] h-[32px]" id="restlisten" type="text" value={configObj['Application Options']['restlisten']}
                    onChange={(e) =>
                      handleChange('Application Options', 'restlisten', e.target.value)
                    } />

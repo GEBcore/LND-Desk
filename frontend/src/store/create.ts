@@ -56,6 +56,8 @@ interface CreateState {
   setShowMnemonicDialog: (val: boolean) => void
   confirmLoading: boolean
   setConfirmLoading: (val: boolean) => void
+  showQADialog: boolean
+  setShowQADialog: (val: boolean) => void
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -102,4 +104,6 @@ export const useCreateStore = create<CreateState>((set, get) => ({
   setShowMnemonicDialog:(val: boolean) => set({showMnemonicDialog: val}),
   confirmLoading: false,
   setConfirmLoading: (val: boolean) => set({confirmLoading: val}),
+  showQADialog: false,
+  setShowQADialog: (val: boolean) => set({showQADialog: val})
 }))
