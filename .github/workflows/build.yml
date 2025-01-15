@@ -7,6 +7,7 @@ on:
 
 env:
   NODE_OPTIONS: "--max-old-space-size=4096"
+  PRERELEASE: true
 
 jobs:
   build:
@@ -31,14 +32,12 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Determine prerelease
-        id: prerelease
-        run: |
-          if [[ "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "prerelease=false" >> $GITHUB_ENV
-          else
-            echo "prerelease=true" >> $GITHUB_ENV
-          fi
+      - name: Determine PRERELEASE
+        id: PRERELEASE
+        env:
+          PRERELEASE: false
+        if: match(github.ref_name, '^v[0-9]+\\.[0-9]+\\.[0-9]+$')
+        run: echo "This is a stable release."
 
       - name: Build wails
         uses: btclayer2/wails-build-action@v0.0.7
@@ -46,7 +45,7 @@ jobs:
         with:
           build-name: ${{ matrix.build.name }}
           build-platform: ${{ matrix.build.platform }}
-          prerelease: ${{ env.prerelease }}
+          prerelease: ${{ env.PRERELEASE }}
           package: true
           node-version: '22.8.0'
           go-version: '1.23'
