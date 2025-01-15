@@ -30,6 +30,10 @@ export function GetState() {
   return window['go']['main']['App']['GetState']();
 }
 
+export function GetVersion() {
+  return window['go']['main']['App']['GetVersion']();
+}
+
 export function InitWallet(arg1, arg2, arg3, arg4) {
   return window['go']['main']['App']['InitWallet'](arg1, arg2, arg3, arg4);
 }

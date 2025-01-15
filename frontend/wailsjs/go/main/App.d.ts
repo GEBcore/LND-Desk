@@ -18,6 +18,8 @@ export function GetLndRest():Promise<string>;
 
 export function GetState():Promise<lnrpc.GetStateResponse>;
 
+export function GetVersion():Promise<string>;
+
 export function InitWallet(arg1:string,arg2:string,arg3:string,arg4:string):Promise<void>;
 
 export function OpenDirectorySelector(arg1:frontend.OpenDialogOptions):Promise<string>;

@@ -2,11 +2,16 @@ package main
 
 import (
 	"context"
+	_ "embed"
 	"errors"
 	"fmt"
 	"github.com/lightningnetwork/lnd"
 	"github.com/lightningnetwork/lnd/signal"
+	"github.com/tidwall/gjson"
 )
+
+//go:embed wails.json
+var wailsJSON string
 
 // App struct
 type App struct {
@@ -33,3 +38,9 @@ func NewApp() *App {
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
+
+func (a *App) GetVersion() string {
+	version := gjson.Get(wailsJSON, "info.productVersion")
+	return version.String()
+}
+
