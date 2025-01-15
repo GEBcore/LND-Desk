@@ -16,31 +16,7 @@ import { ConfirmButton } from '@/components/ConfirmButton';
 import ConfigForm from '@/views/Main/ConfigForm';
 
 function Main() {
-  const [config, setConfig] = useState(`[Application Options]
-debuglevel=trace
-maxpendingchannels=10
-alias=Bevm_client_test
-no-macaroons=false
-coin-selection-strategy=largest
-rpclisten=localhost:10009
-restlisten=localhost:8080
-no-rest-tls=true
-restcors=https://bevmhub.bevm.io
-
-[Bitcoin]
-bitcoin.mainnet=false
-bitcoin.testnet=false
-bitcoin.simnet=false
-bitcoin.regtest=false
-bitcoin.signet=true
-bitcoin.node=neutrino
-
-[neutrino]
-neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
-neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
-
-[protocol]
-protocol.simple-taproot-chans=true`);
+  const { config, setConfig, aliasName } = useCreateStore()
   const [lndDir, setLndDir] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast()
@@ -64,9 +40,19 @@ protocol.simple-taproot-chans=true`);
 
   async function CheckConfig(): Promise<boolean> {
     try {
+      if(!aliasName){
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: String('Your LND Alias Empty!'),
+        })
+        return false
+      }
       console.log(lndDir)
       console.log(config)
-      await VerifyConfig(lndDir, config);
+      const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
+      console.log(updatedText)
+      await VerifyConfig(lndDir, updatedText);
       return true
     } catch (error) {
       toast({
@@ -76,11 +62,6 @@ protocol.simple-taproot-chans=true`);
       })
       return false
     }
-  }
-
-  function SaveConfig(value: string) {
-    setConfig(value);
-    localStorage.setItem('config', value);
   }
 
   function SaveLndDir(value: string) {
@@ -116,10 +97,10 @@ protocol.simple-taproot-chans=true`);
   }
 
   useEffect(() => {
-    const savedConfig = localStorage.getItem('config');
-    if (savedConfig && savedConfig !== '') {
-      setConfig(savedConfig);
-    }
+    // const savedConfig = localStorage.getItem('config');
+    // if (savedConfig && savedConfig !== '') {
+    //   setConfig(savedConfig);
+    // }
     const savedLndDir = localStorage.getItem('lndDir');
     if (savedLndDir && savedLndDir !== '') {
       setLndDir(savedLndDir);

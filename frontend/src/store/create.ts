@@ -2,9 +2,38 @@ import { create } from 'zustand'
 import { GenSeed, InitWallet } from '../../wailsjs/go/main/App';
 import { formatWords, formatWordsIndex } from '@/utils/formatWords';
 import { useState } from 'react';
+export const defaultConfig = `[Application Options]
+debuglevel=trace
+maxpendingchannels=10
+alias=
+no-macaroons=false
+coin-selection-strategy=largest
+rpclisten=10009
+restlisten=8080
+no-rest-tls=true
+restcors=https://bevmhub.bevm.io
+
+[Bitcoin]
+bitcoin.mainnet=false
+bitcoin.testnet=false
+bitcoin.simnet=false
+bitcoin.regtest=false
+bitcoin.signet=true
+bitcoin.node=neutrino
+
+[neutrino]
+neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
+neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
+
+[protocol]
+protocol.simple-taproot-chans=true`;
 
 
 interface CreateState {
+  config: string
+  setConfig:(val: string) =>void
+  aliasName: string
+  setAliasName:(val: string) =>void
   pwd: string
   setPwd:(val: string) =>void
   status: 'pwd'|'create'
@@ -30,6 +59,10 @@ interface CreateState {
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
+  config: defaultConfig,
+  setConfig:(val: string) =>set({config: val}),
+  aliasName: '',
+  setAliasName:(val: string) => set({aliasName: val}),
   pwd: '',
   setPwd:(val: string) =>set({pwd: val}),
   status: 'pwd',
