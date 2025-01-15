@@ -4,6 +4,8 @@ import {main} from '../models';
 import {lnrpc} from '../models';
 import {frontend} from '../models';
 
+export function FetchVersionInfo():Promise<main.VersionCtrl>;
+
 export function GenSeed(arg1:string):Promise<Array<string>>;
 
 export function GetDefaultLndDir():Promise<string>;
