@@ -210,6 +210,22 @@ export namespace main {
 		    return a;
 		}
 	}
+	export class VersionCtrl {
+	    CurrentVersion: string;
+	    LatestVersion: string;
+	    NeedUpdate: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new VersionCtrl(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.CurrentVersion = source["CurrentVersion"];
+	        this.LatestVersion = source["LatestVersion"];
+	        this.NeedUpdate = source["NeedUpdate"];
+	    }
+	}
 
 }
 
