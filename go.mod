@@ -8,6 +8,7 @@ require (
 	github.com/btcsuite/btcwallet v0.16.10-0.20240718224643-db3a4a2543bd
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/lightningnetwork/lnd v0.18.3-beta
+	github.com/tidwall/gjson v1.9.3
 	github.com/wailsapp/wails/v2 v2.9.2
 	google.golang.org/grpc v1.59.0
 	gopkg.in/macaroon.v2 v2.0.0
@@ -151,6 +152,8 @@ require (
 	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tkrajina/go-reflector v0.5.6 // indirect
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20201229170055-e5319fda7802 // indirect
 	github.com/tv42/zbase32 v0.0.0-20160707012821-501572607d02 // indirect
