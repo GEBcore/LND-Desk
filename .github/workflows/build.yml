@@ -31,12 +31,22 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Determine prerelease
+        id: prerelease
+        run: |
+          if [[ "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "prerelease=false" >> $GITHUB_ENV
+          else
+            echo "prerelease=true" >> $GITHUB_ENV
+          fi
+
       - name: Build wails
-        uses: btclayer2/wails-build-action@v0.0.6
+        uses: btclayer2/wails-build-action@v0.0.7
         id: build
         with:
           build-name: ${{ matrix.build.name }}
           build-platform: ${{ matrix.build.platform }}
+          prerelease: ${{ env.prerelease }}
           package: true
           node-version: '22.8.0'
           go-version: '1.23'
