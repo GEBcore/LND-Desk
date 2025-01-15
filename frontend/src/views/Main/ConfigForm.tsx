@@ -62,18 +62,15 @@ const ConfigForm = () => {
     setConfig(stringifyConfig(updatedConfig));
   };
 
-  const handleBitcoinNetworkChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const network = event.target.value;
+  const handleBitcoinNetworkChange = (network: string) => {
     const updatedConfig = { ...configObj };
 
-    // Reset all Bitcoin networks to false
     Object.keys(updatedConfig['Bitcoin']).forEach((key) => {
-      if (key.startsWith('bitcoin.')) {
+      if (key.startsWith('bitcoin.') && key !== 'bitcoin.node') {
         updatedConfig['Bitcoin'][key] = 'false';
       }
     });
 
-    // Set selected network to true
     updatedConfig['Bitcoin'][`bitcoin.${network}`] = 'true';
     setConfigObj(updatedConfig);
     setConfig(stringifyConfig(updatedConfig));
@@ -118,26 +115,14 @@ const ConfigForm = () => {
         <div className="flex flex-col items-start w-full gap-[8px]">
           <div className="flex flex-row w-full items-center justify-between">
             <div className="font-normal text-sm text-black leading-4 text-left w-[170px]">BTC Network:</div>
-            {/*<select id="bitcoin-network"*/}
-            {/*        className="w-full flex h-9 rounded-md border border-input px-3 bg-transparent py-1 text-base outline-none"*/}
-            {/*        value={Object.keys(configObj['Bitcoin']).find((key) =>*/}
-            {/*          configObj['Bitcoin'][key] === 'true'*/}
-            {/*        )?.replace('bitcoin.', '')}*/}
-            {/*        onChange={handleBitcoinNetworkChange} >*/}
-            {/*  {['mainnet', 'testnet', 'simnet', 'regtest', 'signet'].map((network) => (*/}
-            {/*    <option key={network} value={network}>*/}
-            {/*      {network}*/}
-            {/*    </option>*/}
-            {/*  ))}*/}
-            {/*</select>*/}
             <div className="rounded-md border border-[1px] border-[#E2E8F0] w-[297px] h-[32px] pl-[12px] leading-[18px] text-[14px] flex flex-row items-center justify-center">
               <SelectRoot collection={frameworks}>
                 <SelectTrigger className="flex flex-row items-center justify-center">
-                  <SelectValueText placeholder="Select Network" className="leading-[18px] text-[14px]" />
+                  <SelectValueText placeholder={'signet'} className="leading-[18px] text-[14px]" />
                 </SelectTrigger>
                 <SelectContent>
-                  {frameworks.items.map((item: { value: React.Key | null | undefined; label: any; }) => (
-                    <SelectItem item={item} key={item.value}>
+                  {frameworks.items.map((item: { value: string; label: string; }) => (
+                    <SelectItem item={item} key={item.value} onClick={() => handleBitcoinNetworkChange(item.value)}>
                       {item.label}
                     </SelectItem>
                   ))}
@@ -166,11 +151,6 @@ const ConfigForm = () => {
           </div>
         </div>
       </div>
-      {/*<textarea*/}
-      {/*  style={{ width: '100%', height: '200px' }}*/}
-      {/*  value={config}*/}
-      {/*  readOnly*/}
-      {/*/>*/}
     </>
   );
 };

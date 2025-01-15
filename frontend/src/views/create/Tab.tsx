@@ -9,8 +9,8 @@ function Tab() {
       <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[35px]">
         Your LND Node Operation Information
       </div>
-      <Tabs.Root defaultValue="new" variant="outline" justify="center" className="w-[480px]">
-        <Tabs.List bg="bg.muted" rounded="l3" p="1">
+      <Tabs.Root defaultValue="new" variant="outline" justify="center" >
+        <Tabs.List rounded="4px" className="flex flex-row justify-between" style={{border:'2px solid #E2E8F0'}}>
           <Tabs.Trigger value="new" className="px-[12px]">
             New Wallet
           </Tabs.Trigger>
@@ -20,7 +20,7 @@ function Tab() {
           <Tabs.Trigger value="private" className="px-[12px]">
             Your own private key
           </Tabs.Trigger>
-          <Tabs.Indicator rounded="l2" />
+          <Tabs.Indicator rounded="l2" style={{border:'2px solid #E67137', color:'#E67137'}} />
         </Tabs.List>
         <Tabs.Content value="import"><Import/></Tabs.Content>
         <Tabs.Content value="new"><New/></Tabs.Content>
