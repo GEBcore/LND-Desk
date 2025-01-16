@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>update</title>
+    <g id="页面-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="更新弹窗" transform="translate(-440.000000, -284.000000)">
+            <g id="ModalContent" transform="translate(422.000000, 210.000000)">
+                <g id="ModalBody" transform="translate(0.000000, 60.000000)">
+                    <g id="update" transform="translate(18.000000, 14.000000)">
+                        <rect id="矩形" fill="#E67137" opacity="0.100000001" x="0" y="1.13686838e-13" width="60" height="60" rx="12"></rect>
+                        <g id="MdArrowDownward" transform="translate(14.000000, 14.000000)">
+                            <path d="M0,0 L32,0 L32,32 L0,32 Z" id="MdArrowDownward-(Background)"></path>
+                            <path d="M32,0 L32,32 L0,32 L0,0 L32,0 Z" id="Vector" stroke-dasharray="0,0" fill-rule="nonzero"></path>
+                            <path d="M24.7866669,12.6200002 L17.3333333,20.0600001 L17.3333333,3.83333333 L14.6666667,3.83333333 L14.6666667,20.0600001 L7.22666677,12.6066666 L5.33333333,14.5 L16,25.1666667 L26.6666667,14.5 L24.7866669,12.6200002 Z" id="Vector" fill="#E67137" fill-rule="nonzero" stroke-dasharray="0,0"></path>
+                            <line x1="5" y1="28.1666667" x2="27" y2="28.1666667" id="路径-6" stroke="#E67137" stroke-width="3"></line>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

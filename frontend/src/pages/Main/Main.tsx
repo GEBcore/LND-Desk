@@ -1,46 +1,20 @@
 import { useState, useEffect } from 'react';
 import './Main.css';
-import INIEditor from '../../components/editor';
 import { useNavigate } from 'react-router-dom';
 import { RunLnd, VerifyConfig, GetDefaultLndDir, OpenDirectorySelector } from "@/../wailsjs/go/main/App";
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from '@/hooks/use-toast';
-import { Folder, Power, PowerOff } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import { frontend } from '@/../wailsjs/go/models';
 import { useCreateStore } from '@/store/create';
-import { resolve } from 'path';
 import { ConfirmButton } from '@/components/ConfirmButton';
 import ConfigForm from '@/views/Main/ConfigForm';
+import { QA } from '@/views/Main/QA';
+import folder from '@/assets/lndstate/folderOpen.svg'
+import { UpdateAlert } from '@/views/Main/Update';
 
 function Main() {
-  const [config, setConfig] = useState(`[Application Options]
-debuglevel=trace
-maxpendingchannels=10
-alias=Bevm_client_test
-no-macaroons=false
-coin-selection-strategy=largest
-rpclisten=localhost:10009
-restlisten=localhost:8080
-no-rest-tls=true
-restcors=https://bevmhub.bevm.io
-
-[Bitcoin]
-bitcoin.mainnet=false
-bitcoin.testnet=false
-bitcoin.simnet=false
-bitcoin.regtest=false
-bitcoin.signet=true
-bitcoin.node=neutrino
-
-[neutrino]
-neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
-neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
-
-[protocol]
-protocol.simple-taproot-chans=true`);
+  const { config, setConfig, aliasName } = useCreateStore()
   const [lndDir, setLndDir] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast()
@@ -64,9 +38,19 @@ protocol.simple-taproot-chans=true`);
 
   async function CheckConfig(): Promise<boolean> {
     try {
+      if(!aliasName){
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: String('Your LND Alias Empty!'),
+        })
+        return false
+      }
       console.log(lndDir)
       console.log(config)
-      await VerifyConfig(lndDir, config);
+      const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
+      console.log(updatedText)
+      await VerifyConfig(lndDir, updatedText);
       return true
     } catch (error) {
       toast({
@@ -76,11 +60,6 @@ protocol.simple-taproot-chans=true`);
       })
       return false
     }
-  }
-
-  function SaveConfig(value: string) {
-    setConfig(value);
-    localStorage.setItem('config', value);
   }
 
   function SaveLndDir(value: string) {
@@ -116,10 +95,10 @@ protocol.simple-taproot-chans=true`);
   }
 
   useEffect(() => {
-    const savedConfig = localStorage.getItem('config');
-    if (savedConfig && savedConfig !== '') {
-      setConfig(savedConfig);
-    }
+    // const savedConfig = localStorage.getItem('config');
+    // if (savedConfig && savedConfig !== '') {
+    //   setConfig(savedConfig);
+    // }
     const savedLndDir = localStorage.getItem('lndDir');
     if (savedLndDir && savedLndDir !== '') {
       setLndDir(savedLndDir);
@@ -137,26 +116,16 @@ protocol.simple-taproot-chans=true`);
       <div className="w-[480px] flex flex-col items-start gap-[24px] mb-[40px]">
         <div className="flex flex-col items-start w-full gap-[8px]">
           <div className="font-normal text-base text-black leading-5 text-left font-normal uppercase:none">Data Storage Directory</div>
-          <div className='flex w-full max-w-3xl items-center space-x-3'>
-            <Input className="w-full" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
-            <Button onClick={ChooseLndDir} > <Folder /></Button>
+          <div className='flex w-full items-center relative'>
+            <Input className="w-[480px]" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
+            <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={folder} alt=""/></div>
           </div>
         </div>
         <ConfigForm/>
       </div>
-      {/*<div id="input-box" className='w-[80%] mx-auto'>*/}
-        {/*<div id="editor-container" className='w-full'>*/}
-        {/*  /!*<INIEditor config={config} onChange={SaveConfig} />*!/*/}
-        {/*</div>*/}
-        {/*<div className="power-button-container">*/}
-        {/*  <div className={`power-button off }`} onClick={RunNode}>*/}
-        {/*    <div className="power-indicator flex flex-col justify-center items-center">*/}
-        {/*      <Power />*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-        <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
-      {/*</div>*/}
+      <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
+      <UpdateAlert/>
+      {/*<QA/>*/}
     </div>
   )
 }

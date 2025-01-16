@@ -12,7 +12,6 @@ import {
 } from '../../../wailsjs/go/main/App';
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
-import { ClipboardCopy, Folder, Lock, Unlock as UnlockIcn } from 'lucide-react';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -22,6 +21,7 @@ import { useCreateStore } from '@/store/create';
 import { frontend } from '../../../wailsjs/go/models';
 import { ConfirmButton } from '@/components/ConfirmButton';
 import copyIcon from '@/assets/lndstate/copy.svg'
+import { UpdateAlert } from '@/views/Main/Update';
 
 enum WalletState {
   WalletState_NON_EXISTING,
@@ -261,28 +261,28 @@ function LndState() {
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
           <Label className='w-full max-w-md'>Lnd Dir</Label>
-          <div className="relative flex w-full max-w-md">
+          <div className="flex w-full max-w-md relative">
             <Input className="pr-10" type="text" value={LndInfo.path} disabled />
-            <Button onClick={() => copyToClipboard(LndInfo.path)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <img src={copyIcon} alt=""/></Button>
+            <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={() => copyToClipboard(LndInfo.path)}><img src={copyIcon} alt=""/></div>
           </div>
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
           <Label className='w-full max-w-md'>Lnd REST</Label>
           <div className="relative flex w-full max-w-md">
             <Input className="pr-10" type="text" value={LndInfo.rest} disabled />
-            <Button onClick={() => copyToClipboard(LndInfo.rest)} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon">
-              <img src={copyIcon} alt=""/></Button>
+            <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={() => copyToClipboard(LndInfo.rest)}><img src={copyIcon} alt=""/></div>
           </div>
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
           <Label className='w-full max-w-md'>Lnd Admin Macaroon</Label>
           <div className="relative flex w-full max-w-md">
             <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
-            <Button onClick={ChooseLndDir} className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 p-0 flex items-center justify-center" variant="outline" size="icon"> <Folder /></Button>
+            <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={copyIcon} alt=""/></div>
           </div>
         </div>
         <ConfirmButton onClick={StopNode} content={'Stop'}/>
       </div>
+      <UpdateAlert/>
     </div>
   )
 }

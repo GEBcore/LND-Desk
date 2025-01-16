@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   Text,
@@ -6,8 +6,6 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogFooter } from '@/components/ui/dialog';
 import Warning from '@/assets/fonts/warning.svg'
 import { useCreateStore } from '@/store/create';
-import { toast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
 import Loading from '@/components/Loading';
 import { ConfirmButton } from '@/components/ConfirmButton';
 
@@ -26,7 +24,7 @@ export const ChakraMnemonicAlert = ({onSubmit}:{onSubmit:any}) => {
   };
 
   return (
-    <Dialog open={showMnemonicDialog}>
+    <Dialog open={showMnemonicDialog} onOpenChange={()=>setShowMnemonicDialog(false)}>
       <DialogContent className="p-[18px] rounded-lg shadow-lg flex flex-col items-center justify-center w-[436px]">
         <DialogHeader>
           <Text fontSize="18px" fontWeight="semibold" color="#2D3748" className="mb-[15px]">
