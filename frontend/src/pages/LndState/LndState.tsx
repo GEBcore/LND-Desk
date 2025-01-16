@@ -21,6 +21,7 @@ import { useCreateStore } from '@/store/create';
 import { frontend } from '../../../wailsjs/go/models';
 import { ConfirmButton } from '@/components/ConfirmButton';
 import copyIcon from '@/assets/lndstate/copy.svg'
+import { UpdateAlert } from '@/views/Main/Update';
 
 enum WalletState {
   WalletState_NON_EXISTING,
@@ -281,6 +282,7 @@ function LndState() {
         </div>
         <ConfirmButton onClick={StopNode} content={'Stop'}/>
       </div>
+      <UpdateAlert/>
     </div>
   )
 }

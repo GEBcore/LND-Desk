@@ -11,6 +11,7 @@ import { ConfirmButton } from '@/components/ConfirmButton';
 import ConfigForm from '@/views/Main/ConfigForm';
 import { QA } from '@/views/Main/QA';
 import folder from '@/assets/lndstate/folderOpen.svg'
+import { UpdateAlert } from '@/views/Main/Update';
 
 function Main() {
   const { config, setConfig, aliasName } = useCreateStore()
@@ -123,6 +124,7 @@ function Main() {
         <ConfigForm/>
       </div>
       <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
+      <UpdateAlert/>
       {/*<QA/>*/}
     </div>
   )

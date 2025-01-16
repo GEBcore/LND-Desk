@@ -1,7 +1,6 @@
 import { create } from 'zustand'
-import { GenSeed, InitWallet } from '../../wailsjs/go/main/App';
+import { FetchVersionInfo, GenSeed, GetVersion, InitWallet } from '../../wailsjs/go/main/App';
 import { formatWords, formatWordsIndex } from '@/utils/formatWords';
-import { useState } from 'react';
 export const defaultConfig = `[Application Options]
 debuglevel=trace
 maxpendingchannels=10
@@ -58,6 +57,12 @@ interface CreateState {
   setConfirmLoading: (val: boolean) => void
   showQADialog: boolean
   setShowQADialog: (val: boolean) => void
+  showUpdateDialog: boolean
+  setShowUpdateDialog: (val: boolean) => void
+  updateVersion: string
+  currentVersion: string
+  getVersion:() => Promise<{ status: string; data?: any; error?: any }>
+  fetchVersionInfo:() => Promise<{ status: string; data?: any; error?: any }>
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -105,5 +110,31 @@ export const useCreateStore = create<CreateState>((set, get) => ({
   confirmLoading: false,
   setConfirmLoading: (val: boolean) => set({confirmLoading: val}),
   showQADialog: false,
-  setShowQADialog: (val: boolean) => set({showQADialog: val})
+  setShowQADialog: (val: boolean) => set({showQADialog: val}),
+  updateVersion: '',
+  currentVersion:'',
+  showUpdateDialog: false,
+  setShowUpdateDialog: (val: boolean) => set({showUpdateDialog: val}),
+  getVersion:async ():Promise<{ status: string; data?: any; error?: any }> => {
+    try {
+      const data = await GetVersion();
+      console.log(data)
+      set({currentVersion: data})
+      return { status: 'success', data };
+    } catch (error) {
+      console.error('Error:', error);
+      return { status: 'fail', error };
+    }
+  },
+  fetchVersionInfo:async ():Promise<{ status: string; data?: any; error?: any }> => {
+    try {
+      const data = await FetchVersionInfo();
+      const {CurrentVersion, LatestVersion, NeedUpdate } = data
+      set({showUpdateDialog: NeedUpdate, updateVersion: LatestVersion, currentVersion: CurrentVersion})
+      return { status: 'success', data };
+    } catch (error) {
+      console.error('Error:', error);
+      return { status: 'fail', error };
+    }
+  },
 }))
