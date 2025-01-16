@@ -18,6 +18,12 @@ function Main() {
   const [lndDir, setLndDir] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast()
+  const {getVersion, fetchVersionInfo, currentVersion, updateVersion} = useCreateStore()
+
+  useEffect(() => {
+    getVersion()
+    fetchVersionInfo()
+  }, []);
 
   async function RunNode() {
     const isVerify = await CheckConfig()
@@ -125,6 +131,7 @@ function Main() {
       </div>
       <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
       <UpdateAlert/>
+      <div>currentVersion: {currentVersion} updateVersion: {updateVersion}</div>
       {/*<QA/>*/}
     </div>
   )
