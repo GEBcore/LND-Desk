@@ -13,8 +13,13 @@ import { BrowserOpenURL } from '../../../wailsjs/runtime';
 export const UpdateAlert = () => {
   const { showUpdateDialog, setShowUpdateDialog, updateVersion } = useCreateStore()
 
+  const updateLater = () => {
+    localStorage.setItem('reminderTime', String(Date.now()))
+    setShowUpdateDialog(false)
+  }
+
   return (
-    <Dialog open={showUpdateDialog} onOpenChange={()=> setShowUpdateDialog(false)}>
+    <Dialog open={showUpdateDialog} onOpenChange={updateLater}>
       <DialogContent className="p-[18px] rounded-lg shadow-lg flex flex-col items-end justify-end w-[436px]">
         <Text fontSize="18px" fontWeight="semibold" color="#2D3748" className="w-full">
           Software Update
@@ -27,7 +32,7 @@ export const UpdateAlert = () => {
         </div>
         <DialogFooter>
           <Button
-            onClick={()=>setShowUpdateDialog(false)}
+            onClick={updateLater}
             style={{border:'1px solid rgb(200, 200, 200)', padding: '4px 40px', fontSize:'16px', outline:'none'}}
           >
             Later

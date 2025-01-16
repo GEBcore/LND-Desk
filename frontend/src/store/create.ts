@@ -126,14 +126,32 @@ export const useCreateStore = create<CreateState>((set, get) => ({
     }
   },
   fetchVersionInfo:async ():Promise<{ status: string; data?: any; error?: any }> => {
-    try {
-      const data = await FetchVersionInfo();
-      const {CurrentVersion, LatestVersion, NeedUpdate } = data
-      set({showUpdateDialog: NeedUpdate, updateVersion: LatestVersion, currentVersion: CurrentVersion})
-      return { status: 'success', data };
-    } catch (error) {
-      console.error('Error:', error);
-      return { status: 'fail', error };
+    async function getVersionInfo() {
+      try {
+        const data = await FetchVersionInfo();
+        const { CurrentVersion, LatestVersion, NeedUpdate } = data;
+        set({ showUpdateDialog: NeedUpdate, updateVersion: LatestVersion, currentVersion: CurrentVersion });
+        return { status: 'success', data };
+      } catch (error) {
+        console.error('Error:', error);
+        return { status: 'fail', error };
+      }
+    }
+    const reminderTime = localStorage.getItem('reminderTime');
+    const timestamp = Date.now();
+    if (reminderTime) {
+      const reminderTimestamp = Number(reminderTime);
+      const timeDifference = timestamp - reminderTimestamp;
+      const twoHoursInMilliseconds = 2 * 60 * 60 * 1000;
+
+      if (timeDifference > twoHoursInMilliseconds) {
+        return await getVersionInfo();
+      } else {
+        console.error('waiting time...')
+        return { status: 'fail', error: 'waiting time...' }; // 未超过2小时
+      }
+    } else {
+      return await getVersionInfo();
     }
   },
 }))
