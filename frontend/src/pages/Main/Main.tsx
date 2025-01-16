@@ -131,7 +131,6 @@ function Main() {
       </div>
       <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
       <UpdateAlert/>
-      <div>currentVersion: {currentVersion} updateVersion: {updateVersion}</div>
       {/*<QA/>*/}
     </div>
   )

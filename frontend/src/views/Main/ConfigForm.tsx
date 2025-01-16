@@ -87,9 +87,9 @@ const ConfigForm = () => {
   const frameworks = createListCollection({
     items: [
       { label: "mainnet", value: "mainnet" },
-      { label: "testnet", value: "testnet" },
-      { label: "simnet", value: "simnet" },
-      { label: "regtest", value: "regtest" },
+      // { label: "testnet", value: "testnet" },
+      // { label: "simnet", value: "simnet" },
+      // { label: "regtest", value: "regtest" },
       { label: "signet", value: "signet" },
     ],
   })

@@ -14,9 +14,6 @@ restcors=https://bevmhub.bevm.io
 
 [Bitcoin]
 bitcoin.mainnet=false
-bitcoin.testnet=false
-bitcoin.simnet=false
-bitcoin.regtest=false
 bitcoin.signet=true
 bitcoin.node=neutrino
 
@@ -27,7 +24,9 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
 [protocol]
 protocol.simple-taproot-chans=true`;
 
-
+// bitcoin.testnet=false
+// bitcoin.simnet=false
+// bitcoin.regtest=false
 interface CreateState {
   config: string
   setConfig:(val: string) =>void
@@ -118,7 +117,7 @@ export const useCreateStore = create<CreateState>((set, get) => ({
   getVersion:async ():Promise<{ status: string; data?: any; error?: any }> => {
     try {
       const data = await GetVersion();
-      console.log(data)
+      // console.log(data)
       set({currentVersion: data})
       return { status: 'success', data };
     } catch (error) {
