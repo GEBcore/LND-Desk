@@ -5,10 +5,8 @@ import { createListCollection } from "@chakra-ui/react"
 import {
   SelectContent,
   SelectItem,
-  SelectLabel,
   SelectRoot,
   SelectTrigger,
-  SelectValueText,
 } from "@/components/ui/select"
 interface Config {
   [section: string]: {
@@ -52,6 +50,7 @@ const stringifyConfig = (configObj: Config): string => {
 
 const ConfigForm = () => {
   const { config, setConfig, aliasName, setAliasName } = useCreateStore()
+  const [currentnetwork, setCurrentnetwork] = useState('signet')
   const [configObj, setConfigObj] = useState<Config>(parseConfig(defaultConfig));
   const [isTouched, setIsTouched] = useState(false);
 
@@ -64,6 +63,7 @@ const ConfigForm = () => {
 
   const handleBitcoinNetworkChange = (network: string) => {
     const updatedConfig = { ...configObj };
+    setCurrentnetwork(network)
 
     Object.keys(updatedConfig['Bitcoin']).forEach((key) => {
       if (key.startsWith('bitcoin.') && key !== 'bitcoin.node') {
@@ -118,7 +118,8 @@ const ConfigForm = () => {
             <div className="rounded-md border border-[1px] border-[#E2E8F0] w-[297px] h-[32px] pl-[12px] leading-[18px] text-[14px] flex flex-row items-center justify-center">
               <SelectRoot collection={frameworks}>
                 <SelectTrigger className="flex flex-row items-center justify-center">
-                  <SelectValueText placeholder={'signet'} className="leading-[18px] text-[14px]" />
+                  {/*<SelectValueText placeholder={'signet'} className="leading-[18px] text-[14px]" />*/}
+                  <div>{currentnetwork}</div>
                 </SelectTrigger>
                 <SelectContent>
                   {frameworks.items.map((item: { value: string; label: string; }) => (

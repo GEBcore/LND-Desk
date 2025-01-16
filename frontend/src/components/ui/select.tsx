@@ -73,33 +73,6 @@ export const SelectItem = React.forwardRef<
     </ChakraSelect.Item>
   )
 })
-
-interface SelectValueTextProps
-  extends Omit<ChakraSelect.ValueTextProps, "children"> {
-  children?(items: CollectionItem[]): React.ReactNode
-}
-
-export const SelectValueText = React.forwardRef<
-  HTMLSpanElement,
-  SelectValueTextProps
->(function SelectValueText(props, ref) {
-  const { children, ...rest } = props
-  return (
-    <ChakraSelect.ValueText {...rest} ref={ref}>
-      <ChakraSelect.Context>
-        {(select) => {
-          const items = select.selectedItems
-          if (items.length === 0) return props.placeholder
-          if (children) return children(items)
-          if (items.length === 1)
-            return select.collection.stringifyItem(items[0])
-          return `${items.length} selected`
-        }}
-      </ChakraSelect.Context>
-    </ChakraSelect.ValueText>
-  )
-})
-
 export const SelectRoot = React.forwardRef<
   HTMLDivElement,
   ChakraSelect.RootProps
