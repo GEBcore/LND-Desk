@@ -2,25 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  background-color: white;
-  color: rgb(17, 18, 19);
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('../public/fonts/SpaceGrotesk-Regular.ttf') format('truetype');
+  font-weight: 100 900; /* 可变字体的权重范围 */
+  font-style: normal;
 }
 
 body {
-  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400; /* 设置所需的字体权重 */
+}
+
+html {
+  background-color: white;
   color: rgb(17, 18, 19);
-  font-family: "SpaceGrotesk", sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-@font-face {
-  font-family: "SpaceGrotesk, SpaceGrotesk";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    url("assets/fonts/static/SpaceGrotesk-Bold.ttf") format("ttf");
-}
 
+/*body {*/
+/*  margin: 0;*/
+/*  color: rgb(17, 18, 19);*/
+/*  font-family: 'Roboto', sans-serif;*/
+/*  !*font-family: "CustomFont", sans-serif, SpaceGrotesk, SpaceGrotesk;;*!*/
+/*}*/
 
 @layer base {
   :root {
