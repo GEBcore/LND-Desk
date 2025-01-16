@@ -36,14 +36,15 @@ function Pwd() {
   }
   return (
     <>
-      <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[40px]">
+      <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[40px] font-family-medium">
         Create a password for your wallet
       </div>
       <Toaster />
       <form className="flex flex-col items-center justify-center" onSubmit={onSubmit}>
-        <Stack gap="4" align="flex-start" width="480px">
-          <Field label="Input wallet Password:" helperText="The password must be at least eight digits！" errorText={error}>
+        <Stack gap="4" align="flex-start" width="480px" className="font-family-medium">
+          <Field label="Input wallet Password:" helperText="The password must be at least eight digits！"  errorText={error}>
             <Input
+              className="font-family-regular"
               height={'32px'}
               placeholder="Please Enter Your Password"
               value={pwd}
@@ -53,6 +54,7 @@ function Pwd() {
           <Field label="Confirm wallet Password:" errorText={error}>
             <Input
               height={'32px'}
+              className="font-family-regular"
               placeholder="Please Confirm Your Password"
               value={confirmPwd}
               onChange={(e) => setConfirmPwd(e.target.value)}

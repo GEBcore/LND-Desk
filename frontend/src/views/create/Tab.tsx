@@ -6,11 +6,11 @@ import Private from '@/views/create/Private';
 function Tab() {
   return (
     <div className="flex flex-col justify-center items-center flex-wrap gap-[16px] w-full">
-      <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[35px]">
+      <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[35px] font-family-medium">
         Your LND Node Operation Information
       </div>
       <Tabs.Root defaultValue="new" variant="outline" justify="center" >
-        <Tabs.List rounded="4px" className="flex flex-row justify-between" style={{border:'2px solid #E2E8F0'}}>
+        <Tabs.List rounded="4px" className="flex flex-row justify-between font-family-medium" style={{border:'2px solid #E2E8F0'}}>
           <Tabs.Trigger value="new" className="px-[12px]">
             New Wallet
           </Tabs.Trigger>

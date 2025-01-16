@@ -37,7 +37,7 @@ export const ChakraMnemonicAlert = ({onSubmit}:{onSubmit:any}) => {
             </Text>
           </div>
         </DialogHeader>
-        <div className="flex flex-col px-[15px] py-[12px]" style={{ border: '1px solid #E67137',background: `${[btcTheme.orange[50]]}`, borderRadius:'6px', color:`${[btcTheme.orange[800]]}`, gap:'10px'}}>
+        <div className="flex flex-col px-[15px] py-[12px]" style={{ border: '1px solid #E67137',background: `${[btcTheme.orange[50]]}`, borderRadius:'6px', color:`${[btcTheme.orange[800]]}`, gap:'10px', fontSize:'16px'}}>
           <div className="flex flex-row items-start">
             <Text as="span" fontWeight="bold" mr={2}>•</Text>
             <Text as="span">This is your ONLY chance to backup these words</Text>
@@ -57,6 +57,7 @@ export const ChakraMnemonicAlert = ({onSubmit}:{onSubmit:any}) => {
         <DialogFooter>
           <Button
             variant="outline"
+            className="font-family-bold"
             size="md"
             w={{ base: 'full', sm: 'auto' }}
             onClick={()=>setShowMnemonicDialog(false)}

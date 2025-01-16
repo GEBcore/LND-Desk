@@ -53,12 +53,13 @@ function New() {
     <div className="flex flex-col items-center justify-center mx-w-full">
       <Toaster />
       {newStatus === 'phrase' && <div className="flex flex-col justify-center items-center">
-        <div className="font-normal text-[20px] text-[#1A202C] leading-[26px] text-right not-italic my-[24px]">
+        <div className="font-normal text-[20px] text-[#1A202C] leading-[26px] text-right not-italic my-[24px] font-family-medium">
           Set cipher seed passphrase(optional)
         </div>
-        <Stack gap={'24px'} align="flex-start" width="480px">
+        <Stack gap={'24px'} align="flex-start" width="480px" className="font-family-medium">
           <Field label="Input your cipher seed passphrase">
             <Input
+              className="font-family-regular"
               placeholder="If not, no input is required."
               value={createPassphrase}
               onChange={(e) => setCreatePassphrase(e.target.value)}
@@ -66,6 +67,7 @@ function New() {
           </Field>
           <Field label="Confirm your cipher seed passphrase">
             <Input
+              className="font-family-regular"
               placeholder="If not, no input is required."
               value={confirmPassphrase}
               onChange={(e) => setConfirmPassphrase(e.target.value)}
@@ -81,7 +83,7 @@ function New() {
           {showCreateMnemonic.map((word, index) => (
             <div key={index} className="flex items-center space-x-2">
               <span className="text-gray-500 text-sm">{index + 1}.</span>
-              <span className="text-gray-900">{word}</span>
+              <span className="text-gray-900 font-family-medium">{word}</span>
             </div>
           ))}
         </div>

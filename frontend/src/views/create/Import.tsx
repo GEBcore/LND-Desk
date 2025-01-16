@@ -53,9 +53,10 @@ function Import() {
     <div className="flex flex-col items-center justify-center mx-w-full">
       <Toaster />
       <div className="flex flex-col justify-center items-center">
-        <Stack gap="4" align="flex-start" width="480px">
+        <Stack gap="4" align="flex-start" width="480px" className="font-family-medium">
           <Field label="" errorText={error}>
             <Textarea
+              className="font-family-regular"
               placeholder="Please enter the 24-word mnemonic, separated by spaces."
               value={mnemonic}
               onChange={(e) => setMnemonic(e.target.value)}
@@ -63,11 +64,12 @@ function Import() {
               _hover={{ borderColor: '#E67137' }}
               _active={{ borderColor: '#E67137' }}
               // _hover={{border:'1px solid #E67137', outline:'none'}}
-              style={{height:'120px', padding:'12px',  border:'1px solid #e4e4e7', outline:'none'}}
+              style={{height:'120px', padding:'12px',  border:'1px solid #e4e4e7', outline:'none', fontSize:'14px'}}
             />
           </Field>
-          <Field label="Input your cipher seed passphrase">
+          <Field label="Input your cipher seed passphrase" className="font-family-medium">
             <Input
+              className="font-family-regular"
               placeholder="If not, no input is required."
               value={passphrase}
               onChange={(e) => setPassphrase(e.target.value)}

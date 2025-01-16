@@ -249,32 +249,32 @@ function LndState() {
       </Dialog>
       <Toaster />
       <div className="flex flex-col justify-center items-center flex-wrap gap-[16px] w-full">
-        <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[35px]">
+        <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[35px] font-family-medium">
           Your LND Node Operation Information
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
-          <Label className='w-full max-w-md'>Block Sync Process</Label>
+          <Label className='w-full max-w-md font-family-medium'>Block Sync Process</Label>
           <div className="relative flex items-center justify-center w-full max-w-md gap-3">
             <Progress value={progress} className="w-[90%]" />
             <Label className='w-[15%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
           </div>
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
-          <Label className='w-full max-w-md'>Lnd Dir</Label>
+          <Label className='w-full max-w-md font-family-medium'>Lnd Dir</Label>
           <div className="flex w-full max-w-md relative">
             <Input className="pr-10" type="text" value={LndInfo.path} disabled />
             <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={() => copyToClipboard(LndInfo.path)}><img src={copyIcon} alt=""/></div>
           </div>
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
-          <Label className='w-full max-w-md'>Lnd REST</Label>
+          <Label className='w-full max-w-md font-family-medium'>Lnd REST</Label>
           <div className="relative flex w-full max-w-md">
             <Input className="pr-10" type="text" value={LndInfo.rest} disabled />
             <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={() => copyToClipboard(LndInfo.rest)}><img src={copyIcon} alt=""/></div>
           </div>
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
-          <Label className='w-full max-w-md'>Lnd Admin Macaroon</Label>
+          <Label className='w-full max-w-md font-family-medium'>Lnd Admin Macaroon</Label>
           <div className="relative flex w-full max-w-md">
             <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
             <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={copyIcon} alt=""/></div>

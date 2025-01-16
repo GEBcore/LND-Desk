@@ -43,11 +43,12 @@ function Private() {
         <Stack gap="4" align="flex-start" width="480px">
           <Field label="" errorText={error}>
             <Textarea
+              className="font-family-regular"
               placeholder="Please enter your own private key."
               value={privateKey}
               onChange={(e) => setPrivateKey(e.target.value)}
               _hover={{border:'1px solid #E67137', outline:'none'}}
-              style={{height:'120px', padding:'12px',  border:'1px solid #e4e4e7', outline:'none'}}
+              style={{height:'120px', padding:'12px',  border:'1px solid #e4e4e7', outline:'none', fontSize:'14px'}}
             />
           </Field>
         </Stack>

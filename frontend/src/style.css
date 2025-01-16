@@ -3,15 +3,28 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Space Grotesk';
+  font-family: 'Space Grotesk Regular';
   src: url('../public/fonts/SpaceGrotesk-Regular.ttf') format('truetype');
-  font-weight: 100 900; /* 可变字体的权重范围 */
+  font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Space Grotesk Medium';
+  src: url('../public/fonts/SpaceGrotesk-Medium.ttf') format('truetype'),
+  url('../public/fonts/SpaceGrotesk-Bold.ttf') format('truetype');
+  font-weight: 500;  /* 只为 Medium 版本 */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Space Grotesk Bold';
+  src: url('../public/fonts/SpaceGrotesk-Bold.ttf') format('truetype');
+}
+
 body {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 400; /* 设置所需的字体权重 */
+  font-family: 'Space Grotesk Regular', sans-serif;
+  /*font-weight: 100 900;*/
 }
 
 html {

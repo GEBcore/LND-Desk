@@ -109,16 +109,16 @@ function Main() {
 
   return (
     <div className='flex flex-col items-center justify-center mt-[48px] mx-w-full'>
-      <div className="font-normal text-[24px] text-[#1A202C] leading-[31px] text-center not-italic max-w-[380px] mb-[35px]">
+      <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[35px] font-family-medium">
         Your LND Node Operation Information
       </div>
       <Toaster />
       <div className="w-[480px] flex flex-col items-start gap-[24px] mb-[40px]">
         <div className="flex flex-col items-start w-full gap-[8px]">
-          <div className="font-normal text-base text-black leading-5 text-left font-normal uppercase:none">Data Storage Directory</div>
+          <div className="text-base text-black leading-5 text-left uppercase:none font-family-medium">Data Storage Directory</div>
           <div className='flex w-full items-center relative'>
             <Input className="w-[480px]" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
-            <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={folder} alt=""/></div>
+            <div className="bg-[#EDF2F7] absolute p-[8px] right-[0px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={folder} alt=""/></div>
           </div>
         </div>
         <ConfigForm/>

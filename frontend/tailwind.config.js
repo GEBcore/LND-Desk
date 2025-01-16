@@ -5,7 +5,9 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['CustomFont', 'sans-serif', 'SpaceGrotesk', 'SpaceGrotesk'],
+				'family-regular': ['Space Grotesk Regular', 'sans-serif'],
+				'family-medium': ['Space Grotesk Medium', 'sans-serif'],
+				'family-bold': ['Space Grotesk Bold', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
