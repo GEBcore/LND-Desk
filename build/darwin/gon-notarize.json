@@ -1,0 +1,15 @@
+{
+  "notarize": [{
+    "path": "./build/bin/LND-Desk.pkg",
+    "bundle_id": "com.bevm.LND-Desk",
+    "staple": true
+  },{
+    "path": "./build/bin/LND-Desk.app.zip",
+    "bundle_id": "com.bevm.LND-Desk",
+    "staple": false
+  }],
+  "apple_id": {
+    "username": "@env:APPLE_USERNAME",
+    "password": "@env:APPLE_PASSWORD"
+  }
+}
