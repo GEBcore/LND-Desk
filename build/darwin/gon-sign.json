@@ -2,11 +2,11 @@
   "source" : ["./build/bin/LND-Desk.app"],
   "bundle_id" : "com.bevm.LND-Desk",
   "apple_id": {
-    "username": "@env:APPLE_USERNAME",
+    "username": "lownkid@outlook.com",
     "password": "@env:APPLE_PASSWORD"
   },
   "sign" :{
-    "application_identity" : "@env:APPLICATION_IDENTITY",
+    "application_identity" : "Apple Distribution: Chainnet Technology (Hangzhou) Company Limited (H6XKR479R6)",
     "entitlements_file": "./build/darwin/entitlements.plist"
   },
   "dmg" :{

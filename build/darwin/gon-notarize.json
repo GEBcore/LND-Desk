@@ -9,7 +9,7 @@
     "staple": false
   }],
   "apple_id": {
-    "username": "@env:APPLE_USERNAME",
+    "username": "lownkid@outlook.com",
     "password": "@env:APPLE_PASSWORD"
   }
 }
