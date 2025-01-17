@@ -5,11 +5,11 @@ import { Tabs } from "@chakra-ui/react"
 import Private from '@/views/create/Private';
 function Tab() {
   return (
-    <div className="flex flex-col justify-center items-center flex-wrap gap-[16px] w-full">
-      <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[35px] font-family-medium">
+    <div className="flex flex-col justify-center items-center flex-wrap w-full">
+      <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[40px] font-family-medium">
         Your LND Node Operation Information
       </div>
-      <Tabs.Root defaultValue="new" variant="outline" justify="center" >
+      <Tabs.Root defaultValue="new" variant="outline" justify="center">
         <Tabs.List rounded="4px" className="flex flex-row justify-between font-family-medium" style={{border:'2px solid #E2E8F0'}}>
           <Tabs.Trigger value="new" className="px-[12px]">
             New Wallet
@@ -22,9 +22,9 @@ function Tab() {
           </Tabs.Trigger>
           <Tabs.Indicator rounded="l2" style={{border:'2px solid #E67137', color:'#E67137'}} />
         </Tabs.List>
-        <Tabs.Content value="import"><Import/></Tabs.Content>
-        <Tabs.Content value="new"><New/></Tabs.Content>
-        <Tabs.Content value="private"><Private/></Tabs.Content>
+        <Tabs.Content value="import" className="pt-[24px]"><Import/></Tabs.Content>
+        <Tabs.Content value="new" className="pt-[24px]"><New/></Tabs.Content>
+        <Tabs.Content value="private" className="pt-[24px]"><Private/></Tabs.Content>
       </Tabs.Root>
     </div>
 

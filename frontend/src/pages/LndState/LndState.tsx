@@ -236,14 +236,7 @@ function LndState() {
                 className="border-gray-300"
               />
             </div>
-            <Button
-              type="submit"
-              onClick={UnlockWallet}
-              size="sm"
-              className="px-3"
-            >
-              Unlock
-            </Button>
+            <ConfirmButton type="submit" content={'Unlock'} onClick={UnlockWallet} style={{padding: '6px 12px'}}/>
           </div>
         </DialogContent>
       </Dialog>

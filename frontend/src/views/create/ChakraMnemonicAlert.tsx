@@ -25,7 +25,7 @@ export const ChakraMnemonicAlert = ({onSubmit}:{onSubmit:any}) => {
 
   return (
     <Dialog open={showMnemonicDialog} onOpenChange={()=>setShowMnemonicDialog(false)}>
-      <DialogContent className="p-[18px] rounded-lg shadow-lg flex flex-col items-center justify-center w-[436px]">
+      <DialogContent className="p-[18px] rounded-lg shadow-lg flex flex-col items-center justify-center w-[436px] gap-[16px]">
         <DialogHeader>
           <Text fontSize="18px" fontWeight="semibold" color="#2D3748" className="mb-[15px]">
             Important Security Notice
@@ -37,7 +37,7 @@ export const ChakraMnemonicAlert = ({onSubmit}:{onSubmit:any}) => {
             </Text>
           </div>
         </DialogHeader>
-        <div className="flex flex-col px-[15px] py-[12px]" style={{ border: '1px solid #E67137',background: `${[btcTheme.orange[50]]}`, borderRadius:'6px', color:`${[btcTheme.orange[800]]}`, gap:'10px', fontSize:'16px'}}>
+        <div className="flex flex-col px-[15px] py-[12px] leading-[21px]" style={{ border: '1px solid #E67137',background: `${[btcTheme.orange[50]]}`, borderRadius:'6px', color:`${[btcTheme.orange[800]]}`, gap:'12px', fontSize:'16px'}}>
           <div className="flex flex-row items-start">
             <Text as="span" fontWeight="bold" mr={2}>•</Text>
             <Text as="span">This is your ONLY chance to backup these words</Text>
@@ -51,7 +51,7 @@ export const ChakraMnemonicAlert = ({onSubmit}:{onSubmit:any}) => {
             <Text as="span">Store this backup in a secure location, never share it with anyone</Text>
           </div>
         </div>
-        <Text color={btcTheme.orange[500]} fontSize="sm" fontWeight="medium" className="flex flex-row justify-start text-start w-full">
+        <Text color={btcTheme.orange[500]} fontSize="sm" fontWeight="medium" className="flex flex-row justify-start text-start w-full mb-[10px]">
           Once confirmed, you will not see these words again
         </Text>
         <DialogFooter>

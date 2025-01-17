@@ -53,11 +53,11 @@ function New() {
     <div className="flex flex-col items-center justify-center mx-w-full">
       <Toaster />
       {newStatus === 'phrase' && <div className="flex flex-col justify-center items-center">
-        <div className="font-normal text-[20px] text-[#1A202C] leading-[26px] text-right not-italic my-[24px] font-family-medium">
+        <div className="font-normal text-[20px] text-[#1A202C] leading-[26px] text-right not-italic mb-[24px] font-family-medium">
           Set cipher seed passphrase(optional)
         </div>
         <Stack gap={'24px'} align="flex-start" width="480px" className="font-family-medium">
-          <Field label="Input your cipher seed passphrase">
+          <Field label="Input your cipher seed passphrase" className="gap-[8px]">
             <Input
               className="font-family-regular"
               placeholder="If not, no input is required."
@@ -65,7 +65,7 @@ function New() {
               onChange={(e) => setCreatePassphrase(e.target.value)}
             />
           </Field>
-          <Field label="Confirm your cipher seed passphrase">
+          <Field label="Confirm your cipher seed passphrase" className="gap-[8px]">
             <Input
               className="font-family-regular"
               placeholder="If not, no input is required."
@@ -77,7 +77,7 @@ function New() {
         <ConfirmButton type="submit" onClick={onSubmit} content="Generate new wallet" style={{marginTop:'40px'}}/>
       </div>}
       {newStatus === 'word' && <div style={{display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
-        <div  style={{fontSize:'20px',fontWeight: '600', margin:'24px 0', color:'#1A202C'}}>New mnemonic</div>
+        <div  style={{fontSize:'20px',fontWeight: '600', marginBottom:'16px', color:'#1A202C'}}>New mnemonic</div>
         {/*<div style={{maxWidth:'280px'}}>{showCreateMnemonic}</div>*/}
         <div className="grid grid-cols-5 gap-4 bg-white rounded-lg border border-gray-200 w-[480px] p-[14px]">
           {showCreateMnemonic.map((word, index) => (
@@ -90,7 +90,7 @@ function New() {
         <div style={{width:'480px',marginTop:'24px', color:'rgba(0,0,0,36%)', fontSize:'12px', textAlign:'left'}}>
           1 Please take a moment to write down this mnemonic phrase on a piece of paper.
         </div>
-        <div style={{width:'480px', fontSize:'12px', color:'rgba(0,0,0,36%)', textAlign:'left', margin:'8px 0 12px 0'}}>
+        <div style={{width:'480px', fontSize:'12px', color:'rgba(0,0,0,36%)', textAlign:'left', margin:'8px 0 0 0'}}>
           2 It's your backup and you can use it to recover the wallet.
         </div>
         <ConfirmButton type="submit" onClick={()=>setShowMnemonicDialog(true)} content="Confirm" style={{marginTop:'40px'}}/>

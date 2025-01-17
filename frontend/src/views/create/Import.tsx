@@ -10,13 +10,11 @@ import { ChakraMnemonicAlert } from '@/views/create/ChakraMnemonicAlert';
 import { ConfirmButton } from '@/components/ConfirmButton';
 
 function Import() {
-  // 定义状态存储两个文本框的值
   const [mnemonic, setMnemonic] = useState("");
   const [passphrase, setPassphrase] = useState("");
   const [error, setError] = useState(""); // 错误提示信息
   const navigate = useNavigate();
   const { initWallet, pwd, setShowMnemonicDialog, setConfirmLoading } = useCreateStore()
-  // 验证方法：检查是否为24个单词
   const validateMnemonic = (mnemonic: string) => {
     const words = mnemonic.trim().split(/\s+/); // 通过空格分割单词
     return words.length === 24;
@@ -53,7 +51,7 @@ function Import() {
     <div className="flex flex-col items-center justify-center mx-w-full">
       <Toaster />
       <div className="flex flex-col justify-center items-center">
-        <Stack gap="4" align="flex-start" width="480px" className="font-family-medium">
+        <Stack gap="24px" align="flex-start" width="480px" className="font-family-medium">
           <Field label="" errorText={error}>
             <Textarea
               className="font-family-regular"

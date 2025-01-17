@@ -41,18 +41,21 @@ function Pwd() {
       </div>
       <Toaster />
       <form className="flex flex-col items-center justify-center" onSubmit={onSubmit}>
-        <Stack gap="4" align="flex-start" width="480px" className="font-family-medium">
-          <Field label="Input wallet Password:" helperText="The password must be at least eight digits！"  errorText={error}>
+        <Stack gap="24px" align="flex-start" width="480px" className="font-family-medium">
+          <Field label="Input wallet Password:" errorText={error} className="gap-[8px]">
             <Input
+              id="pwd"
               className="font-family-regular"
+              // type="password"
               height={'32px'}
               placeholder="Please Enter Your Password"
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
             />
           </Field>
-          <Field label="Confirm wallet Password:" errorText={error}>
+          <Field label="Confirm wallet Password:" errorText={error} className="gap-[8px]">
             <Input
+              id="confirmPwd"
               height={'32px'}
               className="font-family-regular"
               placeholder="Please Confirm Your Password"
