@@ -110,15 +110,14 @@ const ConfigForm = () => {
           onBlur={handleBlur} // 失焦时触发
         />
       </div>
-      <div className="flex flex-col items-start w-full gap-[8px]">
-        <div className="font-normal text-base text-black leading-5 text-left uppercase:none mb-[12px] font-family-medium">Special node configuration</div>
-        <div className="flex flex-col items-start w-full gap-[8px]">
+      <div className="flex flex-col items-start w-full gap-[12px]">
+        <div className="font-normal text-base text-black leading-5 text-left uppercase:none font-family-medium">Special node configuration</div>
+        <div className="flex flex-col items-start w-full gap-[12px]">
           <div className="flex flex-row w-full items-center justify-between">
             <div className="font-normal text-sm text-black leading-4 text-left w-[170px] font-family-medium">BTC Network:</div>
             <div className="rounded-md border border-[1px] border-[#E2E8F0] w-[297px] h-[32px] pl-[12px] leading-[18px] text-[14px] flex flex-row items-center justify-center">
               <SelectRoot collection={frameworks}>
                 <SelectTrigger className="flex flex-row items-center justify-center">
-                  {/*<SelectValueText placeholder={'signet'} className="leading-[18px] text-[14px]" />*/}
                   <div>{currentnetwork}</div>
                 </SelectTrigger>
                 <SelectContent>
