@@ -56,7 +56,6 @@ jobs:
           sign: true
           sign-macos-apple-username: ${{SIGN_MACOS_APPLE_USERNAME}}
           sign-macos-apple-password: ${{ secrets.APPLE_PASSWORD }}
-          sign-macos-app-id: ${{ secrets.MACOS_DEVELOPER_CERT_ID }}
           sign-macos-app-cert: ${{ secrets.MACOS_DEVELOPER_CERT }}
           sign-macos-app-cert-password: ${{ secrets.MACOS_DEVELOPER_CERT_PASSWORD }}
           sign-macos-installer-id: ${{ secrets.MACOS_INSTALLER_CERT_ID }}
