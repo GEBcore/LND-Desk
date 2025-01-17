@@ -1,0 +1,16 @@
+{
+  "source" : ["./build/bin/LND-Desk.app"],
+  "bundle_id" : "com.bevm.LND-Desk",
+  "apple_id": {
+    "username": "@env:APPLE_USERNAME",
+    "password": "@env:APPLE_PASSWORD"
+  },
+  "sign" :{
+    "application_identity" : "@env:APPLICATION_IDENTITY",
+    "entitlements_file": "./build/darwin/entitlements.plist"
+  },
+  "dmg" :{
+    "output_path":  "./build/bin/LND-Desk.dmg",
+    "volume_name":  "btclayer2-LND"
+  }
+}
