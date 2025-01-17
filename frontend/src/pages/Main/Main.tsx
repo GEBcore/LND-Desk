@@ -115,7 +115,7 @@ function Main() {
 
   return (
     <div className='flex flex-col items-center justify-center mt-[48px] mx-w-full'>
-      <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[35px] font-family-medium">
+      <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[40px] font-family-medium">
         Your LND Node Operation Information
       </div>
       <Toaster />

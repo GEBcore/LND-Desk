@@ -248,10 +248,10 @@ function LndState() {
         </DialogContent>
       </Dialog>
       <Toaster />
-      <div className="flex flex-col justify-center items-center flex-wrap gap-[16px] w-full">
-        <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[35px] font-family-medium">
-          Your LND Node Operation Information
-        </div>
+      <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[40px] font-family-medium">
+        Your LND Node Operation Information
+      </div>
+      <div className="flex flex-col justify-center items-center flex-wrap gap-[24px] w-full mb-[40px]">
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">
           <Label className='w-full max-w-md font-family-medium'>Block Sync Process</Label>
           <div className="relative flex items-center justify-center w-full max-w-md gap-3">
@@ -280,8 +280,8 @@ function LndState() {
             <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={copyIcon} alt=""/></div>
           </div>
         </div>
-        <ConfirmButton onClick={StopNode} content={'Stop'}/>
       </div>
+      <ConfirmButton onClick={StopNode} content={'Stop'}/>
       <UpdateAlert/>
     </div>
   )
