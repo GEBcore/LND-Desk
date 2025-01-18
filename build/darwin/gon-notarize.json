@@ -9,7 +9,8 @@
     "staple": false
   }],
   "apple_id": {
-    "username": "lownkid@outlook.com",
-    "password": "@env:APPLE_PASSWORD"
+    "username": "",
+    "password": "",
+    "provider": ""
   }
 }
