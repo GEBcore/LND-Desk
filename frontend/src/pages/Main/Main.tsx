@@ -25,6 +25,10 @@ function Main() {
     fetchVersionInfo()
   }, []);
 
+  useEffect(() => {
+    console.log('config', config)
+  }, [config]);
+
   async function RunNode() {
     const isVerify = await CheckConfig()
     if (!isVerify) {
@@ -120,12 +124,13 @@ function Main() {
       </div>
       <Toaster />
       <div className="w-[480px] flex flex-col items-start gap-[24px] mb-[40px]">
-        <div className="flex flex-col items-start w-full gap-[8px]">
-          <div className="text-base text-black leading-5 text-left uppercase:none font-family-medium">Data Storage Directory</div>
-          <div className='flex w-full items-center relative'>
-            <Input className="w-[480px]" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />
-            <div className="bg-[#EDF2F7] absolute p-[8px] right-[0px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={folder} alt=""/></div>
-          </div>
+        <div className="flex flex-row w-full items-center justify-between gap-[8px]">
+          <div className="text-base text-black leading-5 text-left uppercase:none font-family-medium">Choose your LND Directory</div>
+          {/*<div className='flex w-full items-center relative'>*/}
+          {/*  /!*<Input className="w-[480px]" id="lndDir" type="text" value={lndDir} onChange={(e) => SaveLndDir(e.target.value)} />*!/*/}
+          {/*  <div className="bg-[#EDF2F7] absolute p-[8px] right-[0px] cursor-pointer border border-[#E2E8F0] rounded" onClick={ChooseLndDir}><img src={folder} alt=""/></div>*/}
+          {/*</div>*/}
+          <div className="bg-[#EDF2F7] p-[8px] cursor-pointer border border-[#E2E8F0] rounded" onClick={ChooseLndDir}><img src={folder} alt=""/></div>
         </div>
         <ConfigForm/>
       </div>
