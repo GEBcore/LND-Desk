@@ -90,6 +90,7 @@ function Main() {
         'ResolvesAliases': true,
         'TreatPackagesAsDirectories': false,
       }))
+      setLndDir(chooseedLndDir)
       SaveLndDir(chooseedLndDir);
     } catch (error) {
       toast({
@@ -123,7 +124,10 @@ function Main() {
         <div className="flex flex-col w-full items-start justify-between gap-[8px]">
           <div className="text-base text-black leading-5 text-left uppercase:none font-family-medium">Data Storage Directory</div>
           <div className='flex w-full items-center relative'>
-            <Input placeholder={'Choose your LND Directory'} className="w-[480px]" disabled={true} id="lndDir" type="text" />
+            <Input placeholder={'Choose your LND Directory'} value={lndDir} className="w-[480px]" disabled={true} id="lndDir" type="text" style={{
+              opacity: 1,
+              border: '1px solid rgb(226, 232, 240)',
+            }} />
             <div className="bg-[#EDF2F7] absolute p-[8px] right-[0px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={folder} alt=""/></div>
           </div>
           {/*<div className="bg-[#EDF2F7] p-[8px] cursor-pointer border border-[#E2E8F0] rounded" onClick={ChooseLndDir}><img src={folder} alt=""/></div>*/}
