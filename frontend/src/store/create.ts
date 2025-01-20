@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { FetchVersionInfo, GenSeed, GetVersion, InitWallet } from '../../wailsjs/go/main/App';
+import { FetchVersionInfo, GenSeed, GetLndChainInfo, GetVersion, InitWallet } from '../../wailsjs/go/main/App';
 import { formatWords, formatWordsIndex } from '@/utils/formatWords';
 export const defaultConfig = `[Application Options]
 debuglevel=trace
@@ -62,6 +62,10 @@ interface CreateState {
   currentVersion: string
   getVersion:() => Promise<{ status: string; data?: any; error?: any }>
   fetchVersionInfo:() => Promise<{ status: string; data?: any; error?: any }>
+  currentNetwork: string
+  setCurrentNetwork: (val: string) => void
+  lndChainScan: string
+  setLndChainScan: (val: string) => void
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -154,4 +158,8 @@ export const useCreateStore = create<CreateState>((set, get) => ({
       return await getVersionInfo();
     }
   },
+  currentNetwork: 'signet',
+  setCurrentNetwork: (val: string) => set({currentNetwork: val}),
+  lndChainScan: 'https://mempool.space/signet',
+  setLndChainScan: (val: string) => set({lndChainScan: val}),
 }))

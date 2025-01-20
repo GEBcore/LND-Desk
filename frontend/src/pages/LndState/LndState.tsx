@@ -41,7 +41,7 @@ function LndState() {
     admMacaroon: ''
   });
   const { toast } = useToast()
-  const { isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady } = useCreateStore()
+  const { isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady, lndChainScan } = useCreateStore()
   const [password, setPassword] = useState('');
   const [progress, setProgress] = useState(0)
   const progressRef = useRef<NodeJS.Timeout | null>(null);
@@ -66,6 +66,10 @@ function LndState() {
       console.error('Error getting LND path:', error);
     }
   }
+
+  useEffect(() => {
+    console.log('lndChainScan', lndChainScan)
+  }, [lndChainScan]);
 
   function copyToClipboard(value: string) {
     navigator.clipboard.writeText(value).then(
@@ -105,7 +109,7 @@ function LndState() {
 
   async function GetChainInfo() {
     try {
-      const { MempoolBlock, LndInfo } = await GetLndChainInfo("https://mempool.space/signet");
+      const { MempoolBlock, LndInfo } = await GetLndChainInfo(lndChainScan);
       let lndBlock = 0
       if (LndInfo?.block_height) {
         lndBlock = LndInfo.block_height

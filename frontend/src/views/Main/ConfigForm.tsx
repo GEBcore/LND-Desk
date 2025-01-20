@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { defaultConfig, useCreateStore } from '@/store/create';
-import { createListCollection } from "@chakra-ui/react"
 import {
   SelectContent,
   SelectItem,
   SelectRoot,
   SelectTrigger,
 } from "@/components/ui/select"
+import { frameworks, lndChainScanMap } from '@/commons/lndChainInfo';
 interface Config {
   [section: string]: {
     [key: string]: string;
   };
 }
-
 
 const parseConfig = (config: string): Config => {
   const lines = config.split('\n');
@@ -49,8 +48,7 @@ const stringifyConfig = (configObj: Config): string => {
 };
 
 const ConfigForm = () => {
-  const { config, setConfig, aliasName, setAliasName } = useCreateStore()
-  const [currentnetwork, setCurrentnetwork] = useState('signet')
+  const { config, setConfig, aliasName, setAliasName, setLndChainScan, currentNetwork, setCurrentNetwork } = useCreateStore()
   const [configObj, setConfigObj] = useState<Config>(parseConfig(defaultConfig));
   const [isTouched, setIsTouched] = useState(false);
 
@@ -63,7 +61,8 @@ const ConfigForm = () => {
 
   const handleBitcoinNetworkChange = (network: string) => {
     const updatedConfig = { ...configObj };
-    setCurrentnetwork(network)
+    setCurrentNetwork(network)
+    setLndChainScan(lndChainScanMap[network])
 
     Object.keys(updatedConfig['Bitcoin']).forEach((key) => {
       if (key.startsWith('bitcoin.') && key !== 'bitcoin.node') {
@@ -84,16 +83,7 @@ const ConfigForm = () => {
   const handleBlur = () => {
     setIsTouched(true);
   };
-  const frameworks = createListCollection({
-    items: [
-      { label: "mainnet", value: "mainnet" },
-      // { label: "testnet", value: "testnet" },
-      // { label: "simnet", value: "simnet" },
-      // { label: "regtest", value: "regtest" },
-      { label: "signet", value: "signet" },
-    ],
-  })
-  // @ts-ignore
+
   return (
     <>
       <div className="flex flex-col items-start w-full gap-[8px]">
@@ -118,7 +108,7 @@ const ConfigForm = () => {
             <div className="rounded-md border border-[1px] border-[#E2E8F0] w-[297px] h-[32px] pl-[12px] leading-[18px] text-[14px] flex flex-row items-center justify-center">
               <SelectRoot collection={frameworks}>
                 <SelectTrigger className="flex flex-row items-center justify-center">
-                  <div>{currentnetwork}</div>
+                  <div>{currentNetwork}</div>
                 </SelectTrigger>
                 <SelectContent>
                   {frameworks.items.map((item: { value: string; label: string; }) => (
