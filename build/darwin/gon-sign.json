@@ -2,15 +2,16 @@
   "source" : ["./build/bin/LND-Desk.app"],
   "bundle_id" : "com.bevm.LND-Desk",
   "apple_id": {
-    "username": "@env:APPLE_USERNAME",
-    "password": "@env:APPLE_PASSWORD"
+    "username": "",
+    "password": "",
+    "provider": ""
   },
   "sign" :{
-    "application_identity" : "@env:APPLICATION_IDENTITY",
+    "application_identity" : "Developer ID Application: Chainnet Technology (Hangzhou) Company Limited (H6XKR479R6)",
     "entitlements_file": "./build/darwin/entitlements.plist"
   },
   "dmg" :{
     "output_path":  "./build/bin/LND-Desk.dmg",
-    "volume_name":  "btclayer2-LND"
+    "volume_name":  "LND-Desk"
   }
 }

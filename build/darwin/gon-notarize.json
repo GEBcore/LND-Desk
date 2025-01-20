@@ -9,7 +9,8 @@
     "staple": false
   }],
   "apple_id": {
-    "username": "@env:APPLE_USERNAME",
-    "password": "@env:APPLE_PASSWORD"
+    "username": "",
+    "password": "",
+    "provider": ""
   }
 }

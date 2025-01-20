@@ -40,7 +40,7 @@ jobs:
         run: echo "This is a stable release."
 
       - name: Build wails
-        uses: btclayer2/wails-build-action@v0.0.8
+        uses: btclayer2/wails-build-action@v0.1.2
         id: build
         with:
           build-name: ${{ matrix.build.name }}
@@ -54,11 +54,11 @@ jobs:
           deno-working-directory: './'
           tags: 'autopilotrpc signrpc walletrpc chainrpc invoicesrpc neutrinorpc routerrpc watchtowerrpc monitoring peersrpc kvdb_postrgres kvdb_sqlite kvdb_etcd'
           sign: true
-          sign-macos-apple-username: ${{ secrets.SIGN_MACOS_APPLE_USERNAME }}
           sign-macos-apple-password: ${{ secrets.APPLE_PASSWORD }}
           sign-macos-app-cert: ${{ secrets.MACOS_DEVELOPER_CERT }}
           sign-macos-app-cert-password: ${{ secrets.MACOS_DEVELOPER_CERT_PASSWORD }}
           sign-macos-installer-id: ${{ secrets.MACOS_INSTALLER_CERT_ID }}
           sign-macos-installer-cert: ${{ secrets.MACOS_INSTALLER_CERT }}
           sign-macos-installer-cert-password: ${{ secrets.MACOS_INSTALLER_CERT_PASSWORD }}
-          apple-application-identity: ${{ secrets.APPLE_APPLICATION_IDENTITY }}
+          sign-macos-apple-username: ${{ secrets.APPLE_USERNAME }}
+          sign-macos-apple-provider: ${{ secrets.APPLE_TEAM }}
