@@ -25,10 +25,6 @@ function Main() {
     fetchVersionInfo()
   }, []);
 
-  useEffect(() => {
-    console.log('config', config)
-  }, [config]);
-
   async function RunNode() {
     const isVerify = await CheckConfig()
     if (!isVerify) {
@@ -56,8 +52,8 @@ function Main() {
         })
         return false
       }
-      console.log(lndDir)
-      console.log(config)
+      // console.log(lndDir)
+      // console.log(config)
       const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
       console.log(updatedText)
       await VerifyConfig(lndDir, updatedText);
