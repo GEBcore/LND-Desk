@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { FetchVersionInfo, GenSeed, GetLndChainInfo, GetVersion, InitWallet } from '../../wailsjs/go/main/App';
 import { formatWords, formatWordsIndex } from '@/utils/formatWords';
+import { useState } from 'react';
 export const defaultConfig = `[Application Options]
 debuglevel=trace
 maxpendingchannels=10
@@ -30,6 +31,8 @@ protocol.simple-taproot-chans=true`;
 interface CreateState {
   config: string
   setConfig:(val: string) =>void
+  lndDir: string
+  setLndDir:(val: string) =>void
   aliasName: string
   setAliasName:(val: string) =>void
   pwd: string
@@ -71,6 +74,8 @@ interface CreateState {
 export const useCreateStore = create<CreateState>((set, get) => ({
   config: defaultConfig,
   setConfig:(val: string) =>set({config: val}),
+  lndDir: '',
+  setLndDir:(val: string) =>set({lndDir: val}),
   aliasName: '',
   setAliasName:(val: string) => set({aliasName: val}),
   pwd: '',

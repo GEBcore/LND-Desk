@@ -14,8 +14,7 @@ import folder from '@/assets/lndstate/folderOpen.svg'
 import { UpdateAlert } from '@/views/Main/Update';
 
 function Main() {
-  const { config, setConfig, aliasName } = useCreateStore()
-  const [lndDir, setLndDir] = useState('');
+  const { config, setConfig, aliasName, lndDir, setLndDir } = useCreateStore()
   const navigate = useNavigate();
   const { toast } = useToast()
   const {getVersion, fetchVersionInfo, currentVersion, updateVersion} = useCreateStore()
@@ -70,17 +69,18 @@ function Main() {
 
   function SaveLndDir(value: string) {
     setLndDir(value);
-    localStorage.setItem('lndDir', value);
+    // localStorage.setItem('lndDir', value);
   }
 
-  async function SetDefaultLndDir() {
-    const defaultLndDir = await GetDefaultLndDir()
-    SaveLndDir(defaultLndDir)
-  }
+  // async function SetDefaultLndDir() {
+  //   const defaultLndDir = await GetDefaultLndDir()
+  //   SaveLndDir(defaultLndDir)
+  // }
 
   async function ChooseLndDir() {
     try {
-      const defaultLndDir = await GetDefaultLndDir()
+      // const defaultLndDir = await GetDefaultLndDir()
+      const defaultLndDir = ''
       const chooseedLndDir = await OpenDirectorySelector(frontend.OpenDialogOptions.createFrom({
         'DefaultDirectory': defaultLndDir,
         'DefaultFilename': 'lnd',
@@ -101,18 +101,18 @@ function Main() {
     }
   }
 
-  useEffect(() => {
-    // const savedConfig = localStorage.getItem('config');
-    // if (savedConfig && savedConfig !== '') {
-    //   setConfig(savedConfig);
-    // }
-    const savedLndDir = localStorage.getItem('lndDir');
-    if (savedLndDir && savedLndDir !== '') {
-      setLndDir(savedLndDir);
-    } else {
-      SetDefaultLndDir()
-    }
-  }, []);
+  // useEffect(() => {
+  //   // const savedConfig = localStorage.getItem('config');
+  //   // if (savedConfig && savedConfig !== '') {
+  //   //   setConfig(savedConfig);
+  //   // }
+  //   // const savedLndDir = localStorage.getItem('lndDir');
+  //   // if (savedLndDir && savedLndDir !== '') {
+  //   //   setLndDir(savedLndDir);
+  //   // } else {
+  //   //   SetDefaultLndDir()
+  //   // }
+  // }, []);
 
   return (
     <div className='flex flex-col items-center justify-center mt-[48px] mx-w-full'>

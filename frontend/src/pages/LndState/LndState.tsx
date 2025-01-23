@@ -22,6 +22,8 @@ import { frontend } from '../../../wailsjs/go/models';
 import { ConfirmButton } from '@/components/ConfirmButton';
 import copyIcon from '@/assets/lndstate/copy.svg'
 import { UpdateAlert } from '@/views/Main/Update';
+import folder from '@/assets/lndstate/folderOpen.svg'
+
 
 enum WalletState {
   WalletState_NON_EXISTING,
@@ -274,7 +276,7 @@ function LndState() {
           <Label className='w-full max-w-md font-family-medium'>Lnd Admin Macaroon</Label>
           <div className="relative flex w-full max-w-md">
             <Input className="pr-10" type="text" value={LndInfo.admMacaroon} disabled />
-            <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={copyIcon} alt=""/></div>
+            <div className="bg-[#EDF2F7] absolute p-[8px] right-[-1px] cursor-pointer border border-[#E2E8F0] rounded-tr-md rounded-br-md" onClick={ChooseLndDir}><img src={folder} alt=""/></div>
           </div>
         </div>
       </div>
