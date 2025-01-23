@@ -26,7 +26,7 @@ func Unlock(ctx context.Context, c *lnd.Config, password string) error {
 	req := &lnrpc.UnlockWalletRequest{
 		WalletPassword: []byte(password),
 		RecoveryWindow: recoveryWindow,
-		StatelessInit:  true,
+		StatelessInit:  false,
 	}
 	_, err = client.UnlockWallet(ctx, req)
 	if err != nil {
