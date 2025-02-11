@@ -71,6 +71,41 @@ const ConfigForm = () => {
     });
 
     updatedConfig['Bitcoin'][`bitcoin.${network}`] = 'true';
+    
+    // Clear existing neutrino peers
+    updatedConfig['neutrino'] = {};
+    
+    if (network === 'mainnet') {
+      updatedConfig['neutrino'] = {
+        'neutrino.addpeer': [
+          'btcd-mainnet.lightning.computer',
+          'neutrino.noderunner.wtf',
+          'node.eldamar.icu', 
+          'btcd.lnolymp.us',
+          'btcd0.lightning.engineering',
+          'bb1.breez.technology:8333',
+          'node.blixtwallet.com:8333',
+          'mainnet1-btcd.zaphq.io',
+          'mainnet2-btcd.zaphq.io', 
+          'mainnet3-btcd.zaphq.io',
+          'mainnet4-btcd.zaphq.io'
+        ].join('\n')
+      };
+      
+      // Add fee section
+      updatedConfig['fee'] = {
+        'fee.url': 'https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json'
+      };
+    } else if (network === 'signet') {
+      updatedConfig['neutrino'] = {
+        'neutrino.addpeer': [
+          'x49.seed.signet.bitcoin.sprovoost.nl',
+          'v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333'
+        ].join('\n')
+      };
+      updatedConfig['fee'] = {};
+    }
+    
     setConfigObj(updatedConfig);
     setConfig(stringifyConfig(updatedConfig));
   };
@@ -140,12 +175,8 @@ const ConfigForm = () => {
                    } />
           </div>
         </div>
-        {/*<h2>Updated Config</h2>*/}
-        {/*<textarea*/}
-        {/*  style={{ width: '100%', height: '200px' }}*/}
-        {/*  value={config}*/}
-        {/*  readOnly*/}
-        {/*/>*/}
+        <h2>Updated Config</h2>
+        <textarea style={{ width: '100%', height: '200px' }} value={config} readOnly/>
     </div>
     </>
   );
