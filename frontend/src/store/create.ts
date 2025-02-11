@@ -14,8 +14,8 @@ no-rest-tls=true
 restcors=https://bevmhub.bevm.io
 
 [Bitcoin]
-bitcoin.mainnet=true
-bitcoin.signet=false
+bitcoin.mainnet=false
+bitcoin.signet=true
 bitcoin.node=neutrino
 
 [neutrino]
