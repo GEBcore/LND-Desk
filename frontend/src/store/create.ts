@@ -14,16 +14,35 @@ no-rest-tls=true
 restcors=https://bevmhub.bevm.io
 
 [Bitcoin]
-bitcoin.mainnet=false
-bitcoin.signet=true
+bitcoin.mainnet=true
+bitcoin.signet=false
 bitcoin.node=neutrino
 
 [neutrino]
-neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
-neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
+// signet
+//neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl 
+//neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
+
+// mainnet
+neutrino.addpeer=btcd-mainnet.lightning.computer
+neutrino.addpeer=neutrino.noderunner.wtf
+neutrino.addpeer=node.eldamar.icu
+neutrino.addpeer=btcd.lnolymp.us
+neutrino.addpeer=btcd0.lightning.engineering
+neutrino.addpeer=bb1.breez.technology:8333
+neutrino.addpeer=node.blixtwallet.com:8333
+neutrino.addpeer=mainnet1-btcd.zaphq.io
+neutrino.addpeer=mainnet2-btcd.zaphq.io
+neutrino.addpeer=mainnet3-btcd.zaphq.io
+neutrino.addpeer=mainnet4-btcd.zaphq.io
+
 
 [protocol]
-protocol.simple-taproot-chans=true`;
+protocol.simple-taproot-chans=true
+
+// mainnet
+[fee]
+fee.url=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json`;
 
 // bitcoin.testnet=false
 // bitcoin.simnet=false
