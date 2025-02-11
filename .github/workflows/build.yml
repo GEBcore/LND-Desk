@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.build.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           submodules: recursive
 
@@ -40,7 +40,7 @@ jobs:
         run: echo "This is a stable release."
 
       - name: Build wails
-        uses: btclayer2/wails-build-action@v0.1.2
+        uses: btclayer2/wails-build-action@v0.1.3
         id: build
         with:
           build-name: ${{ matrix.build.name }}
