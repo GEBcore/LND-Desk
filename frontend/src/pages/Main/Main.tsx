@@ -14,7 +14,7 @@ import folder from '@/assets/lndstate/folderOpen.svg'
 import { UpdateAlert } from '@/views/Main/Update';
 
 function Main() {
-  const { config, setConfig, aliasName, lndDir, setLndDir } = useCreateStore()
+  const { config, setConfig, aliasName, lndDir, setLndDir, currentNetwork } = useCreateStore()
   const navigate = useNavigate();
   const { toast } = useToast()
   const {getVersion, fetchVersionInfo, currentVersion, updateVersion} = useCreateStore()
@@ -51,11 +51,36 @@ function Main() {
         })
         return false
       }
-      // console.log(lndDir)
-      // console.log(config)
       const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
-      console.log(updatedText)
-      await VerifyConfig(lndDir, updatedText);
+      let neutrinoConfig = '';
+      if (currentNetwork === 'mainnet') {
+        neutrinoConfig = `neutrino.addpeer=btcd-mainnet.lightning.computer
+neutrino.addpeer=neutrino.noderunner.wtf
+neutrino.addpeer=node.eldamar.icu
+neutrino.addpeer=btcd.lnolymp.us
+neutrino.addpeer=btcd0.lightning.engineering
+neutrino.addpeer=bb1.breez.technology:8333
+neutrino.addpeer=node.blixtwallet.com:8333
+neutrino.addpeer=mainnet1-btcd.zaphq.io
+neutrino.addpeer=mainnet2-btcd.zaphq.io
+neutrino.addpeer=mainnet3-btcd.zaphq.io
+neutrino.addpeer=mainnet4-btcd.zaphq.io`;
+      } else if (currentNetwork === 'signet') {
+        neutrinoConfig = `neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl 
+neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333`;
+      }
+
+      // Replace the [neutrino] section
+      const configSections = updatedText.split('\n[');
+      const newSections = configSections.map(section => {
+        if (section.startsWith('neutrino]')) {
+          return `neutrino]\n${neutrinoConfig}`;
+        }
+        return section;
+      });
+      const finalConfig = newSections[0] + '\n[' + newSections.slice(1).join('\n[');
+      console.log('finalConfig', finalConfig)
+      await VerifyConfig(lndDir, finalConfig);
       return true
     } catch (error) {
       toast({

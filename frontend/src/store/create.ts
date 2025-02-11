@@ -14,13 +14,14 @@ no-rest-tls=true
 restcors=https://bevmhub.bevm.io
 
 [Bitcoin]
-bitcoin.mainnet=false
-bitcoin.signet=true
+bitcoin.mainnet=true
+bitcoin.signet=false
 bitcoin.node=neutrino
 
 [neutrino]
 neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl 
 neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
+
 
 [protocol]
 protocol.simple-taproot-chans=true`;
