@@ -147,12 +147,6 @@ const ConfigForm = () => {
                    } />
           </div>
         </div>
-        <h2>Updated Config</h2>
-        <textarea
-          style={{ width: '100%', height: '200px' }}
-          value={config}
-          readOnly
-        />
     </div>
     </>
   );
