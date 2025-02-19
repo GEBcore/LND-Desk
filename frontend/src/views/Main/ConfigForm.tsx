@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { defaultConfig, useCreateStore } from '@/store/create';
 import {
@@ -49,14 +49,52 @@ const stringifyConfig = (configObj: Config): string => {
 
 const ConfigForm = () => {
   const { config, setConfig, aliasName, setAliasName, setLndChainScan, currentNetwork, setCurrentNetwork } = useCreateStore()
-  const [configObj, setConfigObj] = useState<Config>(parseConfig(defaultConfig));
+  const [configObj, setConfigObj] = useState<Config>(() => {
+    const savedConfig = localStorage.getItem('config');
+    return savedConfig ? parseConfig(savedConfig) : parseConfig(defaultConfig);
+  });
   const [isTouched, setIsTouched] = useState(false);
+
+  // 组件加载时初始化所有配置
+  useEffect(() => {
+    if (!configObj['Application Options']) return;
+
+    // 设置 alias
+    if (configObj['Application Options']['alias']) {
+      setAliasName(configObj['Application Options']['alias']);
+    }
+
+    // 设置网络类型
+    if (configObj['Bitcoin']) {
+      const network = Object.keys(configObj['Bitcoin']).find(key => 
+        key.startsWith('bitcoin.') && 
+        key !== 'bitcoin.node' && 
+        configObj['Bitcoin'][key] === 'true'
+      );
+      if (network) {
+        const networkType = network.replace('bitcoin.', '');
+        setCurrentNetwork(networkType);
+        setLndChainScan(lndChainScanMap[networkType]);
+      }
+    }
+  }, []);
 
   const handleChange = (section: string, key: string, value: string) => {
     const updatedConfig = { ...configObj };
-    updatedConfig[section][key] = value;
+    console.log(key, value)
+    debugger
+    if ((key === 'rpclisten' || key === 'restlisten') && !value.includes("localhost:")) {
+      updatedConfig[section][key] = value ? `localhost:${value}` : '';
+    } else {
+      updatedConfig[section][key] = value;
+    }
     setConfigObj(updatedConfig);
     setConfig(stringifyConfig(updatedConfig));
+  };
+
+  const getPortValue = (value: string | undefined) => {
+    if (!value) return '';
+    return value.replace('localhost:', '');
   };
 
   const handleBitcoinNetworkChange = (network: string) => {
@@ -129,22 +167,33 @@ const ConfigForm = () => {
           </div>
           <div className="flex flex-row w-full items-center justify-between">
             <div className="font-normal text-sm text-black leading-4 text-left w-[170px] font-family-medium">REST cors:</div>
-            <Input className="w-[295px] h-[32px]" id="restcors" type="text"  value={configObj['Application Options']['restcors']} onChange={(e) =>
-              handleChange('Application Options', 'restcors', e.target.value)
-            } />
+            <Input 
+              className="w-[295px] h-[32px]" 
+              id="restcors" 
+              type="text"  
+              value={configObj['Application Options']['restcors'] || ''} 
+              onChange={(e) => handleChange('Application Options', 'restcors', e.target.value)}
+            />
           </div>
           <div className="flex flex-row w-full items-center justify-between">
             <div className="font-normal text-sm text-black leading-4 text-left w-[170px] font-family-medium">RPC Listen Endpoint:</div>
-            <Input className="w-[295px] h-[32px]" id="rpclisten" type="text"  value={configObj['Application Options']['rpclisten']} onChange={(e) =>
-              handleChange('Application Options', 'rpclisten', e.target.value)
-            } />
+            <Input 
+              className="w-[295px] h-[32px]" 
+              id="rpclisten" 
+              type="text"  
+              value={getPortValue(configObj['Application Options']['rpclisten'])} 
+              onChange={(e) => handleChange('Application Options', 'rpclisten', e.target.value)}
+            />
           </div>
           <div className="flex flex-row w-full items-center justify-between flex-nowrap">
             <div className="font-normal text-sm text-black leading-4 text-left w-[170px] font-family-medium">REST Listen Endpoint:</div>
-            <Input className="w-[295px] h-[32px]" id="restlisten" type="text" value={configObj['Application Options']['restlisten']}
-                   onChange={(e) =>
-                     handleChange('Application Options', 'restlisten', e.target.value)
-                   } />
+            <Input 
+              className="w-[295px] h-[32px]" 
+              id="restlisten" 
+              type="text" 
+              value={getPortValue(configObj['Application Options']['restlisten'])} 
+              onChange={(e) => handleChange('Application Options', 'restlisten', e.target.value)}
+            />
           </div>
         </div>
     </div>

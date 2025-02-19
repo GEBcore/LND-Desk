@@ -51,7 +51,7 @@ function Main() {
         })
         return false
       }
-      const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
+      // const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
       let neutrinoConfig = '';
       if (currentNetwork === 'mainnet') {
         neutrinoConfig = `neutrino.addpeer=btcd-mainnet.lightning.computer
@@ -71,7 +71,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
       }
 
       // Replace the [neutrino] section
-      const configSections = updatedText.split('\n[');
+      const configSections = config.split('\n[');
       const newSections = configSections.map(section => {
         if (section.startsWith('neutrino]')) {
           return `neutrino]\n${neutrinoConfig}`;
@@ -80,6 +80,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
       });
       const finalConfig = newSections[0] + '\n[' + newSections.slice(1).join('\n[');
       console.log('finalConfig', finalConfig)
+      localStorage.setItem('config', finalConfig);
       await VerifyConfig(lndDir, finalConfig);
       return true
     } catch (error) {
@@ -94,17 +95,12 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
 
   function SaveLndDir(value: string) {
     setLndDir(value);
-    // localStorage.setItem('lndDir', value);
+    localStorage.setItem('lndDir', value);
   }
 
-  // async function SetDefaultLndDir() {
-  //   const defaultLndDir = await GetDefaultLndDir()
-  //   SaveLndDir(defaultLndDir)
-  // }
 
   async function ChooseLndDir() {
     try {
-      // const defaultLndDir = await GetDefaultLndDir()
       const defaultLndDir = ''
       const chooseedLndDir = await OpenDirectorySelector(frontend.OpenDialogOptions.createFrom({
         'DefaultDirectory': defaultLndDir,
@@ -126,18 +122,16 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
     }
   }
 
-  // useEffect(() => {
-  //   // const savedConfig = localStorage.getItem('config');
-  //   // if (savedConfig && savedConfig !== '') {
-  //   //   setConfig(savedConfig);
-  //   // }
-  //   // const savedLndDir = localStorage.getItem('lndDir');
-  //   // if (savedLndDir && savedLndDir !== '') {
-  //   //   setLndDir(savedLndDir);
-  //   // } else {
-  //   //   SetDefaultLndDir()
-  //   // }
-  // }, []);
+  useEffect(() => {
+    const savedConfig = localStorage.getItem('config');
+    if (savedConfig && savedConfig !== '') {
+      setConfig(savedConfig);
+    }
+    const savedLndDir = localStorage.getItem('lndDir');
+    if (savedLndDir && savedLndDir !== '') {
+      setLndDir(savedLndDir);
+    }
+  }, []);
 
   return (
     <div className='flex flex-col items-center justify-center mt-[48px] mx-w-full'>
