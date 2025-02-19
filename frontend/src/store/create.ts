@@ -164,7 +164,7 @@ export const useCreateStore = create<CreateState>((set, get) => ({
       return await getVersionInfo();
     }
   },
-  currentNetwork: 'signet',
+  currentNetwork: 'mainnet',
   setCurrentNetwork: (val: string) => set({currentNetwork: val}),
   lndChainScan: 'https://mempool.space/signet',
   setLndChainScan: (val: string) => set({lndChainScan: val}),
