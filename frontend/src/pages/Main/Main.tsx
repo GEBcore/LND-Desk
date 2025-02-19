@@ -95,7 +95,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
 
   function SaveLndDir(value: string) {
     setLndDir(value);
-    localStorage.setItem('lndDir', value);
+    // localStorage.setItem('lndDir', value);
   }
 
 
@@ -127,10 +127,10 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
     if (savedConfig && savedConfig !== '') {
       setConfig(savedConfig);
     }
-    const savedLndDir = localStorage.getItem('lndDir');
-    if (savedLndDir && savedLndDir !== '') {
-      setLndDir(savedLndDir);
-    }
+    // const savedLndDir = localStorage.getItem('lndDir');
+    // if (savedLndDir && savedLndDir !== '') {
+    //   setLndDir(savedLndDir);
+    // }
   }, []);
 
   return (
