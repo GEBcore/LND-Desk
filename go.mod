@@ -9,7 +9,7 @@ require (
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/lightningnetwork/lnd v0.18.3-beta
 	github.com/tidwall/gjson v1.14.2
-	github.com/wailsapp/wails/v2 v2.10.0
+	github.com/wailsapp/wails/v2 v2.9.3
 	google.golang.org/grpc v1.59.0
 	gopkg.in/macaroon.v2 v2.0.0
 )
