@@ -111,3 +111,6 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 ## Support
 
 For questions or assistance, please open an issue in the repository.
+
+---
+## [FAQ](https://github.com/btclayer2/LND-Desk/wiki/Frequently-Asked-Questions)
