@@ -28,7 +28,8 @@ func main() {
 		Bind: []interface{}{
 			app,
 		},
-		DisableResize: true,
+		DisableResize:            true,
+		EnableDefaultContextMenu: true,
 	})
 
 	if err != nil {
