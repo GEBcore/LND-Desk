@@ -120,6 +120,10 @@ const ConfigForm = () => {
     setConfig(stringifyConfig(updatedConfig));
   };
 
+  useEffect(() => {
+    handleBitcoinNetworkChange(currentNetwork)
+  }, [currentNetwork]);
+
   const changeAliasName = (e: { target: { value: string; }; }) => {
     handleChange('Application Options', 'alias', e.target.value)
     setAliasName(e.target.value)
