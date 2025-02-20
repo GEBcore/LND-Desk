@@ -51,7 +51,7 @@ function Main() {
         })
         return false
       }
-      // const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
+      const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
       let neutrinoConfig = '';
       if (currentNetwork === 'mainnet') {
         neutrinoConfig = `neutrino.addpeer=btcd-mainnet.lightning.computer
@@ -71,7 +71,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
       }
 
       // Replace the [neutrino] section
-      const configSections = config.split('\n[');
+      const configSections = updatedText.split('\n[');
       const newSections = configSections.map(section => {
         if (section.startsWith('neutrino]')) {
           return `neutrino]\n${neutrinoConfig}`;
@@ -79,7 +79,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
         return section;
       });
       const finalConfig = newSections[0] + '\n[' + newSections.slice(1).join('\n[');
-      console.log('finalConfig', finalConfig)
+      console.log('VerifyConfig', finalConfig)
       localStorage.setItem('config', finalConfig);
       await VerifyConfig(lndDir, finalConfig);
       return true

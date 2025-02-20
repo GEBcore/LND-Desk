@@ -8,8 +8,8 @@ maxpendingchannels=10
 alias=
 no-macaroons=false
 coin-selection-strategy=largest
-rpclisten=10009
-restlisten=8080
+rpclisten=localhost:10009
+restlisten=localhost:8080
 no-rest-tls=true
 restcors=https://bevmhub.bevm.io
 

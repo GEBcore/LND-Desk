@@ -77,24 +77,23 @@ const ConfigForm = () => {
         setLndChainScan(lndChainScanMap[networkType]);
       }
     }
+    if (configObj['Application Options']['rpclisten']) {
+      const value = configObj['Application Options']['rpclisten']?.replace('localhost:', '')
+      configObj['Application Options']['rpclisten'] = value
+    }
+
+    if (configObj['Application Options']['restlisten']) {
+      const value = configObj['Application Options']['restlisten']?.replace('localhost:', '')
+      configObj['Application Options']['restlisten'] = value
+    }
   }, []);
 
   const handleChange = (section: string, key: string, value: string) => {
     const updatedConfig = { ...configObj };
     console.log(key, value)
-    debugger
-    if ((key === 'rpclisten' || key === 'restlisten') && !value.includes("localhost:")) {
-      updatedConfig[section][key] = value ? `localhost:${value}` : '';
-    } else {
-      updatedConfig[section][key] = value;
-    }
+    updatedConfig[section][key] = value;
     setConfigObj(updatedConfig);
     setConfig(stringifyConfig(updatedConfig));
-  };
-
-  const getPortValue = (value: string | undefined) => {
-    if (!value) return '';
-    return value.replace('localhost:', '');
   };
 
   const handleBitcoinNetworkChange = (network: string) => {
@@ -185,7 +184,7 @@ const ConfigForm = () => {
               className="w-[295px] h-[32px]" 
               id="rpclisten" 
               type="text"  
-              value={getPortValue(configObj['Application Options']['rpclisten'])} 
+              value={configObj['Application Options']['rpclisten']}
               onChange={(e) => handleChange('Application Options', 'rpclisten', e.target.value)}
             />
           </div>
@@ -195,7 +194,7 @@ const ConfigForm = () => {
               className="w-[295px] h-[32px]" 
               id="restlisten" 
               type="text" 
-              value={getPortValue(configObj['Application Options']['restlisten'])} 
+              value={configObj['Application Options']['restlisten']}
               onChange={(e) => handleChange('Application Options', 'restlisten', e.target.value)}
             />
           </div>
