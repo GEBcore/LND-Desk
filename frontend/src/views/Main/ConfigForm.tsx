@@ -77,14 +77,18 @@ const ConfigForm = () => {
         setLndChainScan(lndChainScanMap[networkType]);
       }
     }
+
+    // 处理 RPC 和 REST 监听地址，移除所有 localhost: 前缀
     if (configObj['Application Options']['rpclisten']) {
-      const value = configObj['Application Options']['rpclisten']?.replace('localhost:', '')
-      configObj['Application Options']['rpclisten'] = value
+      const value = configObj['Application Options']['rpclisten']
+        .replace(/^(?:localhost:)+/, '');
+      configObj['Application Options']['rpclisten'] = value;
     }
 
     if (configObj['Application Options']['restlisten']) {
-      const value = configObj['Application Options']['restlisten']?.replace('localhost:', '')
-      configObj['Application Options']['restlisten'] = value
+      const value = configObj['Application Options']['restlisten']
+        .replace(/^(?:localhost:)+/, '');
+      configObj['Application Options']['restlisten'] = value;
     }
   }, []);
 
