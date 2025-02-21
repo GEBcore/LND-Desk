@@ -51,7 +51,11 @@ function Main() {
         })
         return false
       }
-      const updatedText = config.replace(/rpclisten=([^ ]*)/, "rpclisten=localhost:$1").replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
+
+      const updatedText = config
+        .replace(/rpclisten=(?!localhost:)([^ ]*)/, "rpclisten=localhost:$1")
+        .replace(/restlisten=(?!localhost:)([^ ]*)/, "restlisten=localhost:$1");
+
       let neutrinoConfig = '';
       if (currentNetwork === 'mainnet') {
         neutrinoConfig = `neutrino.addpeer=btcd-mainnet.lightning.computer
