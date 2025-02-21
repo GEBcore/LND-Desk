@@ -49,7 +49,7 @@ jobs:
           package: true
           wails-version: 'v2.9.3'
           node-version: '22.8.0'
-          go-version: '1.23'
+          go-version: '1.24'
           deno-build: 'npm i -g pnpm'
           deno-version: '2.1.4'
           deno-working-directory: './'
