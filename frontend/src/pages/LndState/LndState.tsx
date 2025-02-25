@@ -140,8 +140,10 @@ function LndState() {
           setIsWalletUnlocked(true)
           break
         case WalletState.WalletState_RPC_ACTIVE:
-        case WalletState.WalletState_SERVER_ACTIVE:
           setIsWalletRpcReady(true)
+          GetChainInfo()
+          break
+        case WalletState.WalletState_SERVER_ACTIVE:
           setIsServerActive(true)
           GetChainInfo()
           clearInterval(t)
