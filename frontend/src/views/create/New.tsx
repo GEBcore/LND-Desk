@@ -79,7 +79,7 @@ function New() {
       {newStatus === 'word' && <div style={{display:'flex', flexDirection:'column', alignItems: 'center', justifyItems:'center'}}>
         <div  style={{fontSize:'20px',fontWeight: '600', marginBottom:'16px', color:'#1A202C'}}>New mnemonic</div>
         {/*<div style={{maxWidth:'280px'}}>{showCreateMnemonic}</div>*/}
-        <div className="grid grid-cols-5 gap-4 bg-white rounded-lg border border-gray-200 w-[480px] p-[14px]">
+        <div className="grid grid-cols-5 gap-4 bg-white rounded-lg border border-gray-200 w-[580px] p-[14px]">
           {showCreateMnemonic.map((word, index) => (
             <div key={index} className="flex items-center space-x-2">
               <span className="text-gray-500 text-sm">{index + 1}.</span>

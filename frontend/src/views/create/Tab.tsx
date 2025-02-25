@@ -9,7 +9,7 @@ function Tab() {
       <div className="text-[24px] text-[#1A202C] leading-[31px] text-center max-w-[380px] mb-[40px] font-family-medium">
         Your LND Node Operation Information
       </div>
-      <Tabs.Root defaultValue="new" variant="outline" justify="center">
+      <Tabs.Root defaultValue="new" variant="outline" justify="center" width={'480px'}>
         <Tabs.List rounded="4px" className="flex flex-row justify-between font-family-medium" style={{border:'2px solid #E2E8F0'}}>
           <Tabs.Trigger value="new" className="px-[12px]">
             New Wallet
