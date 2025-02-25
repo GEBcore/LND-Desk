@@ -56,6 +56,7 @@ function LndState() {
   async function StopNode() {
     await StopLnd()
     setTimeout(() => {
+      setIsServerActive(false)
       setIsWalletRpcReady(false)
       setIsWalletUnlocked(false)
       navigate('/');
