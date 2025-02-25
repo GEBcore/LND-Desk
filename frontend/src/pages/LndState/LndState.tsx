@@ -23,6 +23,10 @@ import { ConfirmButton } from '@/components/ConfirmButton';
 import copyIcon from '@/assets/lndstate/copy.svg'
 import { UpdateAlert } from '@/views/Main/Update';
 import folder from '@/assets/lndstate/folderOpen.svg'
+import question from '@/assets/header/question.svg';
+import processActive from '@/assets/lndstate/processActive.svg'
+import processDefault from '@/assets/lndstate/processDefault.svg'
+
 
 
 enum WalletState {
@@ -43,7 +47,7 @@ function LndState() {
     admMacaroon: ''
   });
   const { toast } = useToast()
-  const { isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady, lndChainScan } = useCreateStore()
+  const { isWalletUnlocked, setIsWalletUnlocked, isWalletRpcReady, setIsWalletRpcReady, lndChainScan, isServerActive, setIsServerActive } = useCreateStore()
   const [password, setPassword] = useState('');
   const [progress, setProgress] = useState(0)
   const progressRef = useRef<NodeJS.Timeout | null>(null);
@@ -68,10 +72,6 @@ function LndState() {
       console.error('Error getting LND path:', error);
     }
   }
-
-  useEffect(() => {
-    console.log('lndChainScan', lndChainScan)
-  }, [lndChainScan]);
 
   function copyToClipboard(value: string) {
     navigator.clipboard.writeText(value).then(
@@ -142,6 +142,7 @@ function LndState() {
         case WalletState.WalletState_RPC_ACTIVE:
         case WalletState.WalletState_SERVER_ACTIVE:
           setIsWalletRpcReady(true)
+          setIsServerActive(true)
           GetChainInfo()
           clearInterval(t)
           break
@@ -150,6 +151,7 @@ function LndState() {
           break
       }
     } catch (error) {
+      setIsServerActive(false)
       toast({
         variant: "destructive",
         title: "Lnd RPC ERROR",
@@ -256,6 +258,9 @@ function LndState() {
           <div className="relative flex items-center justify-center w-full max-w-md gap-3">
             <Progress value={progress} className="w-[90%]" />
             <Label className='w-[15%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
+            <div className="tooltip" data-tooltip="When the indicator turns green, it means the LND node is fully operational and ready to use.!">
+              {isServerActive ? <img width={'24px'} src={processActive} alt=""/> : <img width={'24px'} src={processDefault} alt=""/>}
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-[8px] justify-center items-center w-full">

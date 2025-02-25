@@ -100,6 +100,27 @@ html {
   }
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.tooltip:hover::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 200px;
+  /*height: 200px;*/
+  white-space: pre-wrap;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  z-index: 1;
+}
+
 @layer base {
   * {
     @apply border-border;

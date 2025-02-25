@@ -82,6 +82,8 @@ interface CreateState {
   setCurrentNetwork: (val: string) => void
   lndChainScan: string
   setLndChainScan: (val: string) => void
+  isServerActive: boolean
+  setIsServerActive: (val: boolean) => void
 }
 
 export const useCreateStore = create<CreateState>((set, get) => ({
@@ -180,4 +182,6 @@ export const useCreateStore = create<CreateState>((set, get) => ({
   setCurrentNetwork: (val: string) => set({currentNetwork: val}),
   lndChainScan: 'https://mempool.space',
   setLndChainScan: (val: string) => set({lndChainScan: val}),
+  isServerActive: false,
+  setIsServerActive: (val: boolean) => set({isServerActive: val}),
 }))
