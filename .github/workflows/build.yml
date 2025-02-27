@@ -36,7 +36,7 @@ jobs:
         id: PRERELEASE
         if: startsWith(github.ref_name, 'v') && !contains(github.ref_name, '-')
         run: |
-          echo "PRERELEASE=true" >> $env:GITHUB_ENV
+          echo "PRERELEASE=false" >> $env:GITHUB_ENV
 
       - name: Build wails
         uses: btclayer2/wails-build-action@v0.1.3
