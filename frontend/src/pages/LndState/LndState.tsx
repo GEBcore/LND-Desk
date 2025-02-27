@@ -142,11 +142,9 @@ function LndState() {
           break
         case WalletState.WalletState_RPC_ACTIVE:
           setIsWalletRpcReady(true)
-          GetChainInfo()
           break
         case WalletState.WalletState_SERVER_ACTIVE:
           setIsServerActive(true)
-          GetChainInfo()
           clearInterval(t)
           break
         case WalletState.WalletState_WAITING_TO_START:
@@ -168,7 +166,7 @@ function LndState() {
     if (isWalletRpcReady && !progressRef.current) {
       progressRef.current = setInterval(() => {
         GetChainInfo()
-      }, 5000)
+      }, 3000)
     }
 
     return () => {
