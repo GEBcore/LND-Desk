@@ -21,7 +21,7 @@ jobs:
           - name: 'LND-Desk.windows'
             platform:  'windows/amd64'
             os: 'windows-latest'
-          - name: 'LND-Desk.macos'
+          - name: 'LND-Desk'
             platform:  'darwin/universal'
             os: 'macos-latest'
 
