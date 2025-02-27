@@ -86,7 +86,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
       });
       const finalConfig = newSections[0] + '\n[' + newSections.slice(1).join('\n[');
       console.log('VerifyConfig', finalConfig)
-      await VerifyConfig(lndDir, updatedText);
+      await VerifyConfig(lndDir, finalConfig);
       return true
     } catch (error) {
       toast({

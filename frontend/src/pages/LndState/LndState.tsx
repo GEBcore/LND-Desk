@@ -259,7 +259,7 @@ function LndState() {
           <div className="relative flex items-center justify-center w-full max-w-md gap-3">
             <Progress value={progress} className="w-[90%]" />
             <Label className='w-[15%] text-center'>{(progress / 100 * 100).toFixed(2) + '%'}</Label>
-            <div className="tooltip" data-tooltip="When the indicator turns green, it means the LND node is fully operational and ready to use.!">
+            <div className="tooltip" data-tooltip="When the indicator turns green, it means the LND node is fully operational and ready to use.">
               {isServerActive ? <img width={'24px'} src={processActive} alt=""/> : <img width={'24px'} src={processDefault} alt=""/>}
             </div>
           </div>
