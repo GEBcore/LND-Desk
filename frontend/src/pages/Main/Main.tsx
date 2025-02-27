@@ -86,8 +86,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
       });
       const finalConfig = newSections[0] + '\n[' + newSections.slice(1).join('\n[');
       console.log('VerifyConfig', finalConfig)
-      localStorage.setItem('config', finalConfig);
-      await VerifyConfig(lndDir, finalConfig);
+      await VerifyConfig(lndDir, updatedText);
       return true
     } catch (error) {
       toast({
@@ -127,17 +126,6 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
       })
     }
   }
-
-  useEffect(() => {
-    const savedConfig = localStorage.getItem('config');
-    if (savedConfig && savedConfig !== '') {
-      setConfig(savedConfig);
-    }
-    // const savedLndDir = localStorage.getItem('lndDir');
-    // if (savedLndDir && savedLndDir !== '') {
-    //   setLndDir(savedLndDir);
-    // }
-  }, []);
 
   return (
     <div className='flex flex-col items-center justify-center mt-[48px] mx-w-full'>

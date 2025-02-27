@@ -48,63 +48,67 @@ const stringifyConfig = (configObj: Config): string => {
 };
 
 const ConfigForm = () => {
-  const { config, setConfig, aliasName, setAliasName, setLndChainScan, currentNetwork, setCurrentNetwork } = useCreateStore()
-  const [configObj, setConfigObj] = useState<Config>(() => {
-    const savedConfig = localStorage.getItem('config');
-    return savedConfig ? parseConfig(savedConfig) : parseConfig(defaultConfig);
-  });
+  const { setConfig, aliasName, setAliasName, setLndChainScan, currentNetwork, setCurrentNetwork } = useCreateStore()
+  const [configObj, setConfigObj] = useState<Config>(() => parseConfig(defaultConfig));
   const [isTouched, setIsTouched] = useState(false);
 
-  // 组件加载时初始化所有配置
+  // 从 localStorage 加载配置
   useEffect(() => {
-    if (!configObj['Application Options']) return;
-
-    // 设置 alias
-    if (configObj['Application Options']['alias']) {
-      setAliasName(configObj['Application Options']['alias']);
+    // 加载 alias
+    const savedAlias = localStorage.getItem('lnd_alias');
+    if (savedAlias) {
+      setAliasName(savedAlias);
+      const updatedConfig = { ...configObj };
+      updatedConfig['Application Options']['alias'] = savedAlias;
+      setConfigObj(updatedConfig);
     }
 
-    // 设置网络类型
-    if (configObj['Bitcoin']) {
-      const network = Object.keys(configObj['Bitcoin']).find(key => 
-        key.startsWith('bitcoin.') && 
-        key !== 'bitcoin.node' && 
-        configObj['Bitcoin'][key] === 'true'
-      );
-      if (network) {
-        const networkType = network.replace('bitcoin.', '');
-        setCurrentNetwork(networkType);
-        setLndChainScan(lndChainScanMap[networkType]);
-      }
+    // 加载 network
+    const savedNetwork = localStorage.getItem('btc_network');
+    if (savedNetwork) {
+      setCurrentNetwork(savedNetwork);
+      setLndChainScan(lndChainScanMap[savedNetwork]);
     }
 
-    // 处理 RPC 和 REST 监听地址，移除所有 localhost: 前缀
-    if (configObj['Application Options']['rpclisten']) {
-      const value = configObj['Application Options']['rpclisten']
-        .replace(/^(?:localhost:)+/, '');
-      configObj['Application Options']['rpclisten'] = value;
-    }
+    // 加载其他配置
+    const savedRestCors = localStorage.getItem('rest_cors');
+    const savedRpcListen = localStorage.getItem('rpc_listen');
+    const savedRestListen = localStorage.getItem('rest_listen');
 
-    if (configObj['Application Options']['restlisten']) {
-      const value = configObj['Application Options']['restlisten']
-        .replace(/^(?:localhost:)+/, '');
-      configObj['Application Options']['restlisten'] = value;
-    }
+    const updatedConfig = { ...configObj };
+    if (savedRestCors) updatedConfig['Application Options']['restcors'] = savedRestCors;
+    if (savedRpcListen) updatedConfig['Application Options']['rpclisten'] = savedRpcListen;
+    if (savedRestListen) updatedConfig['Application Options']['restlisten'] = savedRestListen;
+    setConfigObj(updatedConfig);
+    setConfig(stringifyConfig(updatedConfig));
   }, []);
 
   const handleChange = (section: string, key: string, value: string) => {
     const updatedConfig = { ...configObj };
-    console.log(key, value)
     updatedConfig[section][key] = value;
     setConfigObj(updatedConfig);
     setConfig(stringifyConfig(updatedConfig));
+
+    // 只保存独立配置项到 localStorage
+    switch (key) {
+      case 'restcors':
+        localStorage.setItem('rest_cors', value);
+        break;
+      case 'rpclisten':
+        localStorage.setItem('rpc_listen', value);
+        break;
+      case 'restlisten':
+        localStorage.setItem('rest_listen', value);
+        break;
+    }
   };
 
   const handleBitcoinNetworkChange = (network: string) => {
-    const updatedConfig = { ...configObj };
-    setCurrentNetwork(network)
-    setLndChainScan(lndChainScanMap[network])
+    setCurrentNetwork(network);
+    setLndChainScan(lndChainScanMap[network]);
+    localStorage.setItem('btc_network', network);
 
+    const updatedConfig = { ...configObj };
     Object.keys(updatedConfig['Bitcoin']).forEach((key) => {
       if (key.startsWith('bitcoin.') && key !== 'bitcoin.node') {
         updatedConfig['Bitcoin'][key] = 'false';
@@ -115,22 +119,24 @@ const ConfigForm = () => {
 
     if (network === 'mainnet') {
       updatedConfig['fee'] = {'fee.url':'https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json'};
-    }else{
-      updatedConfig['fee'] = {}
+    } else {
+      updatedConfig['fee'] = {};
     }
 
     setConfigObj(updatedConfig);
     setConfig(stringifyConfig(updatedConfig));
   };
 
-  useEffect(() => {
-    handleBitcoinNetworkChange(currentNetwork)
-  }, [currentNetwork]);
-
   const changeAliasName = (e: { target: { value: string; }; }) => {
-    handleChange('Application Options', 'alias', e.target.value)
-    setAliasName(e.target.value)
-  }
+    const value = e.target.value;
+    setAliasName(value);
+    localStorage.setItem('lnd_alias', value);
+    
+    const updatedConfig = { ...configObj };
+    updatedConfig['Application Options']['alias'] = value;
+    setConfigObj(updatedConfig);
+    setConfig(stringifyConfig(updatedConfig));
+  };
 
   const handleBlur = () => {
     setIsTouched(true);
