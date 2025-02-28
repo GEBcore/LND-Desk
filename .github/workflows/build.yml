@@ -15,10 +15,10 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - name: 'LND-Desk'
+          - name: 'LND-Desk.AppImage'
             platform:  'linux/amd64'
             os: 'ubuntu-22.04'
-          - name: 'LND-Desk'
+          - name: 'LND-Desk.exe'
             platform:  'windows/amd64'
             os: 'windows-latest'
           - name: 'LND-Desk'
@@ -34,10 +34,9 @@ jobs:
 
       - name: Determine PRERELEASE
         id: PRERELEASE
-        env:
-          PRERELEASE: false
         if: startsWith(github.ref_name, 'v') && !contains(github.ref_name, '-')
-        run: echo "This is a stable release."
+        run: |
+          echo "PRERELEASE=false" >> $env:GITHUB_ENV
 
       - name: Build wails
         uses: btclayer2/wails-build-action@v0.1.3
