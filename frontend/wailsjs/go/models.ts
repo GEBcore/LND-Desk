@@ -63,6 +63,20 @@ export namespace frontend {
 
 export namespace lnrpc {
 	
+	export class Chain {
+	    chain?: string;
+	    network?: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Chain(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.chain = source["chain"];
+	        this.network = source["network"];
+	    }
+	}
 	export class Feature {
 	    name?: string;
 	    is_required?: boolean;
@@ -77,20 +91,6 @@ export namespace lnrpc {
 	        this.name = source["name"];
 	        this.is_required = source["is_required"];
 	        this.is_known = source["is_known"];
-	    }
-	}
-	export class Chain {
-	    chain?: string;
-	    network?: string;
-	
-	    static createFrom(source: any = {}) {
-	        return new Chain(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.chain = source["chain"];
-	        this.network = source["network"];
 	    }
 	}
 	export class GetInfoResponse {
@@ -111,7 +111,7 @@ export namespace lnrpc {
 	    testnet?: boolean;
 	    chains?: Chain[];
 	    uris?: string[];
-	    features?: {[key: number]: Feature};
+	    features?: Record<number, Feature>;
 	    require_htlc_interceptor?: boolean;
 	    store_final_htlc_resolutions?: boolean;
 	
@@ -138,7 +138,7 @@ export namespace lnrpc {
 	        this.testnet = source["testnet"];
 	        this.chains = this.convertValues(source["chains"], Chain);
 	        this.uris = source["uris"];
-	        this.features = source["features"];
+	        this.features = this.convertValues(source["features"], Feature, true);
 	        this.require_htlc_interceptor = source["require_htlc_interceptor"];
 	        this.store_final_htlc_resolutions = source["store_final_htlc_resolutions"];
 	    }

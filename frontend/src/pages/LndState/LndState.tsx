@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Unlock,
@@ -11,7 +11,6 @@ import {
   OpenFileSelector
 } from '../../../wailsjs/go/main/App';
 import { Input } from "@/components/ui/input"
-import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogOverlay, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -26,6 +25,8 @@ import folder from '@/assets/lndstate/folderOpen.svg'
 import question from '@/assets/header/question.svg';
 import processActive from '@/assets/lndstate/processActive.svg'
 import processDefault from '@/assets/lndstate/processDefault.svg'
+import { BrowserOpenURL } from '../../../wailsjs/runtime';
+import { Button } from '@chakra-ui/react';
 
 
 
@@ -286,7 +287,15 @@ function LndState() {
           </div>
         </div>
       </div>
-      <ConfirmButton onClick={StopNode} content={'Stop'}/>
+      <div className="flex flex-row gap-[20px]">
+        <Button
+          onClick={()=>BrowserOpenURL('https://bevmhub.bevm.io/node')}
+          style={{border:'1px solid rgb(200, 200, 200)', padding: '4px 40px', fontSize:'16px', outline:'none'}}
+        >
+          BEVM Hub
+        </Button>
+        <ConfirmButton onClick={StopNode} content={'Stop'}/>
+      </div>
       <UpdateAlert/>
     </div>
   )
