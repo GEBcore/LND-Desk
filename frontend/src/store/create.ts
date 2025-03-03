@@ -34,6 +34,7 @@ neutrino.addpeer=mainnet4-btcd.zaphq.io
 
 [protocol]
 protocol.simple-taproot-chans=true
+protocol.wumbo-channels=true
 
 [fee]
 fee.url=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json`;
