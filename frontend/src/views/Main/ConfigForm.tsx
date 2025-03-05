@@ -83,6 +83,7 @@ const ConfigForm = () => {
     setConfig(stringifyConfig(updatedConfig));
   }, []);
 
+
   const handleChange = (section: string, key: string, value: string) => {
     const updatedConfig = { ...configObj };
     updatedConfig[section][key] = value;
@@ -103,10 +104,10 @@ const ConfigForm = () => {
     }
   };
 
-  const handleBitcoinNetworkChange = (network: string) => {
+  const handleBitcoinNetworkChange = (network: string, refreshLocal?:boolean) => {
     setCurrentNetwork(network);
     setLndChainScan(lndChainScanMap[network]);
-    localStorage.setItem('btc_network', network);
+    refreshLocal && localStorage.setItem('btc_network', network);
 
     const updatedConfig = { ...configObj };
     Object.keys(updatedConfig['Bitcoin']).forEach((key) => {
@@ -127,6 +128,10 @@ const ConfigForm = () => {
     setConfig(stringifyConfig(updatedConfig));
   };
 
+
+  useEffect(() => {
+    handleBitcoinNetworkChange(currentNetwork, false)
+  }, [currentNetwork]);
   const changeAliasName = (e: { target: { value: string; }; }) => {
     const value = e.target.value;
     setAliasName(value);
@@ -170,7 +175,7 @@ const ConfigForm = () => {
                 </SelectTrigger>
                 <SelectContent>
                   {frameworks.items.map((item: { value: string; label: string; }) => (
-                    <SelectItem item={item} key={item.value} onClick={() => handleBitcoinNetworkChange(item.value)}>
+                    <SelectItem item={item} key={item.value} onClick={() => handleBitcoinNetworkChange(item.value, true)}>
                       {item.label}
                     </SelectItem>
                   ))}

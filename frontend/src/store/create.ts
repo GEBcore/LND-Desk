@@ -178,9 +178,9 @@ export const useCreateStore = create<CreateState>((set, get) => ({
       return await getVersionInfo();
     }
   },
-  currentNetwork: 'mainnet',
+  currentNetwork: localStorage.getItem('btc_network') ?? 'mainnet',
   setCurrentNetwork: (val: string) => set({currentNetwork: val}),
-  lndChainScan: 'https://mempool.space',
+  lndChainScan: localStorage.getItem('btc_network') == 'mainnet' ? 'https://mempool.space' : 'https://mempool.space/signet',
   setLndChainScan: (val: string) => set({lndChainScan: val}),
   isServerActive: false,
   setIsServerActive: (val: boolean) => set({isServerActive: val}),

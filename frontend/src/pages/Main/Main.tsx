@@ -59,6 +59,7 @@ function Main() {
         .replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
 
       let neutrinoConfig = '';
+      console.log('111currentNetwork',currentNetwork)
       if (currentNetwork === 'mainnet') {
         neutrinoConfig = `neutrino.addpeer=btcd-mainnet.lightning.computer
 neutrino.addpeer=neutrino.noderunner.wtf
