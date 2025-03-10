@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>warming</title>
+    <g id="页面-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Operation-Information" transform="translate(-423.000000, -639.000000)">
+            <g id=".status=error" transform="translate(424.000000, 640.000000)">
+                <path d="M0,12 C0,5.37240028 5.37240028,0 12,0 C18.6275997,0 24,5.37240028 24,12 C24,18.6275997 18.6275997,24 12,24 C5.37240028,24 0,18.6275997 0,12 Z" id="Vector" stroke="#1890FF" stroke-dasharray="0,0"></path>
+                <path d="M10.8,6 L13.2,6 L13.2,8.4 L10.8,8.4 L10.8,6 Z M10.8,10.8 L13.2,10.8 L13.2,18 L10.8,18 L10.8,10.8 Z" id="形状" fill="#1890FF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

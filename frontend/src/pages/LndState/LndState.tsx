@@ -27,6 +27,7 @@ import processActive from '@/assets/lndstate/processActive.svg'
 import processDefault from '@/assets/lndstate/processDefault.svg'
 import { BrowserOpenURL } from '../../../wailsjs/runtime';
 import { Button } from '@chakra-ui/react';
+import Reminder from '@/views/state/Reminder';
 
 
 
@@ -94,6 +95,22 @@ function LndState() {
     );
   }
 
+  const filterErrorMessage = (errorMsg: string) => {
+    if(errorMsg.includes('connection refused')){
+      toast({
+        variant: "destructive",
+        title: "Lnd RPC ERROR",
+        description: String('The port connection has failed. Please exit and restart the LND Desk.'),
+      })
+    }else {
+      toast({
+        variant: "destructive",
+        title: "Lnd RPC ERROR",
+        description: errorMsg,
+      })
+    }
+  }
+
   async function UnlockWallet() {
     try {
       await Unlock(password)
@@ -120,11 +137,7 @@ function LndState() {
       }
       setProgress((lndBlock / MempoolBlock) * 100)
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Lnd RPC ERROR",
-        description: String(error),
-      })
+      filterErrorMessage(String(error))
     }
   }
 
@@ -154,11 +167,7 @@ function LndState() {
       }
     } catch (error) {
       setIsServerActive(false)
-      toast({
-        variant: "destructive",
-        title: "Lnd RPC ERROR",
-        description: String(error),
-      })
+      filterErrorMessage(String(error))
       clearInterval(t)
     }
   }
@@ -296,6 +305,7 @@ function LndState() {
         </Button>
         <ConfirmButton onClick={StopNode} content={'Stop'}/>
       </div>
+      <Reminder/>
       <UpdateAlert/>
     </div>
   )
