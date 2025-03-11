@@ -27,6 +27,7 @@ import processActive from '@/assets/lndstate/processActive.svg'
 import processDefault from '@/assets/lndstate/processDefault.svg'
 import { BrowserOpenURL } from '../../../wailsjs/runtime';
 import { Button } from '@chakra-ui/react';
+import Reminder from '@/views/state/Reminder';
 
 
 
@@ -304,6 +305,7 @@ function LndState() {
         </Button>
         <ConfirmButton onClick={StopNode} content={'Stop'}/>
       </div>
+      <Reminder/>
       <UpdateAlert/>
     </div>
   )

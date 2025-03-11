@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Main.css';
 import { useNavigate } from 'react-router-dom';
 import { RunLnd, VerifyConfig, GetDefaultLndDir, OpenDirectorySelector } from "@/../wailsjs/go/main/App";
@@ -12,7 +12,6 @@ import ConfigForm from '@/views/Main/ConfigForm';
 import { QA } from '@/views/Main/QA';
 import folder from '@/assets/lndstate/folderOpen.svg'
 import { UpdateAlert } from '@/views/Main/Update';
-import Reminder from '@/views/state/Reminder';
 
 function Main() {
   const { config, setConfig, aliasName, lndDir, setLndDir, currentNetwork } = useCreateStore()
@@ -146,7 +145,6 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
         <ConfigForm/>
       </div>
       <ConfirmButton content={'Confirm to Run'} onClick={RunNode} />
-      <Reminder/>
       <UpdateAlert/>
       {/*<QA/>*/}
     </div>
