@@ -11,7 +11,7 @@ coin-selection-strategy=largest
 rpclisten=10009
 restlisten=8080
 no-rest-tls=true
-restcors=https://bevmhub.bevm.io
+restcors=https://gebhub.geb.network
 
 [Bitcoin]
 bitcoin.mainnet=true

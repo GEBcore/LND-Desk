@@ -100,7 +100,7 @@ function LndState() {
       toast({
         variant: "destructive",
         title: "Lnd RPC ERROR",
-        description: String('The port connection has failed. Please exit and restart the LND Desk.'),
+        description: String('The port connection has failed. Please exit and restart the GEB Hub.'),
       })
     }else {
       toast({
@@ -298,10 +298,10 @@ function LndState() {
       </div>
       <div className="flex flex-row gap-[20px]">
         <Button
-          onClick={()=>BrowserOpenURL('https://bevmhub.bevm.io/node')}
+          onClick={()=>BrowserOpenURL('https://gebhub.geb.network/node')}
           style={{border:'1px solid rgb(200, 200, 200)', padding: '4px 40px', fontSize:'16px', outline:'none'}}
         >
-          BEVM Hub
+          GEB Hub
         </Button>
         <ConfirmButton onClick={StopNode} content={'Stop'}/>
       </div>

@@ -59,7 +59,6 @@ function Main() {
         .replace(/restlisten=([^ ]*)/, "restlisten=localhost:$1");
 
       let neutrinoConfig = '';
-      console.log('111currentNetwork',currentNetwork)
       if (currentNetwork === 'mainnet') {
         neutrinoConfig = `neutrino.addpeer=btcd-mainnet.lightning.computer
 neutrino.addpeer=neutrino.noderunner.wtf
@@ -86,7 +85,7 @@ neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:
         return section;
       });
       const finalConfig = newSections[0] + '\n[' + newSections.slice(1).join('\n[');
-      console.log('VerifyConfig', finalConfig)
+      // console.log('VerifyConfig', finalConfig)
       await VerifyConfig(lndDir, finalConfig);
       return true
     } catch (error) {

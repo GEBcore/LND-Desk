@@ -74,9 +74,14 @@ const ConfigForm = () => {
     const savedRestCors = localStorage.getItem('rest_cors');
     const savedRpcListen = localStorage.getItem('rpc_listen');
     const savedRestListen = localStorage.getItem('rest_listen');
-
     const updatedConfig = { ...configObj };
-    if (savedRestCors) updatedConfig['Application Options']['restcors'] = savedRestCors;
+    if (savedRestCors) {
+      if (savedRestCors === 'https://bevmhub.bevm.io'){
+        updatedConfig['Application Options']['restcors'] = 'https://gebhub.geb.network'
+      }else{
+        updatedConfig['Application Options']['restcors'] = savedRestCors
+      }
+    }
     if (savedRpcListen) updatedConfig['Application Options']['rpclisten'] = savedRpcListen;
     if (savedRestListen) updatedConfig['Application Options']['restlisten'] = savedRestListen;
     setConfigObj(updatedConfig);
