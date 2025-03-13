@@ -100,7 +100,7 @@ function LndState() {
       toast({
         variant: "destructive",
         title: "Lnd RPC ERROR",
-        description: String('The port connection has failed. Please exit and restart the GEB Hub.'),
+        description: String('The port connection has failed. Please exit and restart the LND Desk.'),
       })
     }else {
       toast({
