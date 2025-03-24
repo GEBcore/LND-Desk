@@ -60,7 +60,7 @@ cd lnd-desk
 ### Build the Application
 Use the following command to build the application with all the necessary tags:
 ```bash
-wails build -tags "autopilotrpc signrpc walletrpc chainrpc invoicesrpc neutrinorpc routerrpc watchtowerrpc monitoring peersrpc kvdb_postrgres kvdb_sqlite kvdb_etcd"
+make buildapp
 ```
 
 This will generate platform-specific binaries in the build/bin/ directory.
