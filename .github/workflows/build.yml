@@ -39,7 +39,7 @@ jobs:
           echo "PRERELEASE=false" >> $env:GITHUB_ENV
 
       - name: Build wails
-        uses: GEBcore/wails-build-action@v0.2.0
+        uses: GEBcore/wails-build-action@v0.2.1
         id: build
         with:
           build-name: ${{ matrix.build.name }}
